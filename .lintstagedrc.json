@@ -1,0 +1,5 @@
+{
+  "*.{css,html,js,jsx,json,md,ts,tsx,scss}": ["prettier --write"],
+  "cypress/**/*.{html,js,jsx,ts,tsx}": ["prettier --write", "ng-lint-staged lint --fix --"],
+  "src/**/*.{html,js,jsx,ts,tsx}": ["prettier --write", "ng-lint-staged lint --fix --"]
+}

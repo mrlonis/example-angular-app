@@ -1,4 +1,4 @@
-# ExampleAngularApp
+# Example Angular App
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.4.
 
@@ -46,3 +46,65 @@ ng add @angular-eslint/schematics
 npx husky-init && npm install
 chmod +x .husky/pre-commit
 ```
+
+### Prettier
+
+```bash
+npm install --save-dev prettier eslint-config-prettier eslint-plugin-prettier
+```
+
+Create a `.prettierrc` file. Example:
+
+```json
+{
+  "singleQuote": true,
+  "printWidth": 125,
+  "tabWidth": 2,
+  "trailingComma": "all",
+  "overrides": [
+    {
+      "files": "*.html",
+      "options": {
+        "parser": "html"
+      }
+    },
+    {
+      "files": "*.component.html",
+      "options": {
+        "parser": "angular"
+      }
+    }
+  ]
+}
+```
+
+Update the `.eslintrc.json` to include `"plugin:prettier/recommended"` in the `extends` array for `.ts` files. Then, add a new `.html` section at the end of the `overrides` that looks like this:
+
+```json
+{
+  "files": ["*.html"],
+  "excludedFiles": ["*inline-template-*.component.html"],
+  "extends": ["plugin:prettier/recommended"],
+  "rules": {
+    "prettier/prettier": ["error", { "parser": "angular" }]
+  }
+}
+```
+
+### Setting up lint-staged
+
+```bash
+npm install --save-dev lint-staged ng-lint-staged
+```
+
+Create a `.lintstagedrc.json` file in the root of the project. Example:
+
+```json
+{
+  "*.{css,html,js,jsx,json,md,ts,tsx,scss}": ["prettier --write"],
+  "cypress/**/*.{html,js,jsx,ts,tsx}": ["prettier --write", "ng-lint-staged lint --fix --"],
+  "src/**/*.{html,js,jsx,ts,tsx}": ["prettier --write", "ng-lint-staged lint --fix --"]
+}
+```
+
+Change the `husky` `pre-commit` to be `npx lint-staged`
