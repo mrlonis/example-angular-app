@@ -91,6 +91,8 @@ Next, add some prettier scripts to the `package.json`:
 }
 ```
 
+[@angular-eslint documentation for prettier setup](https://github.com/angular-eslint/angular-eslint#notes-for-eslint-plugin-prettier-users)
+
 ### Setting up lint-staged
 
 ```bash
@@ -155,6 +157,14 @@ Then, we need to add `cypress` to the `lint` config in `angular.json`:
       "lintFilePatterns": ["src/**/*.ts", "src/**/*.html", "cypress"]
     }
   }
+}
+```
+
+Then, in the base `tsconfig.json` we need to exclude `cypress` like below:
+
+```json
+{
+  "exclude": ["cypress.config.ts", "cypress"]
 }
 ```
 
