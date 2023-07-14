@@ -8,6 +8,8 @@
     "lint": "ng lint",
     "ng": "ng",
     "prepare": "husky install",
+    "prettier": "prettier --config .prettierrc --write \"**/*.{css,html,js,jsx,json,md,scss,ts,tsx}\"",
+    "prettier:test": "prettier --config .prettierrc --list-different \"**/*.{css,html,js,jsx,json,md,scss,ts,tsx}\"",
     "start": "ng serve",
     "test": "ng test",
     "watch": "ng build --watch --configuration development"

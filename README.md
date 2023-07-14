@@ -91,6 +91,17 @@ Update the `.eslintrc.json` to include `"plugin:prettier/recommended"` in the `e
 }
 ```
 
+Next, add some prettier scripts to the `package.json`:
+
+```json
+{
+  "scripts": {
+    "prettier": "prettier --config .prettierrc --write \"**/*.{css,html,js,jsx,json,md,scss,ts,tsx}\"",
+    "prettier:test": "prettier --config .prettierrc --list-different \"**/*.{css,html,js,jsx,json,md,scss,ts,tsx}\""
+  }
+}
+```
+
 ### Setting up lint-staged
 
 ```bash
@@ -156,4 +167,10 @@ Then, we need to add `cypress` to the `lint` config in `angular.json`:
     }
   }
 }
+```
+
+### eslint-plugin-import Setup
+
+```bash
+npm install eslint-plugin-import --save-dev
 ```
