@@ -138,12 +138,25 @@ Change the `husky` `pre-commit` to be `npx lint-staged`
 ### Add cypress
 
 ```bash
-npm install cypress --save-dev
+npm i -D cypress start-server-and-test eslint-plugin-cypress
 ```
 
-Add the following to your `package.json` scripts `"cypress:open": "cypress open",`. Then, run `npm run cypress:open` to open the cypress app and setup the configuration from there.
+Add the following to your `package.json` scripts:
 
-Add the `eslint-plugin-cypress` to your project by running `npm install eslint-plugin-cypress --save-dev`.
+```json
+{
+  "scripts": {
+    ...,
+    "cypress:open": "cypress open",
+    "cypress:headless": "cypress run --headless -b chrome --config video=false",
+    ...,
+    "test:cypress": "start-server-and-test start http://localhost:4200 cypress:headless",
+    ...
+  }
+}
+```
+
+Then, run `npm run cypress:open` to open the cypress app and setup the configuration from there.
 
 `cypress` overrides the global `jest` definitions making our existing `angular` `jasmine` tests have false-positive linting errors. To fix this we need to do some additional `cypress` config.
 

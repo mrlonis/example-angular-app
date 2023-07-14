@@ -18,4 +18,5 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm run test:ci
+      - run: npm run test:cypress
       - run: npm run build
