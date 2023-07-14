@@ -12,6 +12,7 @@
     "prettier:test": "prettier --config .prettierrc --list-different \"**/*.{css,html,js,jsx,json,md,scss,ts,tsx}\"",
     "start": "ng serve",
     "test": "ng test",
+    "test:ci": "npm run test -- --no-watch --no-progress --browsers=ChromeHeadless",
     "watch": "ng build --watch --configuration development"
   },
   "dependencies": {
