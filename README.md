@@ -199,3 +199,32 @@ Then add two new plugins to the `.ts` `extends` array:
   "extends": ["plugin:import/recommended", "plugin:import/typescript"]
 }
 ```
+
+### Setting up @typescript-eslint rules requiring type information
+
+[Source documentation](https://github.com/angular-eslint/angular-eslint/blob/main/docs/RULES_REQUIRING_TYPE_INFORMATION.md)
+
+Add `parserOptions` to the `.ts` override:
+
+```json
+{
+  "parserOptions": {
+    "project": ["tsconfig.app.json", "tsconfig.spec.json", "tsconfig.json", "cypress/tsconfig.json"]
+  }
+}
+```
+
+To automatically add `parserOptions` to newly created applications or libraries within this workspace, simply update the `angular.json` `schematics` with the following:
+
+```json
+{
+  "@angular-eslint/schematics:application": {
+    "setParserOptionsProject": true
+  },
+  "@angular-eslint/schematics:library": {
+    "setParserOptionsProject": true
+  }
+}
+```
+
+Then, add `"plugin:@typescript-eslint/recommended-requiring-type-checking",` to the `.ts` `extends` array underneath `"plugin:@typescript-eslint/recommended",` inside of `.eslintrc.json`.
