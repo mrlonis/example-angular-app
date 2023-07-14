@@ -172,5 +172,31 @@ Then, we need to add `cypress` to the `lint` config in `angular.json`:
 ### eslint-plugin-import Setup
 
 ```bash
-npm install eslint-plugin-import --save-dev
+npm i -D eslint-plugin-import eslint-import-resolver-typescript
+```
+
+Add new section to `.eslintrc.json` called `settings` that looks like this:
+
+```json
+{
+  "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "import/resolver": {
+      "typescript": {
+        "alwaysTryTypes": true,
+        "project": ["tsconfig.app.json", "tsconfig.spec.json", "tsconfig.json", "cypress/tsconfig.json"]
+      }
+    }
+  }
+}
+```
+
+Then add two new plugins to the `.ts` `extends` array:
+
+```json
+{
+  "extends": ["plugin:import/recommended", "plugin:import/typescript"]
+}
 ```
