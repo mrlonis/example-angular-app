@@ -78,18 +78,7 @@ Create a `.prettierrc` file. Example:
 }
 ```
 
-Update the `.eslintrc.json` to include `"plugin:prettier/recommended"` in the `extends` array for `.ts` files. Then, add a new `.html` section at the end of the `overrides` that looks like this:
-
-```json
-{
-  "files": ["*.html"],
-  "excludedFiles": ["*inline-template-*.component.html"],
-  "extends": ["plugin:prettier/recommended"],
-  "rules": {
-    "prettier/prettier": ["error", { "parser": "angular" }]
-  }
-}
-```
+Update the `.eslintrc.json` to include `"plugin:prettier/recommended"` in the `extends` array for `.ts` and `.html` files.
 
 Next, add some prettier scripts to the `package.json`:
 
