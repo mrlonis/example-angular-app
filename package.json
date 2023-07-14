@@ -1,16 +1,17 @@
 {
   "name": "example-angular-app",
   "version": "0.0.0",
-  "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "lint": "ng lint",
-    "prepare": "husky install"
-  },
   "private": true,
+  "scripts": {
+    "build": "ng build",
+    "cypress:open": "cypress open",
+    "lint": "ng lint",
+    "ng": "ng",
+    "prepare": "husky install",
+    "start": "ng serve",
+    "test": "ng test",
+    "watch": "ng build --watch --configuration development"
+  },
   "dependencies": {
     "@angular/animations": "^16.1.0",
     "@angular/common": "^16.1.0",
@@ -36,8 +37,10 @@
     "@types/jasmine": "~4.3.0",
     "@typescript-eslint/eslint-plugin": "5.62.0",
     "@typescript-eslint/parser": "5.62.0",
+    "cypress": "^12.17.1",
     "eslint": "^8.44.0",
     "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-cypress": "^2.13.3",
     "eslint-plugin-prettier": "^5.0.0",
     "husky": "^8.0.0",
     "jasmine-core": "~4.6.0",

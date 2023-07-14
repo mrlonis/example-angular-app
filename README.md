@@ -108,3 +108,52 @@ Create a `.lintstagedrc.json` file in the root of the project. Example:
 ```
 
 Change the `husky` `pre-commit` to be `npx lint-staged`
+
+### Add cypress
+
+```bash
+npm install cypress --save-dev
+```
+
+Add the following to your `package.json` scripts `"cypress:open": "cypress open",`. Then, run `npm run cypress:open` to open the cypress app and setup the configuration from there.
+
+Add the `eslint-plugin-cypress` to your project by running `npm install eslint-plugin-cypress --save-dev`.
+
+`cypress` overrides the global `jest` definitions making our existing `angular` `jasmine` tests have false-positive linting errors. To fix this we need to do some additional `cypress` config.
+
+[Source](https://docs.cypress.io/guides/tooling/typescript-support)
+
+First, create a `tsconfig.json` file inside the `cypress` folder that looks like this:
+
+```json
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["es5", "dom"],
+    "types": ["cypress", "node"]
+  },
+  "include": ["**/*.ts", "../cypress.d.ts", "../cypress.config.ts"],
+  "exclude": []
+}
+```
+
+Then, add a `.eslintrc.json` to the `cypress` folder that looks like this:
+
+```json
+{
+  "extends": ["plugin:cypress/recommended"]
+}
+```
+
+Then, we need to add `cypress` to the `lint` config in `angular.json`:
+
+```json
+{
+  "lint": {
+    "builder": "@angular-eslint/builder:lint",
+    "options": {
+      "lintFilePatterns": ["src/**/*.ts", "src/**/*.html", "cypress"]
+    }
+  }
+}
+```
