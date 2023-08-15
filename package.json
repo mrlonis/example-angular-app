@@ -13,9 +13,10 @@
     "prettier": "prettier --config .prettierrc --write \"**/*.{css,html,js,jsx,json,md,scss,ts,tsx}\"",
     "prettier:test": "prettier --config .prettierrc --list-different \"**/*.{css,html,js,jsx,json,md,scss,ts,tsx}\"",
     "start": "ng serve",
-    "test": "ng test",
-    "test:ci": "npm run test -- --no-watch --no-progress --browsers=ChromeHeadless",
+    "test": "npm run lint && npm run test:ci && npm run test:cypress",
+    "test:ci": "ng test --no-watch --no-progress --browsers=ChromeHeadless",
     "test:cypress": "start-server-and-test start http://localhost:4200 cypress:headless",
+    "test:cypress:open": "start-server-and-test start http://localhost:4200 cypress:open",
     "watch": "ng build --watch --configuration development"
   },
   "dependencies": {
