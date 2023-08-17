@@ -21,7 +21,8 @@
       },
       "extends": [
         "eslint:recommended",
-        "plugin:@typescript-eslint/recommended-type-checked",
+        // "plugin:@typescript-eslint/recommended-type-checked",
+        // @typescript-eslint/strict-type-checked is a superset of @typescript-eslint/recommended-type-checked. If the strict rules are too much, you can use the recommended rules instead and comment out the strict rules.
         "plugin:@typescript-eslint/strict-type-checked",
         "plugin:@typescript-eslint/stylistic-type-checked",
         "plugin:@angular-eslint/recommended",
