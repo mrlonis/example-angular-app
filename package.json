@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "build": "ng build",
-    "cypress:headless": "cypress run --headless -b chrome --config video=false",
-    "cypress:open": "cypress open",
+    "cypress:headless": "cypress run --config-file cypress/cypress.config.ts --headless -b chrome --config video=false",
+    "cypress:open": "cypress open --config-file cypress/cypress.config.ts",
     "lint": "ng lint",
     "lint:fix": "npm run lint -- --fix",
     "ncu": "npm run ncu:list-changes -- -u",

@@ -8,12 +8,6 @@
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
-        },
-        "@angular-eslint/schematics:application": {
-          "setParserOptionsProject": true
-        },
-        "@angular-eslint/schematics:library": {
-          "setParserOptionsProject": true
         }
       },
       "root": "",
@@ -102,5 +96,13 @@
   "cli": {
     "analytics": "2babac99-ee89-46a8-87ea-6fe3b69f0833",
     "schematicCollections": ["@angular-eslint/schematics"]
+  },
+  "schematics": {
+    "@angular-eslint/schematics:application": {
+      "setParserOptionsProject": true
+    },
+    "@angular-eslint/schematics:library": {
+      "setParserOptionsProject": true
+    }
   }
 }
