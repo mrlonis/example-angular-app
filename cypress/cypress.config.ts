@@ -1,6 +1,12 @@
 import { defineConfig } from 'cypress';
 
 export default defineConfig({
+  reporter: 'junit',
+  reporterOptions: {
+    mochaFile: 'test-reports/cypress-junit-[hash].xml',
+    toConsole: true,
+  },
+
   e2e: {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     setupNodeEvents(on, config) {
