@@ -1,6 +1,5 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-npx sort-package-json
-npx prettier --config .prettierrc --write package.json
+npm run sort-package-json
 npx lint-staged
