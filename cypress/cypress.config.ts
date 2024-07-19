@@ -6,6 +6,8 @@ export default defineConfig({
     mochaFile: 'test-reports/cypress-junit-[hash].xml',
     toConsole: true,
   },
+  viewportHeight: 1080,
+  viewportWidth: 1920,
 
   e2e: {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
