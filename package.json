@@ -76,7 +76,7 @@
     "sort-json": "^2.0.1",
     "sort-package-json": "^2.8.0",
     "start-server-and-test": "^2.0.3",
-    "typescript": "~5.5.3"
+    "typescript": "~5.5.4"
   },
   "engines": {
     "node": "^20.11.1",
