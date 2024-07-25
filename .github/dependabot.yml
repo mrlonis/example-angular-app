@@ -15,6 +15,7 @@ updates:
   - package-ecosystem: 'npm' # See documentation for possible values
     directory: '/' # Location of package manifests
     schedule:
-      interval: "daily"
+      interval: 'daily'
     allow:
-      - dependency-type: "all"
+      - dependency-type: 'all'
+    open-pull-requests-limit: 20
