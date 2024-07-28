@@ -9,7 +9,7 @@ env:
   DEPENDENCY_NAME: '@angular/core'
 
 jobs:
-  build:
+  update-angular-major-version:
     runs-on: ubuntu-latest
 
     steps:
