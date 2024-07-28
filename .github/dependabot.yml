@@ -23,17 +23,17 @@ updates:
       angular:
         applies-to: version-updates
         patterns:
-          - "@angular*"
+          - '@angular*'
         update-types:
-          - "minor"
-          - "patch"
+          - 'minor'
+          - 'patch'
       minor-and-patch:
         applies-to: security-updates
         patterns:
-          - "@angular*"
+          - '@angular*'
         update-types:
-          - "patch"
-          - "minor"
+          - 'patch'
+          - 'minor'
     ignore:
-      - dependency-name: "@angular*"
-        update-types: ["version-update:semver-major"]
+      - dependency-name: '@angular*'
+        update-types: ['version-update:semver-major']
