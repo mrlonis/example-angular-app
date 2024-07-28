@@ -23,17 +23,25 @@ updates:
       angular:
         applies-to: version-updates
         patterns:
-          - "@angular*"
+          - '@angular*'
         update-types:
-          - "minor"
-          - "patch"
+          - 'minor'
+          - 'patch'
       minor-and-patch:
         applies-to: security-updates
         patterns:
-          - "@angular*"
+          - '@angular*'
         update-types:
-          - "patch"
-          - "minor"
+          - 'patch'
+          - 'minor'
     ignore:
-      - dependency-name: "@angular*"
-        update-types: ["version-update:semver-major"]
+      - dependency-name: '@angular*'
+        update-types: ['version-update:semver-major']
+      - dependency-name: 'cypress'
+        update-types: ['version-update:semver-major']
+      - dependency-name: 'eslint'
+        update-types: ['version-update:semver-major']
+      - dependency-name: 'typescript'
+        update-types: ['version-update:semver-major', 'version-update:semver-minor']
+      - dependency-name: 'zone.js'
+        update-types: ['version-update:semver-major', 'version-update:semver-minor']

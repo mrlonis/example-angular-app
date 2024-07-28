@@ -1,4 +1,4 @@
-name: update-angular
+name: update-angular-major-version
 
 on:
   schedule:
@@ -9,7 +9,7 @@ env:
   DEPENDENCY_NAME: '@angular/core'
 
 jobs:
-  build:
+  update-angular-major-version:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,12 +26,20 @@ jobs:
           CURRENT_VERSION=$(jq -r ".packages[\"node_modules/$DEPENDENCY_NAME\"].version" package-lock.json)
           echo "Current version of $DEPENDENCY_NAME: $CURRENT_VERSION"
           echo "CURRENT_VERSION=$CURRENT_VERSION" >> "$GITHUB_OUTPUT"
-          LATEST_VERSION=$(npx --yes latest-version-cli $DEPENDENCY_NAME)
+          LATEST_VERSION=$(npx --yes latest-version-cli "$DEPENDENCY_NAME")
           echo "Latest version of $DEPENDENCY_NAME: $LATEST_VERSION"
           echo "LATEST_VERSION=$LATEST_VERSION" >> "$GITHUB_OUTPUT"
-          if [ "$CURRENT_VERSION" != "$LATEST_VERSION" ]; then
+
+          CURRENT_MAJOR_VERSION=$(echo "$CURRENT_VERSION" | cut -d'.' -f1)
+          echo "Current major version of $DEPENDENCY_NAME: $CURRENT_MAJOR_VERSION"
+          echo "CURRENT_MAJOR_VERSION=$CURRENT_MAJOR_VERSION" >> "$GITHUB_OUTPUT"
+          LATEST_MAJOR_VERSION=$(echo "$LATEST_VERSION" | cut -d'.' -f1)
+          echo "Latest major version of $DEPENDENCY_NAME: $LATEST_MAJOR_VERSION"
+          echo "LATEST_MAJOR_VERSION=$LATEST_MAJOR_VERSION" >> "$GITHUB_OUTPUT"
+
+          if [ "$CURRENT_MAJOR_VERSION" != "$LATEST_MAJOR_VERSION" ]; then
             echo "There is a new version of $DEPENDENCY_NAME available!"
-            echo "BRANCH_NAME=upgrade-from-$CURRENT_VERSION-to-$LATEST_VERSION" >> "$GITHUB_OUTPUT"
+            echo "BRANCH_NAME=upgrade-from-angular-$CURRENT_MAJOR_VERSION-to-angular-$LATEST_MAJOR_VERSION" >> "$GITHUB_OUTPUT"
           else
             echo "You are using the latest version of $DEPENDENCY_NAME."
             echo "BRANCH_NAME=na" >> "$GITHUB_OUTPUT"
@@ -59,10 +67,10 @@ jobs:
           BRANCH_NAME: ${{ steps.check-version.outputs.BRANCH_NAME }}
           CURRENT_VERSION: ${{ steps.check-version.outputs.CURRENT_VERSION }}
           LATEST_VERSION: ${{ steps.check-version.outputs.LATEST_VERSION }}
+          LATEST_MAJOR_VERSION: ${{ steps.check-version.outputs.LATEST_MAJOR_VERSION }}
         run: |
           git checkout -b "$BRANCH_NAME"
-          MAJOR_VERSION=$(echo "$LATEST_VERSION" | cut -d'.' -f1)
-          npm run ng -- update @angular/core@"$MAJOR_VERSION" @angular/cli@"$MAJOR_VERSION" @angular/material@"$MAJOR_VERSION" @angular-eslint/schematics@"$MAJOR_VERSION" @angular-devkit/core@"$MAJOR_VERSION"
+          npm run ng -- update @angular/core@"$LATEST_MAJOR_VERSION" @angular/cli@"$LATEST_MAJOR_VERSION" @angular/material@"$LATEST_MAJOR_VERSION" @angular-eslint/schematics@"$LATEST_MAJOR_VERSION" @angular-devkit/core@"$LATEST_MAJOR_VERSION"
           git commit -m "Upgrade $DEPENDENCY_NAME from $CURRENT_VERSION to $LATEST_VERSION"
           git push -u origin "$BRANCH_NAME"
       - name: Create Pull Request
