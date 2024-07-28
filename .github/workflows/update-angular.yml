@@ -1,0 +1,74 @@
+name: update-angular
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # every day at midnight
+  workflow_dispatch:
+
+env:
+  DEPENDENCY_NAME: '@angular/core'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: npm ci
+      - run: npm install -g latest-version
+      - name: Parse package-lock.json and check for new version
+        id: check-version
+        run: |
+          CURRENT_VERSION=$(jq -r ".packages[\"node_modules/$DEPENDENCY_NAME\"].version" package-lock.json)
+          echo "Current version of $DEPENDENCY_NAME: $CURRENT_VERSION"
+          echo "CURRENT_VERSION=$CURRENT_VERSION" >> "$GITHUB_OUTPUT"
+          LATEST_VERSION=$(npx --yes latest-version-cli $DEPENDENCY_NAME)
+          echo "Latest version of $DEPENDENCY_NAME: $LATEST_VERSION"
+          echo "LATEST_VERSION=$LATEST_VERSION" >> "$GITHUB_OUTPUT"
+          if [ "$CURRENT_VERSION" != "$LATEST_VERSION" ]; then
+            echo "There is a new version of $DEPENDENCY_NAME available!"
+            echo "BRANCH_NAME=upgrade-from-$CURRENT_VERSION-to-$LATEST_VERSION" >> "$GITHUB_OUTPUT"
+          else
+            echo "You are using the latest version of $DEPENDENCY_NAME."
+            echo "BRANCH_NAME=na" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Check if BRANCH_NAME exists
+        id: check-branch
+        if: steps.check-version.outputs.BRANCH_NAME != 'na'
+        env:
+          BRANCH_NAME: ${{ steps.check-version.outputs.BRANCH_NAME }}
+          CURRENT_VERSION: ${{ steps.check-version.outputs.CURRENT_VERSION }}
+          LATEST_VERSION: ${{ steps.check-version.outputs.LATEST_VERSION }}
+        run: |
+          git fetch --all
+          if git show-ref --verify --quiet refs/heads/"$BRANCH_NAME"; then
+            echo "Branch '$BRANCH_NAME' already exists."
+            echo "BRANCH_EXISTS=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "Branch '$BRANCH_NAME' does not exist."
+            echo "BRANCH_EXISTS=false" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Perform upgrade
+        id: perform-upgrade
+        if: steps.check-branch.outputs.BRANCH_EXISTS == 'false'
+        env:
+          BRANCH_NAME: ${{ steps.check-version.outputs.BRANCH_NAME }}
+          CURRENT_VERSION: ${{ steps.check-version.outputs.CURRENT_VERSION }}
+          LATEST_VERSION: ${{ steps.check-version.outputs.LATEST_VERSION }}
+        run: |
+          git checkout -b "$BRANCH_NAME"
+          MAJOR_VERSION=$(echo "$LATEST_VERSION" | cut -d'.' -f1)
+          npm run ng -- update @angular/core@"$MAJOR_VERSION" @angular/cli@"$MAJOR_VERSION" @angular/material@"$MAJOR_VERSION" @angular-eslint/schematics@"$MAJOR_VERSION" @angular-devkit/core@"$MAJOR_VERSION"
+          git commit -m "Upgrade $DEPENDENCY_NAME from $CURRENT_VERSION to $LATEST_VERSION"
+          git push -u origin "$BRANCH_NAME"
+      - name: Create Pull Request
+        if: steps.perform-upgrade.status == 'success'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          default_branch=$(gh repo view --json defaultBranchRef -q ".defaultBranchRef.name")
+          gh pr create --base $default_branch --head ${{ github.head_ref }} --title "Pull request title" --body "Pull request description"
