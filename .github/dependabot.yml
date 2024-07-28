@@ -37,3 +37,11 @@ updates:
     ignore:
       - dependency-name: '@angular*'
         update-types: ['version-update:semver-major']
+      - dependency-name: 'cypress'
+        update-types: ['version-update:semver-major']
+      - dependency-name: 'eslint'
+        update-types: ['version-update:semver-major']
+      - dependency-name: 'typescript'
+        update-types: ['version-update:semver-major', 'version-update:semver-minor']
+      - dependency-name: 'zone.js'
+        update-types: ['version-update:semver-major', 'version-update:semver-minor']
