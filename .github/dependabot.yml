@@ -5,29 +5,26 @@
 
 version: 2
 updates:
-  # Maintain dependencies for GitHub Actions
   - package-ecosystem: 'github-actions'
-    # Workflow files stored in the default location of `.github/workflows`. (You don't need to specify `/.github/workflows` for `directory`. You can use `directory: "/"`.)
     directory: '/'
     schedule:
       interval: 'daily'
-  # Maintain dependencies for npm
-  - package-ecosystem: 'npm' # See documentation for possible values
-    directory: '/' # Location of package manifests
+  - package-ecosystem: 'npm'
+    directory: '/'
     schedule:
       interval: 'daily'
     allow:
       - dependency-type: 'all'
     open-pull-requests-limit: 99
     groups:
-      angular:
+      angular-version-updates:
         applies-to: version-updates
         patterns:
           - '@angular*'
         update-types:
           - 'minor'
           - 'patch'
-      minor-and-patch:
+      angular-security-updates:
         applies-to: security-updates
         patterns:
           - '@angular*'
@@ -36,6 +33,8 @@ updates:
           - 'minor'
     ignore:
       - dependency-name: '@angular*'
+        update-types: ['version-update:semver-major']
+      - dependency-name: '@types/node'
         update-types: ['version-update:semver-major']
       - dependency-name: 'cypress'
         update-types: ['version-update:semver-major']
