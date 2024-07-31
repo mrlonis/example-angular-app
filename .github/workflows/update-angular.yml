@@ -1,13 +1,11 @@
 name: update-angular-major-version
-
 on:
   schedule:
     - cron: '0 0 * * *' # every day at midnight
   workflow_dispatch:
-
 env:
   DEPENDENCY_NAME: '@angular/core'
-
+permissions: write-all
 jobs:
   update-angular-major-version:
     runs-on: ubuntu-latest
