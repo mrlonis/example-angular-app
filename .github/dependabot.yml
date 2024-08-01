@@ -22,8 +22,8 @@ updates:
         patterns:
           - '@angular*'
         update-types:
-          - 'patch'
           - 'minor'
+          - 'patch'
       angular-security-updates:
         applies-to: security-updates
         patterns:
