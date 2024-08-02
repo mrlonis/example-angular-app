@@ -70,7 +70,7 @@ jobs:
           npm run ng -- update @angular/core@"$LATEST_MAJOR_VERSION" @angular/cli@"$LATEST_MAJOR_VERSION" @angular/material@"$LATEST_MAJOR_VERSION" @angular-eslint/schematics@"$LATEST_MAJOR_VERSION" @angular-devkit/core@"$LATEST_MAJOR_VERSION"
           git commit -m "Upgrade $DEPENDENCY_NAME from $CURRENT_VERSION to $LATEST_VERSION"
           git push -u origin "$BRANCH_NAME"
-      - uses: tibdex/github-app-token@v1
+      - uses: tibdex/github-app-token@v2
         id: generate-token
         with:
           app_id: ${{ secrets.APP_ID }}
