@@ -5,7 +5,6 @@ on:
   workflow_dispatch:
 env:
   DEPENDENCY_NAME: '@angular/core'
-permissions: write-all
 jobs:
   update-angular-major-version:
     runs-on: ubuntu-latest
