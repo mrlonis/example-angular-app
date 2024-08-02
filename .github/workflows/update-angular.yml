@@ -71,10 +71,15 @@ jobs:
           npm run ng -- update @angular/core@"$LATEST_MAJOR_VERSION" @angular/cli@"$LATEST_MAJOR_VERSION" @angular/material@"$LATEST_MAJOR_VERSION" @angular-eslint/schematics@"$LATEST_MAJOR_VERSION" @angular-devkit/core@"$LATEST_MAJOR_VERSION"
           git commit -m "Upgrade $DEPENDENCY_NAME from $CURRENT_VERSION to $LATEST_VERSION"
           git push -u origin "$BRANCH_NAME"
+      - uses: tibdex/github-app-token@v1
+        id: generate-token
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.APP_PRIVATE_KEY }}
       - name: Create Pull Request
         if: steps.perform-upgrade.status == 'success'
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
           default_branch=$(gh repo view --json defaultBranchRef -q ".defaultBranchRef.name")
           gh pr create --base $default_branch --head ${{ github.head_ref }} --title "Pull request title" --body "Pull request description"
