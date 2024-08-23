@@ -74,7 +74,7 @@
     "npm-check-updates": "^17.1.0",
     "prettier": "^3.2.5",
     "sort-json": "^2.0.1",
-    "sort-package-json": "^2.8.0",
+    "sort-package-json": "^2.10.1",
     "start-server-and-test": "^2.0.5",
     "typescript": "~5.5.4"
   },
