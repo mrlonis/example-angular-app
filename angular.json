@@ -26,7 +26,10 @@
             "inlineStyleLanguage": "scss",
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": ["src/styles.scss"],
-            "scripts": [],
+            "scripts": [
+              "node_modules/iframe-resizer/js/iframeResizer.min.js",
+              "node_modules/iframe-resizer/js/iframeResizer.contentWindow.min.js"
+            ],
             "browser": "src/main.ts"
           },
           "configurations": {
