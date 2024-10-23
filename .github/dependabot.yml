@@ -21,6 +21,7 @@ updates:
         applies-to: version-updates
         patterns:
           - '@angular*'
+          - 'ngx*'
         update-types:
           - 'minor'
           - 'patch'
@@ -28,6 +29,7 @@ updates:
         applies-to: security-updates
         patterns:
           - '@angular*'
+          - 'ngx*'
         update-types:
           - 'patch'
           - 'minor'
@@ -63,6 +65,8 @@ updates:
       - dependency-name: 'cypress'
         update-types: ['version-update:semver-major']
       - dependency-name: '*eslint*'
+        update-types: ['version-update:semver-major']
+      - dependency-name: 'ngx*'
         update-types: ['version-update:semver-major']
       - dependency-name: 'typescript'
         update-types: ['version-update:semver-major', 'version-update:semver-minor']

@@ -44,3 +44,7 @@ Thumbs.db
 # Test Reports
 /coverage
 /test-reports
+
+# Cypress
+cypress/downloads
+cypress/screenshots
