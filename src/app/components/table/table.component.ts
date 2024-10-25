@@ -36,7 +36,20 @@ export class TableComponent implements AfterViewInit {
   @ViewChild(MatSort) sort?: MatSort;
 
   dataSource = new MatTableDataSource(ELEMENT_DATA.elements);
-  columnsToDisplay = ['name', 'atomic_mass', 'symbol', 'number'];
+  columnsToDisplay = [
+    'name',
+    'atomic_mass',
+    'symbol',
+    'number',
+    'category',
+    'period',
+    'group',
+    'phase',
+    'source',
+    'electron_configuration',
+    'electron_configuration_semantic',
+    'block',
+  ];
   columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
   expandedElement: PeriodicElement | null = null;
 
