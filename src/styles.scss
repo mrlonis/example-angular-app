@@ -8,3 +8,28 @@ body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
+
+.flex {
+  display: flex;
+  flex: auto;
+}
+
+.flex-row {
+  display: flex;
+  flex: auto;
+  flex-direction: row;
+}
+
+.flex-column {
+  display: flex;
+  flex: auto;
+  flex-direction: column;
+}
+
+.max-height-100-percent {
+  max-height: 100%;
+}
+
+.max-height-100vh {
+  max-height: 100vh;
+}

@@ -1,2 +1,2 @@
 export * from './example-iframe';
-export * from './flex-layout';
+export * from './layout';

@@ -1,18 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
-import { FlexLayoutComponent } from './flex-layout.component';
+import { TableComponent } from 'src/app/components';
+import { ExampleIframeComponent } from '..';
+import { LayoutComponent } from './layout.component';
 
-describe('FlexLayoutComponent', () => {
-  let component: FlexLayoutComponent;
-  let fixture: ComponentFixture<FlexLayoutComponent>;
+describe('LayoutComponent', () => {
+  let component: LayoutComponent;
+  let fixture: ComponentFixture<LayoutComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FlexLayoutComponent],
+      imports: [LayoutComponent, TableComponent, ExampleIframeComponent],
       providers: [provideNoopAnimations()],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(FlexLayoutComponent);
+    fixture = TestBed.createComponent(LayoutComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
