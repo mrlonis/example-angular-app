@@ -1,11 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ExampleIframeComponent, FlexLayoutComponent } from './pages';
+import { LayoutComponent } from './pages';
 
-export const routes: Routes = [
-  { path: '', component: ExampleIframeComponent },
-  { path: 'flex', component: FlexLayoutComponent },
-];
+export const routes: Routes = [{ path: '', component: LayoutComponent }];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
