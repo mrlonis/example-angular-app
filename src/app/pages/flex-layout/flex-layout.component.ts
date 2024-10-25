@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { TableComponent } from '../../components';
 
 @Component({
   selector: 'app-flex-layout',
   standalone: true,
-  imports: [],
+  imports: [TableComponent],
   templateUrl: './flex-layout.component.html',
   styleUrl: './flex-layout.component.scss',
 })
