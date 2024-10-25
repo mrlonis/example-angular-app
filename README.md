@@ -25,6 +25,8 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
     - [eslint-plugin-import Setup](#eslint-plugin-import-setup)
     - [Setting up @typescript-eslint rules requiring type information](#setting-up-typescript-eslint-rules-requiring-type-information)
     - [Setup Karma Headless](#setup-karma-headless)
+  - [Git Cheat Sheet](#git-cheat-sheet)
+    - [Remove branches locally that don't exist on the remote](#remove-branches-locally-that-dont-exist-on-the-remote)
 
 ## Updating Angular
 
@@ -302,3 +304,13 @@ Then, add `"plugin:@typescript-eslint/recommended-requiring-type-checking",` and
 TBD if we need to generate a `karma.conf.js` file or not. Angular 16 automatically generates this file for us in memory based on the configuration of `"test"` in `angular.json`. [View the documentation here](https://angular.io/guide/testing).
 
 Add `"codeCoverage": true` to the `"test"` `"options"` in `angular.json`. Then, add a new script to `package.json`: `"test:ci": "npm run test -- --no-watch --no-progress --browsers=ChromeHeadless",`.
+
+## Git Cheat Sheet
+
+### Remove branches locally that don't exist on the remote
+
+```bash
+git config --global fetch.prune true
+git remote prune origin
+git fetch -p && for branch in $(git for-each-ref --format '%(refname) %(upstream:track)' refs/heads | awk '$2 == "[gone]" {sub("refs/heads/", "", $1); print $1}'); do git branch -D $branch; done
+```
