@@ -2,3 +2,15 @@
   display: flex;
   flex: auto;
 }
+
+.flex-row {
+  flex-direction: row;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.max-height {
+  max-height: 100%;
+}
