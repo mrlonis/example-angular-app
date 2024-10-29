@@ -18,12 +18,11 @@ module.exports = tseslint.config(
       ...tseslint.configs.recommendedTypeChecked,
       ...tseslint.configs.stylisticTypeChecked,
       ...angular.configs.tsRecommended,
-      // jasmine.configs.recommended,
+      jasmine.configs.recommended,
       importPlugin.flatConfigs?.recommended,
       depend.configs['flat/recommended'],
       eslintConfigPrettier,
       eslintPluginPrettierRecommended,
-      jasmine.configs.recommended,
     ],
     settings: {
       'import/parsers': {
