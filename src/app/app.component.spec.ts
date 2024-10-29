@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
-import { RouterModule } from '@angular/router';
-import { routes } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
+import { provideRouter } from '@angular/router';
+import { AppComponent, routes } from './app.component';
 
 describe('AppComponent', () => {
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [RouterModule.forRoot(routes)],
-      declarations: [AppComponent],
+      imports: [AppComponent],
+      providers: [provideRouter(routes), provideNoopAnimations()],
     }),
   );
 

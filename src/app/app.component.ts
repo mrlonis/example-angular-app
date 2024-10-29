@@ -1,7 +1,14 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { LayoutComponent } from './pages';
+
+export const routes: Routes = [{ path: '', component: LayoutComponent }];
 
 @Component({
   selector: 'app-root',
+  standalone: true,
+  imports: [CommonModule, RouterModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
