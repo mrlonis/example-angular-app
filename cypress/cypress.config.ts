@@ -3,7 +3,7 @@ import { defineConfig } from 'cypress';
 export default defineConfig({
   reporter: 'junit',
   reporterOptions: {
-    mochaFile: 'test-reports/cypress-junit-[hash].xml',
+    mochaFile: 'test-reports/cypress-junit-example-angular-app.xml',
     toConsole: true,
   },
   viewportHeight: 1080,
