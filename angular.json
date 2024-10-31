@@ -84,7 +84,7 @@
             "karmaConfig": "karma.conf.js",
             "inlineStyleLanguage": "scss",
             "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["@angular/material/prebuilt-themes/magenta-violet.css", "src/styles.scss"],
+            "styles": ["src/styles.scss"],
             "scripts": [
               "node_modules/iframe-resizer/js/iframeResizer.min.js",
               "node_modules/iframe-resizer/js/iframeResizer.contentWindow.min.js"
