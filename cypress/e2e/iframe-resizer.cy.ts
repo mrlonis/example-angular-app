@@ -1,6 +1,6 @@
 describe('example-angular-app', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:4200');
+    cy.visit('/');
   });
 
   it('should load', () => {
