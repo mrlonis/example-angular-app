@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
-import { TableComponent } from 'src/app/components';
 import { ExampleIframeComponent } from '../example-iframe';
+import { TableComponent } from '../table';
 
 @Component({
   selector: 'app-layout',
