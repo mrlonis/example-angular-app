@@ -68,4 +68,12 @@ describe('Mat Table Tab', () => {
 
     getMatCell(0, 0).should('contain.text', 'Iron');
   });
+
+  it('should filter the table when the filter input is changed', () => {
+    getMatCell(0, 0).should('contain.text', 'Hydrogen');
+    cy.get('.mat-mdc-input-element').eq(0).type('Zinc');
+    getMatCell(0, 0).should('contain.text', 'Zinc');
+    cy.get('.mat-mdc-input-element').eq(0).clear();
+    getMatCell(0, 0).should('contain.text', 'Hydrogen');
+  });
 });

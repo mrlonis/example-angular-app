@@ -1,25 +1,79 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatSelectModule } from '@angular/material/select';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ELEMENT_DATA, PeriodicElement } from '../../interfaces';
+
+export const FULL_LIST_OF_COLUMNS = [
+  'name',
+  'appearance',
+  'atomic_mass',
+  'boil',
+  'category',
+  'density',
+  'discovered_by',
+  'melt',
+  'molar_heat',
+  'named_by',
+  'number',
+  'period',
+  'group',
+  'phase',
+  'bohr_model_image',
+  'bohr_model_3d',
+  'spectral_img',
+  'summary',
+  'symbol',
+  'xpos',
+  'ypos',
+  'wxpos',
+  'wypos',
+  'shells',
+  'electron_configuration',
+  'electron_configuration_semantic',
+  'electron_affinity',
+  'electronegativity_pauling',
+  'ionization_energies',
+  'image',
+  'block',
+];
+
+export const DEFAULT_COLUMNS = [
+  'name',
+  'atomic_mass',
+  'symbol',
+  'number',
+  'category',
+  'period',
+  'group',
+  'phase',
+  'source',
+  'electron_configuration',
+  'electron_configuration_semantic',
+  'block',
+];
 
 @Component({
   selector: 'app-table',
   standalone: true,
   imports: [
-    MatTableModule,
+    FormsModule,
     MatButtonModule,
-    MatIconModule,
     MatFormFieldModule,
+    MatIconModule,
     MatInputModule,
-    MatSortModule,
     MatPaginatorModule,
+    MatSelectModule,
+    MatTableModule,
+    MatSortModule,
+    ReactiveFormsModule,
   ],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',
@@ -31,35 +85,20 @@ import { ELEMENT_DATA, PeriodicElement } from '../../interfaces';
     ]),
   ],
 })
-export class TableComponent implements AfterViewInit {
+export class TableComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatSort) sort?: MatSort;
 
   dataSource = new MatTableDataSource(ELEMENT_DATA.elements);
-  columnsToDisplay = [
-    'name',
-    'atomic_mass',
-    'symbol',
-    'number',
-    'category',
-    'period',
-    'group',
-    'phase',
-    'source',
-    'electron_configuration',
-    'electron_configuration_semantic',
-    'block',
-  ];
-  columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
+  columnsToDisplay = new FormControl<string[]>(DEFAULT_COLUMNS, { nonNullable: true });
+  columnsToDisplayWithExpand = [...DEFAULT_COLUMNS, 'expand'];
+  fullListOfColumns = FULL_LIST_OF_COLUMNS;
   expandedElement: PeriodicElement | null = null;
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+  ngOnInit(): void {
+    this.columnsToDisplay.valueChanges.subscribe((columns) => {
+      this.columnsToDisplayWithExpand = [...columns, 'expand'];
+    });
   }
 
   ngAfterViewInit() {
@@ -68,6 +107,15 @@ export class TableComponent implements AfterViewInit {
     }
     if (this.sort) {
       this.dataSource.sort = this.sort;
+    }
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
     }
   }
 }
