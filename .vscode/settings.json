@@ -1,5 +1,5 @@
 {
-  "cSpell.words": ["Resizer"],
+  "cSpell.words": ["iframe", "Resizer"],
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "always",
     "source.organizeImports": "always"
