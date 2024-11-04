@@ -1,4 +1,5 @@
 {
+  "cSpell.words": ["Resizer"],
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit",
     "source.organizeImports": "explicit"
@@ -14,6 +15,5 @@
   "files.eol": "\n",
   "files.insertFinalNewline": true,
   "files.trimFinalNewlines": true,
-  "files.trimTrailingWhitespace": true,
-  "cSpell.words": ["Resizer"]
+  "files.trimTrailingWhitespace": true
 }
