@@ -19,6 +19,17 @@
     "test:cypress:open": "start-server-and-test start http://localhost:4200 cypress:open",
     "watch": "ng build --watch --configuration development"
   },
+  "lint-staged": {
+    "*.{css,html,js,jsx,json,md,ts,tsx,scss}": [
+      "prettier --write"
+    ],
+    "cypress/**/*.{html,js,jsx,ts,tsx}": [
+      "ng-lint-staged lint --fix --"
+    ],
+    "src/**/*.{html,js,jsx,ts,tsx}": [
+      "ng-lint-staged lint --fix --"
+    ]
+  },
   "dependencies": {
     "@angular/animations": "^18.2.9",
     "@angular/cdk": "^18.2.10",
@@ -68,17 +79,6 @@
     "start-server-and-test": "^2",
     "typescript": "~5.5",
     "typescript-eslint": "^8.12.2"
-  },
-  "lint-staged": {
-    "*.{css,html,js,jsx,json,md,ts,tsx,scss}": [
-      "prettier --write"
-    ],
-    "cypress/**/*.{html,js,jsx,ts,tsx}": [
-      "ng-lint-staged lint --fix --"
-    ],
-    "src/**/*.{html,js,jsx,ts,tsx}": [
-      "ng-lint-staged lint --fix --"
-    ]
   },
   "engines": {
     "node": "^22",
