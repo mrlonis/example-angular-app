@@ -9,6 +9,21 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ELEMENT_DATA, PeriodicElement } from '../../interfaces';
 
+export const DEFAULT_COLUMNS = [
+  'name',
+  'atomic_mass',
+  'symbol',
+  'number',
+  'category',
+  'period',
+  'group',
+  'phase',
+  'source',
+  'electron_configuration',
+  'electron_configuration_semantic',
+  'block',
+];
+
 @Component({
   selector: 'app-table',
   standalone: true,
@@ -36,20 +51,7 @@ export class TableComponent implements AfterViewInit {
   @ViewChild(MatSort) sort?: MatSort;
 
   dataSource = new MatTableDataSource(ELEMENT_DATA.elements);
-  columnsToDisplay = [
-    'name',
-    'atomic_mass',
-    'symbol',
-    'number',
-    'category',
-    'period',
-    'group',
-    'phase',
-    'source',
-    'electron_configuration',
-    'electron_configuration_semantic',
-    'block',
-  ];
+  columnsToDisplay = DEFAULT_COLUMNS;
   columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
   expandedElement: PeriodicElement | null = null;
 
