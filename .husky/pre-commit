@@ -1,2 +1,4 @@
+npx sort-json --indent 2 --depth 4 .vscode/settings.json
+npx prettier --config .prettierrc --write .vscode/settings.json
 npx sort-package-json
 npx lint-staged
