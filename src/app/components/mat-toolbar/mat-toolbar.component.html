@@ -1,0 +1,28 @@
+<div class="flex-column max-height-100vh" style="height: 100%">
+  <mat-toolbar>
+    <button mat-icon-button (click)="drawer.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>My App</span>
+    <span class="flex"></span>
+    <button mat-icon-button>
+      <mat-icon>favorite</mat-icon>
+    </button>
+    <button mat-icon-button>
+      <mat-icon>share</mat-icon>
+    </button>
+  </mat-toolbar>
+  <div class="flex">
+    <mat-drawer-container class="flex" style="height: 100%; min-height: 150px">
+      <mat-drawer #drawer>
+        <div>
+          <button mat-button (click)="selectMatTable()"><mat-icon>filter_1</mat-icon>Mat Table</button>
+          <mat-divider></mat-divider>
+          <button mat-button><mat-icon>filter_2</mat-icon>iframe-resizer</button>
+          <mat-divider></mat-divider>
+        </div>
+      </mat-drawer>
+      <div style="display: inline"></div>
+    </mat-drawer-container>
+  </div>
+</div>
