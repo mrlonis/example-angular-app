@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LayoutComponent } from './components';
+import { MatTabsComponent } from './components';
 
-export const routes: Routes = [{ path: '', component: LayoutComponent }];
+export const routes: Routes = [{ path: '', component: MatTabsComponent }];
 
 @Component({
   selector: 'app-root',

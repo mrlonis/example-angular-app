@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { ExampleIframeComponent, MatTableComponent } from 'src/app/components';
-import { LayoutComponent } from './layout.component';
+import { MatTabsComponent } from './mat-tabs.component';
 
 describe('LayoutComponent', () => {
-  let component: LayoutComponent;
-  let fixture: ComponentFixture<LayoutComponent>;
+  let component: MatTabsComponent;
+  let fixture: ComponentFixture<MatTabsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LayoutComponent, MatTableComponent, ExampleIframeComponent],
+      imports: [MatTabsComponent, MatTableComponent, ExampleIframeComponent],
       providers: [provideNoopAnimations()],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(LayoutComponent);
+    fixture = TestBed.createComponent(MatTabsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

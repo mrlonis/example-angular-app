@@ -7,7 +7,7 @@ import { MatTableComponent } from '../mat-table';
   selector: 'app-layout',
   standalone: true,
   imports: [MatTabsModule, MatTableComponent, ExampleIframeComponent],
-  templateUrl: './layout.component.html',
-  styleUrl: './layout.component.scss',
+  templateUrl: './mat-tabs.component.html',
+  styleUrl: './mat-tabs.component.scss',
 })
-export class LayoutComponent {}
+export class MatTabsComponent {}
