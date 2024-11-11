@@ -75,8 +75,8 @@ export const DEFAULT_COLUMNS = [
     MatSortModule,
     ReactiveFormsModule,
   ],
-  templateUrl: './table.component.html',
-  styleUrl: './table.component.scss',
+  templateUrl: './mat-table.component.html',
+  styleUrl: './mat-table.component.scss',
   animations: [
     trigger('detailExpand', [
       state('collapsed,void', style({ height: '0px', minHeight: '0' })),
@@ -85,7 +85,7 @@ export const DEFAULT_COLUMNS = [
     ]),
   ],
 })
-export class TableComponent implements OnInit, AfterViewInit {
+export class MatTableComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatSort) sort?: MatSort;
 

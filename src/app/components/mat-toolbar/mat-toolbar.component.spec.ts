@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
-import { TableComponent } from './table.component';
+import { MatToolbarComponent } from './mat-toolbar.component';
 
-describe('TableComponent', () => {
-  let component: TableComponent;
-  let fixture: ComponentFixture<TableComponent>;
+describe('MatToolbarComponent', () => {
+  let component: MatToolbarComponent;
+  let fixture: ComponentFixture<MatToolbarComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TableComponent],
+      imports: [MatToolbarComponent],
       providers: [provideNoopAnimations()],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(TableComponent);
+    fixture = TestBed.createComponent(MatToolbarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -158,7 +158,9 @@ module.exports = tseslint.config(
       ],
       'import/newline-after-import': ['error', { count: 1 }],
       'import/no-absolute-path': 'error',
+      'import/no-cycle': 'error',
       'import/no-deprecated': 'error',
+      'import/no-self-import': 'error',
       'import/no-unresolved': 'error',
       'import/no-useless-path-segments': [
         'error',
