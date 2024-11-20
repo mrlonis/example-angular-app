@@ -1,14 +1,14 @@
 name: update-angular-major-version
 on:
   schedule:
-    - cron: '0 0 * * *' # every day at midnight
+    - cron: '0 0 * * 0' # every sunday at midnight
   workflow_dispatch:
 env:
   DEPENDENCY_NAME: '@angular/core'
+permissions: write-all
 jobs:
   update-angular-major-version:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -50,7 +50,7 @@ jobs:
           LATEST_VERSION: ${{ steps.check-version.outputs.LATEST_VERSION }}
         run: |
           git fetch --all
-          if git show-ref --verify --quiet refs/heads/"$BRANCH_NAME"; then
+          if git ls-remote --exit-code --heads origin "$BRANCH_NAME"; then
             echo "Branch '$BRANCH_NAME' already exists."
             echo "BRANCH_EXISTS=true" >> "$GITHUB_OUTPUT"
           else
@@ -67,7 +67,10 @@ jobs:
           LATEST_MAJOR_VERSION: ${{ steps.check-version.outputs.LATEST_MAJOR_VERSION }}
         run: |
           git checkout -b "$BRANCH_NAME"
-          npm run ng -- update @angular/core@"$LATEST_MAJOR_VERSION" @angular/cli@"$LATEST_MAJOR_VERSION" @angular/material@"$LATEST_MAJOR_VERSION" @angular-eslint/schematics@"$LATEST_MAJOR_VERSION" @angular-devkit/core@"$LATEST_MAJOR_VERSION"
+          npm run ng -- update @angular/core@"$LATEST_MAJOR_VERSION" @angular/cli@"$LATEST_MAJOR_VERSION" @angular/material@"$LATEST_MAJOR_VERSION" angular-eslint@"$LATEST_MAJOR_VERSION"
+          git config --global user.name "Matthew Lonis"
+          git config --global user.email "mattlonis@gmail.com"
+          git add .
           git commit -m "Upgrade $DEPENDENCY_NAME from $CURRENT_VERSION to $LATEST_VERSION"
           git push -u origin "$BRANCH_NAME"
       - uses: tibdex/github-app-token@v2
@@ -76,9 +79,9 @@ jobs:
           app_id: ${{ secrets.APP_ID }}
           private_key: ${{ secrets.APP_PRIVATE_KEY }}
       - name: Create Pull Request
-        if: steps.perform-upgrade.status == 'success'
+        if: steps.perform-upgrade.conclusion == 'success'
         env:
           GH_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
           default_branch=$(gh repo view --json defaultBranchRef -q ".defaultBranchRef.name")
-          gh pr create --base $default_branch --head ${{ github.head_ref }} --title "Pull request title" --body "Pull request description"
+          gh pr create --base "$default_branch" --title "Pull request title" --body "Pull request description"
