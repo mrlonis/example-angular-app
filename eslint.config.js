@@ -146,6 +146,9 @@ module.exports = tseslint.config(
           style: 'kebab-case',
         },
       ],
+      '@angular-eslint/prefer-standalone': 'error',
+      '@angular-eslint/sort-lifecycle-methods': 'error',
+      '@angular-eslint/sort-ngmodule-metadata-arrays': 'error',
       '@typescript-eslint/no-deprecated': 'error',
       '@typescript-eslint/no-non-null-assertion': 'error',
       '@typescript-eslint/no-unused-vars': [
@@ -190,7 +193,11 @@ module.exports = tseslint.config(
       eslintConfigPrettier,
       eslintPluginPrettierRecommended,
     ],
-    rules: {},
+    rules: {
+      '@angular-eslint/template/no-duplicate-attributes': 'error',
+      '@angular-eslint/template/prefer-control-flow': 'error',
+      '@angular-eslint/template/prefer-self-closing-tags': 'error',
+    },
   },
   cypressPlugin.configs.recommended,
 );
