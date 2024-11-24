@@ -10,8 +10,8 @@
     "lint:fix": "npm run lint -- --fix",
     "ng": "ng",
     "prepare": "husky",
-    "prettier": "prettier --config .prettierrc --write \"**/*.{css,html,js,jsx,json,md,scss,ts,tsx}\"",
-    "prettier:test": "prettier --config .prettierrc --list-different \"**/*.{css,html,js,jsx,json,md,scss,ts,tsx}\"",
+    "prettier": "prettier --config .prettierrc --write \"**/*.{css,html,js,jsx,json,md,scss,ts,tsx,yaml,yml}\"",
+    "prettier:test": "prettier --config .prettierrc --list-different \"**/*.{css,html,js,jsx,json,md,scss,ts,tsx,yaml,yml}\"",
     "start": "ng serve",
     "test": "npm run lint && npm run test:ci && npm run test:cypress",
     "test:ci": "ng test --no-watch --no-progress --browsers=ChromeHeadless",
@@ -20,7 +20,7 @@
     "watch": "ng build --watch --configuration development"
   },
   "lint-staged": {
-    "*.{css,html,js,jsx,json,md,ts,tsx,scss}": [
+    "*.{css,html,js,jsx,json,md,scss,ts,tsx,yaml,yml}": [
       "prettier --write"
     ],
     "cypress/**/*.{html,js,jsx,ts,tsx}": [
