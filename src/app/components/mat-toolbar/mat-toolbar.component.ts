@@ -8,7 +8,6 @@ import { SelectedPageService } from '../../services';
 
 @Component({
   selector: 'app-mat-toolbar',
-  standalone: true,
   imports: [MatToolbarModule, MatButtonModule, MatIconModule, MatSidenavModule, MatDividerModule],
   templateUrl: './mat-toolbar.component.html',
   styleUrl: './mat-toolbar.component.scss',
