@@ -5,7 +5,6 @@ import { UrlCacheService } from '../../services';
 
 @Component({
   selector: 'app-example-iframe',
-  standalone: true,
   imports: [IFrameResizerDirective],
   templateUrl: './example-iframe.component.html',
   styleUrl: './example-iframe.component.scss',

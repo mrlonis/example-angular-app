@@ -62,7 +62,6 @@ export const DEFAULT_COLUMNS = [
 
 @Component({
   selector: 'app-table',
-  standalone: true,
   imports: [
     FormsModule,
     MatButtonModule,
