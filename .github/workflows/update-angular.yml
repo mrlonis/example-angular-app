@@ -82,6 +82,7 @@ jobs:
         if: steps.perform-upgrade.conclusion == 'success'
         env:
           GH_TOKEN: ${{ steps.generate-token.outputs.token }}
+          LATEST_MAJOR_VERSION: ${{ steps.check-version.outputs.LATEST_MAJOR_VERSION }}
         run: |
           default_branch=$(gh repo view --json defaultBranchRef -q ".defaultBranchRef.name")
-          gh pr create --base "$default_branch" --title "Pull request title" --body "Pull request description"
+          gh pr create --base "$default_branch" --title "Upgrade to Angular to v$LATEST_MAJOR_VERSION" --body "Upgrade to Angular to v$LATEST_MAJOR_VERSION"
