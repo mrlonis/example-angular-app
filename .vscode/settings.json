@@ -12,6 +12,8 @@
     "fix": true
   },
   "eslint.validate": ["html", "javascript", "javascriptreact", "typescript", "typescriptreact"],
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 1000,
   "files.eol": "\n",
   "files.insertFinalNewline": true,
   "files.trimFinalNewlines": true,
