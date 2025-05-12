@@ -75,7 +75,7 @@
     "karma-jasmine": "^5",
     "karma-jasmine-html-reporter": "^2",
     "karma-junit-reporter": "^2",
-    "lint-staged": "^15",
+    "lint-staged": "^16",
     "ng-lint-staged": "^12",
     "prettier": "^3",
     "start-server-and-test": "^2",
