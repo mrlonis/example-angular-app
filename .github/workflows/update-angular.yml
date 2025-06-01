@@ -4,7 +4,7 @@ on:
     - cron: '0 0 * * 0' # every sunday at midnight
   workflow_dispatch:
 env:
-  DEPENDENCY_NAME: '@angular/core'
+  DEPENDENCY_NAME: 'angular-eslint'
 permissions: write-all
 jobs:
   update-angular-major-version:
