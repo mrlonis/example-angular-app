@@ -9,8 +9,9 @@ const cypressPlugin = require('eslint-plugin-cypress/flat');
 const depend = require('eslint-plugin-depend');
 const jasmine = require('eslint-plugin-jasmine');
 const globals = require('globals');
+const { defineConfig } = require('eslint/config');
 
-module.exports = tseslint.config(
+module.exports = defineConfig([
   {
     files: ['**/*.spec.ts'],
     extends: [
@@ -139,4 +140,4 @@ module.exports = tseslint.config(
     },
   },
   cypressPlugin.configs.recommended,
-);
+]);
