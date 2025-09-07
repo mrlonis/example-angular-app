@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,7 +13,7 @@ import { SelectedPageService } from '../../services';
   styleUrl: './mat-toolbar.component.scss',
 })
 export class MatToolbarComponent {
-  constructor(private readonly selectedPageService: SelectedPageService) {}
+  private readonly selectedPageService = inject(SelectedPageService);
 
   selectMatTable() {
     this.selectedPageService.matTable = true;

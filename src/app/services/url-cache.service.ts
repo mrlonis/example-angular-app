@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UrlCacheService {
-  cache: Record<string, SafeResourceUrl> = {};
+  private readonly domSanitizer = inject(DomSanitizer);
 
-  constructor(private readonly domSanitizer: DomSanitizer) {}
+  cache: Record<string, SafeResourceUrl> = {};
 
   transform(url: string): SafeResourceUrl {
     if (this.cache[url]) {

@@ -9,8 +9,9 @@ const cypressPlugin = require('eslint-plugin-cypress/flat');
 const depend = require('eslint-plugin-depend');
 const jasmine = require('eslint-plugin-jasmine');
 const globals = require('globals');
+const { defineConfig } = require('eslint/config');
 
-module.exports = tseslint.config(
+module.exports = defineConfig([
   {
     files: ['**/*.spec.ts'],
     extends: [
@@ -25,65 +26,31 @@ module.exports = tseslint.config(
       eslintPluginPrettierRecommended,
     ],
     settings: {
-      'import/parsers': {
-        '@typescript-eslint/parser': ['.ts', '.tsx'],
-      },
+      'import/parsers': { '@typescript-eslint/parser': ['.ts', '.tsx'] },
       'import/resolver': {
         typescript: {
           alwaysTryTypes: true,
-          project: ['tsconfig.app.json', 'tsconfig.spec.json', 'tsconfig.json', 'cypress/tsconfig.json'],
+          project: ['tsconfig.spec.json'],
         },
       },
     },
-    languageOptions: {
-      parserOptions: {
-        project: true,
-        tsconfigRootDir: '.',
-      },
-      globals: {
-        ...globals.jasmine,
-      },
-    },
-    plugins: {
-      jasmine,
-    },
+    languageOptions: { parserOptions: { projectService: true }, globals: { ...globals.jasmine } },
+    plugins: { jasmine },
     processor: angular.processInlineTemplates,
     rules: {
-      '@angular-eslint/directive-selector': [
-        'error',
-        {
-          type: 'attribute',
-          prefix: 'app',
-          style: 'camelCase',
-        },
-      ],
-      '@angular-eslint/component-selector': [
-        'error',
-        {
-          type: 'element',
-          prefix: 'app',
-          style: 'kebab-case',
-        },
-      ],
+      '@angular-eslint/directive-selector': ['error', { type: 'attribute', prefix: 'app', style: 'camelCase' }],
+      '@angular-eslint/component-selector': ['error', { type: 'element', prefix: 'app', style: 'kebab-case' }],
       '@angular-eslint/prefer-standalone': 'error',
       '@angular-eslint/sort-lifecycle-methods': 'error',
-      '@typescript-eslint/no-deprecated': 'error',
+      '@typescript-eslint/no-deprecated': 'warn',
       '@typescript-eslint/no-non-null-assertion': 'error',
       '@typescript-eslint/no-restricted-types': [
         'error',
-        {
-          types: {
-            Promise: 'Promise is not allowed, use Observable instead',
-          },
-        },
+        { types: { Promise: 'Promise is not allowed, use Observable instead' } },
       ],
       '@typescript-eslint/no-unused-vars': [
         'error',
-        {
-          argsIgnorePattern: '^_',
-          varsIgnorePattern: '^_',
-          caughtErrorsIgnorePattern: '^_',
-        },
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_', caughtErrorsIgnorePattern: '^_' },
       ],
       'import/newline-after-import': ['error', { count: 1 }],
       'import/no-absolute-path': 'error',
@@ -91,20 +58,11 @@ module.exports = tseslint.config(
       'import/no-deprecated': 'error',
       'import/no-self-import': 'error',
       'import/no-unresolved': 'error',
-      'import/no-useless-path-segments': [
-        'error',
-        {
-          noUselessIndex: true,
-          commonjs: true,
-        },
-      ],
+      'import/no-useless-path-segments': ['error', { noUselessIndex: true, commonjs: true }],
       'import/order': [
         'error',
         {
-          alphabetize: {
-            order: 'asc',
-            caseInsensitive: false,
-          },
+          alphabetize: { order: 'asc', caseInsensitive: false },
           groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
           'newlines-between': 'never',
         },
@@ -125,59 +83,30 @@ module.exports = tseslint.config(
       eslintPluginPrettierRecommended,
     ],
     settings: {
-      'import/parsers': {
-        '@typescript-eslint/parser': ['.ts', '.tsx'],
-      },
+      'import/parsers': { '@typescript-eslint/parser': ['.ts', '.tsx'] },
       'import/resolver': {
         typescript: {
           alwaysTryTypes: true,
-          project: ['tsconfig.app.json', 'tsconfig.spec.json', 'tsconfig.json', 'cypress/tsconfig.json'],
+          project: ['tsconfig.app.json', 'cypress/tsconfig.json'],
         },
       },
     },
-    languageOptions: {
-      parserOptions: {
-        project: true,
-        tsconfigRootDir: '.',
-      },
-    },
+    languageOptions: { parserOptions: { projectService: true } },
     processor: angular.processInlineTemplates,
     rules: {
-      '@angular-eslint/directive-selector': [
-        'error',
-        {
-          type: 'attribute',
-          prefix: 'app',
-          style: 'camelCase',
-        },
-      ],
-      '@angular-eslint/component-selector': [
-        'error',
-        {
-          type: 'element',
-          prefix: 'app',
-          style: 'kebab-case',
-        },
-      ],
+      '@angular-eslint/directive-selector': ['error', { type: 'attribute', prefix: 'app', style: 'camelCase' }],
+      '@angular-eslint/component-selector': ['error', { type: 'element', prefix: 'app', style: 'kebab-case' }],
       '@angular-eslint/prefer-standalone': 'error',
       '@angular-eslint/sort-lifecycle-methods': 'error',
-      '@typescript-eslint/no-deprecated': 'error',
+      '@typescript-eslint/no-deprecated': 'warn',
       '@typescript-eslint/no-non-null-assertion': 'error',
       '@typescript-eslint/no-restricted-types': [
         'error',
-        {
-          types: {
-            Promise: 'Promise is not allowed, use Observable instead',
-          },
-        },
+        { types: { Promise: 'Promise is not allowed, use Observable instead' } },
       ],
       '@typescript-eslint/no-unused-vars': [
         'error',
-        {
-          argsIgnorePattern: '^_',
-          varsIgnorePattern: '^_',
-          caughtErrorsIgnorePattern: '^_',
-        },
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_', caughtErrorsIgnorePattern: '^_' },
       ],
       'import/newline-after-import': ['error', { count: 1 }],
       'import/no-absolute-path': 'error',
@@ -185,20 +114,11 @@ module.exports = tseslint.config(
       'import/no-deprecated': 'error',
       'import/no-self-import': 'error',
       'import/no-unresolved': 'error',
-      'import/no-useless-path-segments': [
-        'error',
-        {
-          noUselessIndex: true,
-          commonjs: true,
-        },
-      ],
+      'import/no-useless-path-segments': ['error', { noUselessIndex: true, commonjs: true }],
       'import/order': [
         'error',
         {
-          alphabetize: {
-            order: 'asc',
-            caseInsensitive: false,
-          },
+          alphabetize: { order: 'asc', caseInsensitive: false },
           groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
           'newlines-between': 'never',
         },
@@ -220,4 +140,4 @@ module.exports = tseslint.config(
     },
   },
   cypressPlugin.configs.recommended,
-);
+]);

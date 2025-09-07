@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { IFrameResizerDirective } from '../../directives';
 import { UrlCacheService } from '../../services';
@@ -10,9 +10,11 @@ import { UrlCacheService } from '../../services';
   styleUrl: './example-iframe.component.scss',
 })
 export class ExampleIframeComponent {
+  private readonly urlCacheService = inject(UrlCacheService);
+
   url: SafeResourceUrl;
 
-  constructor(private readonly urlCacheService: UrlCacheService) {
+  constructor() {
     this.url = this.urlCacheService.transform('https://iframetester.com/');
   }
 }
