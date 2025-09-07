@@ -1,4 +1,4 @@
-import { AfterViewInit, Directive, ElementRef, Input, OnDestroy } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, Input, OnDestroy, inject } from '@angular/core';
 import { HeightCalculationMethod, IFrameComponent, iframeResizer } from 'iframe-resizer';
 
 @Directive({
@@ -6,12 +6,12 @@ import { HeightCalculationMethod, IFrameComponent, iframeResizer } from 'iframe-
   selector: '[appIframeResizer]',
 })
 export class IFrameResizerDirective implements AfterViewInit, OnDestroy {
+  element = inject(ElementRef);
+
   @Input() heightCalculationMethod: HeightCalculationMethod = 'lowestElement';
   @Input() scrolling = false;
 
   component: IFrameComponent | null = null;
-
-  constructor(public element: ElementRef) {}
 
   ngAfterViewInit() {
     const components = iframeResizer(

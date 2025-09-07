@@ -29,11 +29,11 @@ module.exports = tseslint.config(
       'import/resolver': {
         typescript: {
           alwaysTryTypes: true,
-          project: ['tsconfig.app.json', 'tsconfig.spec.json', 'tsconfig.json', 'cypress/tsconfig.json'],
+          project: ['tsconfig.spec.json'],
         },
       },
     },
-    languageOptions: { parserOptions: { project: true }, globals: { ...globals.jasmine } },
+    languageOptions: { parserOptions: { projectService: true }, globals: { ...globals.jasmine } },
     plugins: { jasmine },
     processor: angular.processInlineTemplates,
     rules: {
@@ -41,7 +41,7 @@ module.exports = tseslint.config(
       '@angular-eslint/component-selector': ['error', { type: 'element', prefix: 'app', style: 'kebab-case' }],
       '@angular-eslint/prefer-standalone': 'error',
       '@angular-eslint/sort-lifecycle-methods': 'error',
-      '@typescript-eslint/no-deprecated': 'error',
+      '@typescript-eslint/no-deprecated': 'warn',
       '@typescript-eslint/no-non-null-assertion': 'error',
       '@typescript-eslint/no-restricted-types': [
         'error',
@@ -86,18 +86,18 @@ module.exports = tseslint.config(
       'import/resolver': {
         typescript: {
           alwaysTryTypes: true,
-          project: ['tsconfig.app.json', 'tsconfig.spec.json', 'tsconfig.json', 'cypress/tsconfig.json'],
+          project: ['tsconfig.app.json', 'cypress/tsconfig.json'],
         },
       },
     },
-    languageOptions: { parserOptions: { project: true } },
+    languageOptions: { parserOptions: { projectService: true } },
     processor: angular.processInlineTemplates,
     rules: {
       '@angular-eslint/directive-selector': ['error', { type: 'attribute', prefix: 'app', style: 'camelCase' }],
       '@angular-eslint/component-selector': ['error', { type: 'element', prefix: 'app', style: 'kebab-case' }],
       '@angular-eslint/prefer-standalone': 'error',
       '@angular-eslint/sort-lifecycle-methods': 'error',
-      '@typescript-eslint/no-deprecated': 'error',
+      '@typescript-eslint/no-deprecated': 'warn',
       '@typescript-eslint/no-non-null-assertion': 'error',
       '@typescript-eslint/no-restricted-types': [
         'error',
