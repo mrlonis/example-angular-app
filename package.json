@@ -36,7 +36,7 @@
     "@angular/cdk": "^20",
     "@angular/common": "^20",
     "@angular/compiler": "^20",
-    "@angular/core": "^20",
+    "@angular/core": "^21",
     "@angular/forms": "^20",
     "@angular/material": "^20",
     "@angular/platform-browser": "^20",
