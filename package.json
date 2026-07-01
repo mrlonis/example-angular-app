@@ -65,7 +65,7 @@
     "eslint-plugin-jasmine": "^4",
     "eslint-plugin-prettier": "^5",
     "husky": "^9",
-    "jasmine-core": "^5",
+    "jasmine-core": "^6",
     "karma": "^6",
     "karma-chrome-launcher": "^3",
     "karma-coverage": "^2",
