@@ -52,7 +52,7 @@
     "@angular/compiler-cli": "^20",
     "@angular/language-service": "^20",
     "@types/iframe-resizer": "^3",
-    "@types/jasmine": "^5",
+    "@types/jasmine": "^6",
     "@types/node": "^24",
     "angular-eslint": "^20",
     "cypress": "^15",
