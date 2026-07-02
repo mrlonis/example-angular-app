@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
-import { ExampleIframeComponent, MatTableComponent } from 'src/app/components';
+import { ExampleIframeComponent } from '../example-iframe/example-iframe.component';
+import { MatTableComponent } from '../mat-table/mat-table.component';
 import { MatTabsComponent } from './mat-tabs.component';
 
 describe('LayoutComponent', () => {

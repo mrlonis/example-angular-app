@@ -32,7 +32,8 @@ describe('Mat Table Tab', () => {
 
   it('should overflow extra rows with a scroll bar', () => {
     getMatCell(20, 0).should('contain.text', 'Scandium').not('be.visible');
-    getMatCell(20, 0).scrollIntoView().should('be.visible');
+    getMatCell(20, 0).scrollIntoView();
+    getMatCell(20, 0).should('be.visible');
   });
 
   it('should sort the table when a column header is clicked', () => {

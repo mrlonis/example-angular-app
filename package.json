@@ -7,84 +7,83 @@
     "build:dev": "npm run build -- --configuration development",
     "cypress:headless": "cypress run --config-file cypress/cypress.config.ts --headless -b chrome",
     "cypress:open": "cypress open --config-file cypress/cypress.config.ts",
-    "lint": "ng lint",
-    "lint:fix": "npm run lint -- --fix",
+    "lint": "npm run lint:angular && npm run lint:cypress",
+    "lint:angular": "ng lint",
+    "lint:cypress": "eslint -c ./cypress/eslint.config.js ./cypress",
+    "lint:fix": "npm run lint:angular -- --fix && npm run lint:cypress -- --fix",
     "ng": "ng",
     "prepare": "husky",
     "prettier": "prettier --config .prettierrc --write \"**/*.{css,html,js,jsx,json,md,scss,ts,tsx,yaml,yml}\"",
     "prettier:test": "prettier --config .prettierrc --list-different \"**/*.{css,html,js,jsx,json,md,scss,ts,tsx,yaml,yml}\"",
     "start": "ng serve",
-    "test": "npm run lint && npm run test:ci && npm run test:cypress",
-    "test:ci": "ng test --no-watch --no-progress --browsers=ChromeHeadless",
+    "test": "npm run lint && npm run test:unit && npm run test:cypress",
     "test:cypress": "start-server-and-test start http://localhost:4200 cypress:headless",
     "test:cypress:open": "start-server-and-test start http://localhost:4200 cypress:open",
+    "test:unit": "ng test --no-watch",
     "watch": "ng build --watch --configuration development"
   },
   "lint-staged": {
-    "*.{css,html,js,jsx,json,md,scss,ts,tsx,yaml,yml}": [
+    ".vscode/settings.json": [
+      "sort-json --indent 2 --depth 4",
       "prettier --write"
     ],
-    "cypress/**/*.{html,js,jsx,ts,tsx}": [
+    "package.json": [
+      "sort-package-json",
+      "prettier --write"
+    ],
+    "cypress/**/*.ts": [
+      "eslint -c ./cypress/eslint.config.js --fix"
+    ],
+    "src/**/*.{html,ts}": [
       "ng-lint-staged lint --fix --"
     ],
-    "src/**/*.{html,js,jsx,ts,tsx}": [
-      "ng-lint-staged lint --fix --"
+    "!({.vscode/settings.json,package.json,cypress/**/*.ts,src/**/*.{html,ts}})": [
+      "prettier --write --ignore-unknown"
     ]
   },
   "dependencies": {
-    "@angular/animations": "^20",
-    "@angular/cdk": "^20",
-    "@angular/common": "^20",
-    "@angular/compiler": "^20",
-    "@angular/core": "^20",
-    "@angular/forms": "^20",
-    "@angular/material": "^20",
-    "@angular/platform-browser": "^20",
-    "@angular/router": "^20",
+    "@angular/animations": "^22",
+    "@angular/cdk": "^22",
+    "@angular/common": "^22",
+    "@angular/compiler": "^22",
+    "@angular/core": "^22",
+    "@angular/forms": "^22",
+    "@angular/material": "^22",
+    "@angular/platform-browser": "^22",
+    "@angular/router": "^22",
     "iframe-resizer": "^4",
     "rxjs": "^7",
-    "tslib": "^2",
-    "zone.js": "~0.15"
+    "tslib": "^2"
   },
   "devDependencies": {
-    "@angular/build": "^20",
-    "@angular/cli": "^20",
-    "@angular/compiler-cli": "^20",
-    "@angular/language-service": "^20",
-    "@types/iframe-resizer": "^3",
-    "@types/jasmine": "^6",
-    "@types/node": "^24",
-    "angular-eslint": "^20",
+    "@angular/build": "^22",
+    "@angular/cli": "^22",
+    "@angular/compiler-cli": "^22",
+    "@eslint/js": "^9",
+    "@types/iframe-resizer": "^4",
+    "@types/node": "^26",
+    "@vitest/coverage-v8": "^4",
+    "angular-eslint": "^22",
     "cypress": "^15",
     "eslint": "^9",
     "eslint-config-prettier": "^10",
     "eslint-import-resolver-typescript": "^4",
-    "eslint-plugin-cypress": "^5",
-    "eslint-plugin-depend": "^1",
+    "eslint-plugin-cypress": "^6",
     "eslint-plugin-import": "^2",
-    "eslint-plugin-jasmine": "^4",
     "eslint-plugin-prettier": "^5",
     "husky": "^9",
-    "jasmine-core": "^6",
-    "karma": "^6",
-    "karma-chrome-launcher": "^3",
-    "karma-coverage": "^2",
-    "karma-edge-launcher": "~0.4",
-    "karma-firefox-launcher": "^2",
-    "karma-jasmine": "^5",
-    "karma-jasmine-html-reporter": "^2",
-    "karma-junit-reporter": "^2",
+    "jsdom": "^29",
     "lint-staged": "^17",
     "ng-lint-staged": "^12",
     "prettier": "^3",
+    "sort-json": "^2",
+    "sort-package-json": "^4",
     "start-server-and-test": "^3",
-    "typescript": "~5.9",
-    "typescript-eslint": "^8"
+    "typescript": "~6.0",
+    "typescript-eslint": "^8",
+    "vitest": "^4"
   },
-  "engines": {
-    "node": "^24",
-    "npm": "^11"
-  },
+  "packageManager": "npm@11.17.0",
   "allowScripts": {
     "@parcel/watcher@2.5.6": true,
     "cypress@15.18.0": true,
@@ -92,7 +91,7 @@
     "esbuild@0.27.7": true,
     "fsevents@2.3.3": true,
     "iframe-resizer@4.4.5": true,
-    "lmdb@3.4.2": true,
+    "lmdb@3.5.4": true,
     "msgpackr-extract@3.0.4": true,
     "unrs-resolver@1.12.2": true
   }

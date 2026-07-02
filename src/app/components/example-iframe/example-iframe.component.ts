@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { SafeResourceUrl } from '@angular/platform-browser';
-import { IFrameResizerDirective } from '../../directives';
-import { UrlCacheService } from '../../services';
+import { IFrameResizerDirective } from '../../directives/iframe-resizer.directive';
+import { UrlCacheService } from '../../services/url-cache.service';
 
 @Component({
   selector: 'app-example-iframe',
