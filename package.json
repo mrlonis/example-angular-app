@@ -16,6 +16,8 @@
     "prettier": "prettier --config .prettierrc --write \"**/*.{css,html,js,jsx,json,md,scss,ts,tsx,yaml,yml}\"",
     "prettier:test": "prettier --config .prettierrc --list-different \"**/*.{css,html,js,jsx,json,md,scss,ts,tsx,yaml,yml}\"",
     "start": "ng serve",
+    "sync:agent-instructions": "node scripts/sync-agent-instructions.mjs",
+    "sync:agent-instructions:check": "node scripts/sync-agent-instructions.mjs --check",
     "test": "npm run test:unit && npm run test:cypress",
     "test:cypress": "start-server-and-test start http://localhost:4200 cypress:headless",
     "test:cypress:open": "start-server-and-test start http://localhost:4200 cypress:open",
