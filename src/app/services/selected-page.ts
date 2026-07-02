@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root',
 })
-export class SelectedPageService {
+export class SelectedPage {
   matTable = false;
   iframeResizer = false;
 }

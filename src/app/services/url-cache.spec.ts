@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
-import { UrlCacheService } from './url-cache.service';
+import { UrlCache } from './url-cache';
 
-describe('UrlCacheService', () => {
-  let service: UrlCacheService;
+describe('UrlCache', () => {
+  let service: UrlCache;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(UrlCacheService);
+    service = TestBed.inject(UrlCache);
   });
 
   it('should be created', () => {

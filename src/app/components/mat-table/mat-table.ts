@@ -1,4 +1,3 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -75,17 +74,10 @@ export const DEFAULT_COLUMNS = [
     MatSortModule,
     ReactiveFormsModule,
   ],
-  templateUrl: './mat-table.component.html',
-  styleUrl: './mat-table.component.scss',
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed,void', style({ height: '0px', minHeight: '0' })),
-      state('expanded', style({ height: '*' })),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
-  ],
+  templateUrl: './mat-table.html',
+  styleUrl: './mat-table.scss',
 })
-export class MatTableComponent implements OnInit, AfterViewInit {
+export class MatTable implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatSort) sort?: MatSort;
 
@@ -117,5 +109,9 @@ export class MatTableComponent implements OnInit, AfterViewInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  isExpanded(element: PeriodicElement) {
+    return this.expandedElement === element;
   }
 }

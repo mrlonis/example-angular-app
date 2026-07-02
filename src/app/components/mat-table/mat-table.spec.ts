@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ExampleIframeComponent } from './example-iframe.component';
+import { MatTable } from './mat-table';
 
-describe('ExampleIframeComponent', () => {
-  let component: ExampleIframeComponent;
-  let fixture: ComponentFixture<ExampleIframeComponent>;
+describe('MatTable', () => {
+  let component: MatTable;
+  let fixture: ComponentFixture<MatTable>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ExampleIframeComponent],
+      imports: [MatTable],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ExampleIframeComponent);
+    fixture = TestBed.createComponent(MatTable);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

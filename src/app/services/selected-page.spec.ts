@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
-import { SelectedPageService } from './selected-page.service';
+import { SelectedPage } from './selected-page';
 
-describe('SelectedPageService', () => {
-  let service: SelectedPageService;
+describe('SelectedPage', () => {
+  let service: SelectedPage;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(SelectedPageService);
+    service = TestBed.inject(SelectedPage);
   });
 
   it('should be created', () => {

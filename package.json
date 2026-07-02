@@ -35,7 +35,7 @@
       "eslint -c ./cypress/eslint.config.js --fix"
     ],
     "src/**/*.{html,ts}": [
-      "ng-lint-staged lint --fix --"
+      "ng-lint-staged lint:angular --fix --"
     ],
     "!({.vscode/settings.json,package.json,cypress/**/*.ts,src/**/*.{html,ts}})": [
       "prettier --write --ignore-unknown"

@@ -5,7 +5,7 @@ import { HeightCalculationMethod, IFrameComponent, iframeResizer } from 'iframe-
   standalone: true,
   selector: '[appIframeResizer]',
 })
-export class IFrameResizerDirective implements AfterViewInit, OnDestroy {
+export class IFrameResizer implements AfterViewInit, OnDestroy {
   element = inject(ElementRef);
 
   @Input() heightCalculationMethod: HeightCalculationMethod = 'lowestElement';

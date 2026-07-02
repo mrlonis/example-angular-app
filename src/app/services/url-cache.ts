@@ -4,7 +4,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 @Injectable({
   providedIn: 'root',
 })
-export class UrlCacheService {
+export class UrlCache {
   private readonly domSanitizer = inject(DomSanitizer);
 
   cache: Record<string, SafeResourceUrl> = {};
