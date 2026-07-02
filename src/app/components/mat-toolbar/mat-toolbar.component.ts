@@ -4,7 +4,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { SelectedPageService } from '../../services';
+import { SelectedPageService } from '../../services/selected-page.service';
 
 @Component({
   selector: 'app-mat-toolbar',

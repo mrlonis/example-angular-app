@@ -9,7 +9,8 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { ELEMENT_DATA, PeriodicElement } from '../../interfaces';
+import { ELEMENT_DATA } from '../../interfaces/data';
+import { PeriodicElement } from '../../interfaces/periodic-element';
 
 export const FULL_LIST_OF_COLUMNS = [
   'name',

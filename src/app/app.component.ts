@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MatTabsComponent, MatToolbarComponent } from './components';
+import { MatTabsComponent } from './components/mat-tabs/mat-tabs.component';
+import { MatToolbarComponent } from './components/mat-toolbar/mat-toolbar.component';
 
 export const routes: Routes = [
   { path: '', component: MatTabsComponent },
