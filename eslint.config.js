@@ -5,7 +5,6 @@ const tseslint = require('typescript-eslint');
 const eslintConfigPrettier = require('eslint-config-prettier');
 const eslintPluginPrettierRecommended = require('eslint-plugin-prettier/recommended');
 const importPlugin = require('eslint-plugin-import');
-const cypressPlugin = require('eslint-plugin-cypress');
 const { defineConfig } = require('eslint/config');
 
 module.exports = defineConfig([
@@ -71,7 +70,6 @@ module.exports = defineConfig([
       '@angular-eslint/template/prefer-self-closing-tags': 'error',
     },
   },
-  cypressPlugin.configs.recommended,
   eslintPluginPrettierRecommended,
   eslintConfigPrettier,
 ]);

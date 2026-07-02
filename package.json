@@ -7,8 +7,10 @@
     "build:dev": "npm run build -- --configuration development",
     "cypress:headless": "cypress run --config-file cypress/cypress.config.ts --headless -b chrome",
     "cypress:open": "cypress open --config-file cypress/cypress.config.ts",
-    "lint": "ng lint",
-    "lint:fix": "npm run lint -- --fix",
+    "lint": "npm run lint:angular && npm run lint:cypress",
+    "lint:angular": "ng lint",
+    "lint:cypress": "eslint -c ./cypress/eslint.config.js ./cypress",
+    "lint:fix": "npm run lint:angular -- --fix && npm run lint:cypress -- --fix",
     "ng": "ng",
     "prepare": "husky",
     "prettier": "prettier --config .prettierrc --write \"**/*.{css,html,js,jsx,json,md,scss,ts,tsx,yaml,yml}\"",
@@ -21,14 +23,22 @@
     "watch": "ng build --watch --configuration development"
   },
   "lint-staged": {
-    "*.{css,html,js,jsx,json,md,scss,ts,tsx,yaml,yml}": [
+    ".vscode/settings.json": [
+      "sort-json --indent 2 --depth 4",
       "prettier --write"
     ],
-    "cypress/**/*.{html,js,jsx,ts,tsx}": [
+    "package.json": [
+      "sort-package-json",
+      "prettier --write"
+    ],
+    "cypress/**/*.ts": [
+      "eslint -c ./cypress/eslint.config.js --fix"
+    ],
+    "src/**/*.{html,ts}": [
       "ng-lint-staged lint --fix --"
     ],
-    "src/**/*.{html,js,jsx,ts,tsx}": [
-      "ng-lint-staged lint --fix --"
+    "!({.vscode/settings.json,package.json,cypress/**/*.ts,src/**/*.{html,ts}})": [
+      "prettier --write --ignore-unknown"
     ]
   },
   "dependencies": {
@@ -66,6 +76,8 @@
     "lint-staged": "^17",
     "ng-lint-staged": "^12",
     "prettier": "^3",
+    "sort-json": "^2.0.1",
+    "sort-package-json": "^4.0.0",
     "start-server-and-test": "^3",
     "typescript": "~6.0",
     "typescript-eslint": "^8",
