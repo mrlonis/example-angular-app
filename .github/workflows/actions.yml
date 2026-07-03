@@ -12,18 +12,25 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v6
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Setup Node
+        uses: actions/setup-node@v6
         with:
           node-version-file: '.nvmrc'
           cache: 'npm'
-      - run: npm ci
-      - run: npm run sync:agent-instructions:check
-      - run: npm run lint
-      - run: npm run test
+      - name: Install dependencies
+        run: npm ci
+      - name: Check agent instructions
+        run: npm run sync:agent-instructions:check
+      - name: Lint
+        run: npm run lint
+      - name: Test
+        run: npm run test
       - name: Upload coverage to Codacy
         uses: codacy/codacy-coverage-reporter-action@v1.3.0
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
           coverage-reports: coverage/example-angular-app/lcov.info
-      - run: npm run build
+      - name: Build
+        run: npm run build
