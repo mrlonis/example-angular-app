@@ -11,5 +11,5 @@ module.exports = defineConfig([
     rules: {
       'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     },
-  }
+  },
 ]);
