@@ -1,8 +1,12 @@
 import { Routes } from '@angular/router';
-import { MatTabs } from './components/mat-tabs/mat-tabs';
-import { MatToolbar } from './components/mat-toolbar/mat-toolbar';
 
 export const routes: Routes = [
-  { path: '', component: MatTabs },
-  { path: 'toolbar', component: MatToolbar },
+  {
+    path: '',
+    loadComponent: () => import('./components/mat-tabs/mat-tabs').then((m) => m.MatTabs),
+  },
+  {
+    path: 'toolbar',
+    loadComponent: () => import('./components/mat-toolbar/mat-toolbar').then((m) => m.MatToolbar),
+  },
 ];

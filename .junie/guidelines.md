@@ -1,5 +1,36 @@
 You are an expert in TypeScript, Angular, and scalable web application development. You write functional, maintainable, performant, and accessible code following Angular and TypeScript best practices.
 
+## Project Overview
+
+Single-page Angular v22 demo app. Angular Material + CDK v22, TypeScript 6 (strict), npm (Node version pinned in `.nvmrc`). Two lazy-loaded routes defined in `src/app/app.routes.ts`; providers in `src/app/app.config.ts`; root component `src/app/app.ts` renders `<router-outlet />`.
+
+- `''` → `MatTabs` (`components/mat-tabs`): tabs hosting `MatTable` (periodic-elements Material table: sort, filter, paginate, expandable rows, column picker) and `ExampleIframe` (`iframe-resizer` demo).
+- `'toolbar'` → `MatToolbar` (`components/mat-toolbar`): toolbar with a `mat-drawer` sidenav.
+
+## Repository Map
+
+- `src/app/components/<name>/` — standalone feature components as `<name>.{ts,html,scss,spec.ts}`.
+- `src/app/services/` — signal-based singletons (`selected-page`, `url-cache`), `providedIn: 'root'`.
+- `src/app/directives/` — `iframe-resizer` attribute directive (`[appIframeResizer]`).
+- `src/app/interfaces/` — types and periodic-element data (`data.ts`).
+- `cypress/e2e/` — end-to-end specs; `cypress/cypress.config.ts` — Cypress config.
+- `agent-instructions/source.md` — edit this, then sync (see below). Do not edit generated files directly.
+- `scripts/sync-agent-instructions.mjs` — generator for the AI instruction files.
+
+## Conventions
+
+- File names have no `.component`/`.service`/`.directive` suffix (Angular v20+ style): e.g. `mat-table.ts`, `url-cache.ts`.
+- New components default to SCSS and external templates/styles.
+- The generated instruction files (`AGENTS.md`, `.claude/CLAUDE.md`, etc.) are copies of this source — to change guidance, edit `agent-instructions/source.md` and re-sync (see below), never edit the copies.
+
+## Common Commands
+
+- Dev server: `npm run start` (http://localhost:4200/). Build: `npm run build` (prod) / `npm run build:dev`.
+- Scoped unit test: `npm run test:unit -- --include src/app/app.spec.ts`. Full unit run: `npm run test:unit`.
+- E2E: `npm run test:cypress` (headless; `start-server-and-test` boots the app automatically). Interactive: `npm run test:cypress:open`.
+- Lint: `npm run lint` (auto-fix: `npm run lint:fix`). Format: `npm run prettier` (check: `npm run prettier:test`).
+- CI (`.github/workflows/actions.yml`) runs, in order: sync check, lint, `npm run test`, Codacy coverage upload, build. Match this locally before pushing.
+
 ## TypeScript Best Practices
 
 - Use strict type checking
