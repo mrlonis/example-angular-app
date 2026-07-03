@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Component, computed, effect, signal, viewChild } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -72,34 +72,36 @@ export const DEFAULT_COLUMNS = [
     MatSelectModule,
     MatTableModule,
     MatSortModule,
-    ReactiveFormsModule,
   ],
   templateUrl: './mat-table.html',
   styleUrl: './mat-table.scss',
 })
-export class MatTable implements OnInit, AfterViewInit {
-  @ViewChild(MatPaginator) paginator?: MatPaginator;
-  @ViewChild(MatSort) sort?: MatSort;
+export class MatTable {
+  readonly paginator = viewChild(MatPaginator);
+  readonly sort = viewChild(MatSort);
 
-  dataSource = new MatTableDataSource(ELEMENT_DATA.elements);
-  columnsToDisplay = new FormControl<string[]>(DEFAULT_COLUMNS, { nonNullable: true });
-  columnsToDisplayWithExpand = [...DEFAULT_COLUMNS, 'expand'];
-  fullListOfColumns = FULL_LIST_OF_COLUMNS;
-  expandedElement: PeriodicElement | null = null;
+  readonly dataSource = new MatTableDataSource(ELEMENT_DATA.elements);
+  readonly columnsToDisplay = signal<string[]>(DEFAULT_COLUMNS);
+  readonly columnsToDisplayWithExpand = computed(() => [...this.columnsToDisplay(), 'expand']);
+  readonly fullListOfColumns = FULL_LIST_OF_COLUMNS;
+  readonly expandedElement = signal<PeriodicElement | null>(null);
 
-  ngOnInit(): void {
-    this.columnsToDisplay.valueChanges.subscribe((columns) => {
-      this.columnsToDisplayWithExpand = [...columns, 'expand'];
+  constructor() {
+    effect(() => {
+      const paginator = this.paginator();
+      const sort = this.sort();
+
+      if (paginator) {
+        this.dataSource.paginator = paginator;
+      }
+      if (sort) {
+        this.dataSource.sort = sort;
+      }
     });
   }
 
-  ngAfterViewInit() {
-    if (this.paginator) {
-      this.dataSource.paginator = this.paginator;
-    }
-    if (this.sort) {
-      this.dataSource.sort = this.sort;
-    }
+  setColumnsToDisplay(columns: string[] | null) {
+    this.columnsToDisplay.set(columns ?? DEFAULT_COLUMNS);
   }
 
   applyFilter(event: Event) {
@@ -111,7 +113,11 @@ export class MatTable implements OnInit, AfterViewInit {
     }
   }
 
+  toggleExpanded(element: PeriodicElement) {
+    this.expandedElement.update((current) => (current === element ? null : element));
+  }
+
   isExpanded(element: PeriodicElement) {
-    return this.expandedElement === element;
+    return this.expandedElement() === element;
   }
 }

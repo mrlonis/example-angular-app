@@ -1,6 +1,6 @@
 <div class="flex-column max-height-100vh" style="height: 100%">
   <mat-toolbar>
-    <button mat-icon-button (click)="drawer.toggle()">
+    <button mat-icon-button (click)="toggleDrawer()">
       <mat-icon>menu</mat-icon>
     </button>
     <span>My App</span>
@@ -20,7 +20,9 @@
             <mat-icon>filter_1</mat-icon>Mat Table
           </button>
           <mat-divider />
-          <button mat-button><mat-icon>filter_2</mat-icon>iframe-resizer</button>
+          <button mat-button (click)="selectIframeResizer()">
+            <mat-icon>filter_2</mat-icon>iframe-resizer
+          </button>
           <mat-divider />
         </div>
       </mat-drawer>
