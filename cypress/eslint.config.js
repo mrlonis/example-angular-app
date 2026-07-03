@@ -8,6 +8,8 @@ module.exports = defineConfig([
   {
     files: ['**/*.ts'],
     extends: [pluginCypress.configs.recommended],
-    rules: {},
-  },
+    rules: {
+      'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+    },
+  }
 ]);
