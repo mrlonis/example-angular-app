@@ -21,7 +21,7 @@ Single-page Angular v22 demo app. Angular Material + CDK v22, TypeScript 6 (stri
 
 - File names have no `.component`/`.service`/`.directive` suffix (Angular v20+ style): e.g. `mat-table.ts`, `url-cache.ts`.
 - New components default to SCSS and external templates/styles.
-- Do not read generated files (`AGENTS.md`, `.claude/CLAUDE.md`, etc.) — they are copies of this source.
+- The generated instruction files (`AGENTS.md`, `.claude/CLAUDE.md`, etc.) are copies of this source — to change guidance, edit `agent-instructions/source.md` and re-sync (see below), never edit the copies.
 
 ## Common Commands
 
