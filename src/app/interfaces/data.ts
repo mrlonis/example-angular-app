@@ -47,7 +47,8 @@ export const ELEMENT_DATA: Elements = {
     },
     {
       name: 'Helium',
-      appearance: 'colorless gas, exhibiting a red-orange glow when placed in a high-voltage electric field',
+      appearance:
+        'colorless gas, exhibiting a red-orange glow when placed in a high-voltage electric field',
       atomic_mass: 4.0026022,
       boil: 4.222,
       category: 'noble gas',
@@ -255,7 +256,8 @@ export const ELEMENT_DATA: Elements = {
       image: {
         title: 'Element 6 - Carbon',
         url: 'https://upload.wikimedia.org/wikipedia/commons/6/68/Pure_Carbon.png',
-        attribution: 'Texas Lane, CC BY-SA 4.0 <https://creativecommons.org/licenses/by-sa/4.0>, via Wikimedia Commons',
+        attribution:
+          'Texas Lane, CC BY-SA 4.0 <https://creativecommons.org/licenses/by-sa/4.0>, via Wikimedia Commons',
       },
       block: 'p',
     },
@@ -377,18 +379,22 @@ export const ELEMENT_DATA: Elements = {
       electron_configuration_semantic: '[He] 2s2 2p5',
       electron_affinity: 328.1649,
       electronegativity_pauling: 3.98,
-      ionization_energies: [1681, 3374.2, 6050.4, 8407.7, 11022.7, 15164.1, 17868, 92038.1, 106434.3],
+      ionization_energies: [
+        1681, 3374.2, 6050.4, 8407.7, 11022.7, 15164.1, 17868, 92038.1, 106434.3,
+      ],
       'cpk-hex': '90e050',
       image: {
         title: 'Liquid Fluorine at -196°C',
         url: 'https://upload.wikimedia.org/wikipedia/commons/2/2c/Fluoro_liquido_a_-196%C2%B0C_1.jpg',
-        attribution: 'Fulvio314, CC BY-SA 3.0 <https://creativecommons.org/licenses/by-sa/3.0>, via Wikimedia Commons',
+        attribution:
+          'Fulvio314, CC BY-SA 3.0 <https://creativecommons.org/licenses/by-sa/3.0>, via Wikimedia Commons',
       },
       block: 'p',
     },
     {
       name: 'Neon',
-      appearance: 'colorless gas exhibiting an orange-red glow when placed in a high voltage electric field',
+      appearance:
+        'colorless gas exhibiting an orange-red glow when placed in a high voltage electric field',
       atomic_mass: 20.17976,
       boil: 27.104,
       category: 'noble gas',
@@ -419,7 +425,9 @@ export const ELEMENT_DATA: Elements = {
       electron_configuration_semantic: '[He] 2s2 2p6',
       electron_affinity: -116,
       electronegativity_pauling: null,
-      ionization_energies: [2080.7, 3952.3, 6122, 9371, 12177, 15238, 19999, 23069.5, 115379.5, 131432],
+      ionization_energies: [
+        2080.7, 3952.3, 6122, 9371, 12177, 15238, 19999, 23069.5, 115379.5, 131432,
+      ],
       'cpk-hex': 'b3e3f5',
       image: {
         title: 'Vial of Glowing Ultrapure neon. Original size in cm: 1 x 5',
@@ -462,7 +470,9 @@ export const ELEMENT_DATA: Elements = {
       electron_configuration_semantic: '[Ne] 3s1',
       electron_affinity: 52.867,
       electronegativity_pauling: 0.93,
-      ionization_energies: [495.8, 4562, 6910.3, 9543, 13354, 16613, 20117, 25496, 28932, 141362, 159076],
+      ionization_energies: [
+        495.8, 4562, 6910.3, 9543, 13354, 16613, 20117, 25496, 28932, 141362, 159076,
+      ],
       'cpk-hex': 'ab5cf2',
       image: {
         title: 'Na (Sodium) Metal',
@@ -505,7 +515,9 @@ export const ELEMENT_DATA: Elements = {
       electron_configuration_semantic: '[Ne] 3s2',
       electron_affinity: -40,
       electronegativity_pauling: 1.31,
-      ionization_energies: [737.7, 1450.7, 7732.7, 10542.5, 13630, 18020, 21711, 25661, 31653, 35458, 169988, 189368],
+      ionization_energies: [
+        737.7, 1450.7, 7732.7, 10542.5, 13630, 18020, 21711, 25661, 31653, 35458, 169988, 189368,
+      ],
       'cpk-hex': '8aff00',
       image: {
         title: 'Magnesium crystals',
@@ -549,7 +561,8 @@ export const ELEMENT_DATA: Elements = {
       electron_affinity: 41.762,
       electronegativity_pauling: 1.61,
       ionization_energies: [
-        577.5, 1816.7, 2744.8, 11577, 14842, 18379, 23326, 27465, 31853, 38473, 42647, 201266, 222316,
+        577.5, 1816.7, 2744.8, 11577, 14842, 18379, 23326, 27465, 31853, 38473, 42647, 201266,
+        222316,
       ],
       'cpk-hex': 'bfa6a6',
       image: {
@@ -594,7 +607,8 @@ export const ELEMENT_DATA: Elements = {
       electron_affinity: 134.0684,
       electronegativity_pauling: 1.9,
       ionization_energies: [
-        786.5, 1577.1, 3231.6, 4355.5, 16091, 19805, 23780, 29287, 33878, 38726, 45962, 50502, 235196, 257923,
+        786.5, 1577.1, 3231.6, 4355.5, 16091, 19805, 23780, 29287, 33878, 38726, 45962, 50502,
+        235196, 257923,
       ],
       'cpk-hex': 'f0c8a0',
       image: {
@@ -639,7 +653,8 @@ export const ELEMENT_DATA: Elements = {
       electron_affinity: 72.037,
       electronegativity_pauling: 2.19,
       ionization_energies: [
-        1011.8, 1907, 2914.1, 4963.6, 6273.9, 21267, 25431, 29872, 35905, 40950, 46261, 54110, 59024, 271791, 296195,
+        1011.8, 1907, 2914.1, 4963.6, 6273.9, 21267, 25431, 29872, 35905, 40950, 46261, 54110,
+        59024, 271791, 296195,
       ],
       'cpk-hex': 'ff8000',
       image: {
@@ -684,13 +699,15 @@ export const ELEMENT_DATA: Elements = {
       electron_affinity: 200.4101,
       electronegativity_pauling: 2.58,
       ionization_energies: [
-        999.6, 2252, 3357, 4556, 7004.3, 8495.8, 27107, 31719, 36621, 43177, 48710, 54460, 62930, 68216, 311048, 337138,
+        999.6, 2252, 3357, 4556, 7004.3, 8495.8, 27107, 31719, 36621, 43177, 48710, 54460, 62930,
+        68216, 311048, 337138,
       ],
       'cpk-hex': 'ffff30',
       image: {
         title: 'Native Sulfur From Russia',
         url: 'https://upload.wikimedia.org/wikipedia/commons/2/23/Native_sulfur_%28Vodinskoe_Deposit%3B_quarry_near_Samara%2C_Russia%29_9.jpg',
-        attribution: 'James St. John, CC BY 2.0 <https://creativecommons.org/licenses/by/2.0>, via Wikimedia Commons',
+        attribution:
+          'James St. John, CC BY 2.0 <https://creativecommons.org/licenses/by/2.0>, via Wikimedia Commons',
       },
       block: 'p',
     },
@@ -728,8 +745,8 @@ export const ELEMENT_DATA: Elements = {
       electron_affinity: 348.575,
       electronegativity_pauling: 3.16,
       ionization_energies: [
-        1251.2, 2298, 3822, 5158.6, 6542, 9362, 11018, 33604, 38600, 43961, 51068, 57119, 63363, 72341, 78095, 352994,
-        380760,
+        1251.2, 2298, 3822, 5158.6, 6542, 9362, 11018, 33604, 38600, 43961, 51068, 57119, 63363,
+        72341, 78095, 352994, 380760,
       ],
       'cpk-hex': '1ff01f',
       image: {
@@ -741,7 +758,8 @@ export const ELEMENT_DATA: Elements = {
     },
     {
       name: 'Argon',
-      appearance: 'colorless gas exhibiting a lilac/violet glow when placed in a high voltage electric field',
+      appearance:
+        'colorless gas exhibiting a lilac/violet glow when placed in a high voltage electric field',
       atomic_mass: 39.9481,
       boil: 87.302,
       category: 'noble gas',
@@ -773,8 +791,8 @@ export const ELEMENT_DATA: Elements = {
       electron_affinity: -96,
       electronegativity_pauling: null,
       ionization_energies: [
-        1520.6, 2665.8, 3931, 5771, 7238, 8781, 11995, 13842, 40760, 46186, 52002, 59653, 66199, 72918, 82473, 88576,
-        397605, 427066,
+        1520.6, 2665.8, 3931, 5771, 7238, 8781, 11995, 13842, 40760, 46186, 52002, 59653, 66199,
+        72918, 82473, 88576, 397605, 427066,
       ],
       'cpk-hex': '80d1e3',
       image: {
@@ -819,14 +837,15 @@ export const ELEMENT_DATA: Elements = {
       electron_affinity: 48.383,
       electronegativity_pauling: 0.82,
       ionization_energies: [
-        418.8, 3052, 4420, 5877, 7975, 9590, 11343, 14944, 16963.7, 48610, 54490, 60730, 68950, 75900, 83080, 93400,
-        99710, 444880, 476063,
+        418.8, 3052, 4420, 5877, 7975, 9590, 11343, 14944, 16963.7, 48610, 54490, 60730, 68950,
+        75900, 83080, 93400, 99710, 444880, 476063,
       ],
       'cpk-hex': '8f40d4',
       image: {
         title: 'Potassium Pieces',
         url: 'https://upload.wikimedia.org/wikipedia/commons/b/b3/Potassium.JPG',
-        attribution: 'Dnn87, CC BY 3.0 <https://creativecommons.org/licenses/by/3.0>, via Wikimedia Commons',
+        attribution:
+          'Dnn87, CC BY 3.0 <https://creativecommons.org/licenses/by/3.0>, via Wikimedia Commons',
       },
       block: 's',
     },
@@ -864,8 +883,8 @@ export const ELEMENT_DATA: Elements = {
       electron_affinity: 2.37,
       electronegativity_pauling: 1,
       ionization_energies: [
-        589.8, 1145.4, 4912.4, 6491, 8153, 10496, 12270, 14206, 18191, 20385, 57110, 63410, 70110, 78890, 86310, 94000,
-        104900, 111711, 494850, 527762,
+        589.8, 1145.4, 4912.4, 6491, 8153, 10496, 12270, 14206, 18191, 20385, 57110, 63410, 70110,
+        78890, 86310, 94000, 104900, 111711, 494850, 527762,
       ],
       'cpk-hex': '3dff00',
       image: {
@@ -910,8 +929,8 @@ export const ELEMENT_DATA: Elements = {
       electron_affinity: 18,
       electronegativity_pauling: 1.36,
       ionization_energies: [
-        633.1, 1235, 2388.6, 7090.6, 8843, 10679, 13310, 15250, 17370, 21726, 24102, 66320, 73010, 80160, 89490, 97400,
-        105600, 117000, 124270, 547530, 582163,
+        633.1, 1235, 2388.6, 7090.6, 8843, 10679, 13310, 15250, 17370, 21726, 24102, 66320, 73010,
+        80160, 89490, 97400, 105600, 117000, 124270, 547530, 582163,
       ],
       'cpk-hex': 'e6e6e6',
       image: {
@@ -956,12 +975,13 @@ export const ELEMENT_DATA: Elements = {
       electron_affinity: 7.289,
       electronegativity_pauling: 1.54,
       ionization_energies: [
-        658.8, 1309.8, 2652.5, 4174.6, 9581, 11533, 13590, 16440, 18530, 20833, 25575, 28125, 76015, 83280, 90880,
-        100700, 109100, 117800, 129900, 137530, 602930, 639294,
+        658.8, 1309.8, 2652.5, 4174.6, 9581, 11533, 13590, 16440, 18530, 20833, 25575, 28125, 76015,
+        83280, 90880, 100700, 109100, 117800, 129900, 137530, 602930, 639294,
       ],
       'cpk-hex': 'bfc2c7',
       image: {
-        title: 'Titanium Crystal made with the van Arkel-de Booer Process. 87 grams, Original size in cm: 2.5 x 4',
+        title:
+          'Titanium Crystal made with the van Arkel-de Booer Process. 87 grams, Original size in cm: 2.5 x 4',
         url: 'https://upload.wikimedia.org/wikipedia/commons/e/ec/Titanium.jpg',
         attribution:
           'Hi-Res Images ofChemical Elements, CC BY 3.0 <https://creativecommons.org/licenses/by/3.0>, via Wikimedia Commons, source: https://images-of-elements.com/titanium.php',
@@ -1002,8 +1022,8 @@ export const ELEMENT_DATA: Elements = {
       electron_affinity: 50.911,
       electronegativity_pauling: 1.63,
       ionization_energies: [
-        650.9, 1414, 2830, 4507, 6298.7, 12363, 14530, 16730, 19860, 22240, 24670, 29730, 32446, 86450, 94170, 102300,
-        112700, 121600, 130700, 143400, 151440, 661050, 699144,
+        650.9, 1414, 2830, 4507, 6298.7, 12363, 14530, 16730, 19860, 22240, 24670, 29730, 32446,
+        86450, 94170, 102300, 112700, 121600, 130700, 143400, 151440, 661050, 699144,
       ],
       'cpk-hex': 'a6a6ab',
       image: {
@@ -1048,8 +1068,8 @@ export const ELEMENT_DATA: Elements = {
       electron_affinity: 65.21,
       electronegativity_pauling: 1.66,
       ionization_energies: [
-        652.9, 1590.6, 2987, 4743, 6702, 8744.9, 15455, 17820, 20190, 23580, 26130, 28750, 34230, 37066, 97510, 105800,
-        114300, 125300, 134700, 144300, 157700, 166090, 721870, 761733,
+        652.9, 1590.6, 2987, 4743, 6702, 8744.9, 15455, 17820, 20190, 23580, 26130, 28750, 34230,
+        37066, 97510, 105800, 114300, 125300, 134700, 144300, 157700, 166090, 721870, 761733,
       ],
       'cpk-hex': '8a99c7',
       image: {
@@ -1094,14 +1114,15 @@ export const ELEMENT_DATA: Elements = {
       electron_affinity: -50,
       electronegativity_pauling: 1.55,
       ionization_energies: [
-        717.3, 1509, 3248, 4940, 6990, 9220, 11500, 18770, 21400, 23960, 27590, 30330, 33150, 38880, 41987, 109480,
-        118100, 127100, 138600, 148500, 158600, 172500, 181380, 785450, 827067,
+        717.3, 1509, 3248, 4940, 6990, 9220, 11500, 18770, 21400, 23960, 27590, 30330, 33150, 38880,
+        41987, 109480, 118100, 127100, 138600, 148500, 158600, 172500, 181380, 785450, 827067,
       ],
       'cpk-hex': '9c7ac7',
       image: {
         title: 'Two Oieces of Manganese Metal',
         url: 'https://upload.wikimedia.org/wikipedia/commons/6/64/Manganese_element.jpg',
-        attribution: 'W. Oelen, CC BY-SA 3.0 <https://creativecommons.org/licenses/by-sa/3.0>, via Wikimedia Commons',
+        attribution:
+          'W. Oelen, CC BY-SA 3.0 <https://creativecommons.org/licenses/by-sa/3.0>, via Wikimedia Commons',
       },
       block: 'd',
     },
@@ -1139,12 +1160,14 @@ export const ELEMENT_DATA: Elements = {
       electron_affinity: 14.785,
       electronegativity_pauling: 1.83,
       ionization_energies: [
-        762.5, 1561.9, 2957, 5290, 7240, 9560, 12060, 14580, 22540, 25290, 28000, 31920, 34830, 37840, 44100, 47206,
-        122200, 131000, 140500, 152600, 163000, 173600, 188100, 195200, 851800, 895161,
+        762.5, 1561.9, 2957, 5290, 7240, 9560, 12060, 14580, 22540, 25290, 28000, 31920, 34830,
+        37840, 44100, 47206, 122200, 131000, 140500, 152600, 163000, 173600, 188100, 195200, 851800,
+        895161,
       ],
       'cpk-hex': 'e06633',
       image: {
-        title: 'Fragments of an iron meteorite, about 92% iron. Original size of the single pieces in cm: 0.4 - 0.8',
+        title:
+          'Fragments of an iron meteorite, about 92% iron. Original size of the single pieces in cm: 0.4 - 0.8',
         url: 'https://images-of-elements.com/iron-2.jpg',
         attribution:
           'Chemical ELements A Virtual Museum, CC BY 3.0 <https://creativecommons.org/licenses/by/3.0> source: https://images-of-elements.com/iron.php',
@@ -1185,8 +1208,9 @@ export const ELEMENT_DATA: Elements = {
       electron_affinity: 63.898,
       electronegativity_pauling: 1.88,
       ionization_energies: [
-        760.4, 1648, 3232, 4950, 7670, 9840, 12440, 15230, 17959, 26570, 29400, 32400, 36600, 39700, 42800, 49396,
-        52737, 134810, 145170, 154700, 167400, 178100, 189300, 204500, 214100, 920870, 966023,
+        760.4, 1648, 3232, 4950, 7670, 9840, 12440, 15230, 17959, 26570, 29400, 32400, 36600, 39700,
+        42800, 49396, 52737, 134810, 145170, 154700, 167400, 178100, 189300, 204500, 214100, 920870,
+        966023,
       ],
       'cpk-hex': 'f090a0',
       image: {
@@ -1231,8 +1255,9 @@ export const ELEMENT_DATA: Elements = {
       electron_affinity: 111.65,
       electronegativity_pauling: 1.91,
       ionization_energies: [
-        737.1, 1753, 3395, 5300, 7339, 10400, 12800, 15600, 18600, 21670, 30970, 34000, 37100, 41500, 44800, 48100,
-        55101, 58570, 148700, 159000, 169400, 182700, 194000, 205600, 221400, 231490, 992718, 1039668,
+        737.1, 1753, 3395, 5300, 7339, 10400, 12800, 15600, 18600, 21670, 30970, 34000, 37100,
+        41500, 44800, 48100, 55101, 58570, 148700, 159000, 169400, 182700, 194000, 205600, 221400,
+        231490, 992718, 1039668,
       ],
       'cpk-hex': '50d050',
       image: {
@@ -1277,8 +1302,9 @@ export const ELEMENT_DATA: Elements = {
       electron_affinity: 119.235,
       electronegativity_pauling: 1.9,
       ionization_energies: [
-        745.5, 1957.9, 3555, 5536, 7700, 9900, 13400, 16000, 19200, 22400, 25600, 35600, 38700, 42000, 46700, 50200,
-        53700, 61100, 64702, 163700, 174100, 184900, 198800, 210500, 222700, 239100, 249660, 1067358, 1116105,
+        745.5, 1957.9, 3555, 5536, 7700, 9900, 13400, 16000, 19200, 22400, 25600, 35600, 38700,
+        42000, 46700, 50200, 53700, 61100, 64702, 163700, 174100, 184900, 198800, 210500, 222700,
+        239100, 249660, 1067358, 1116105,
       ],
       'cpk-hex': 'c88033',
       image: {
@@ -1323,8 +1349,8 @@ export const ELEMENT_DATA: Elements = {
       electron_affinity: -58,
       electronegativity_pauling: 1.65,
       ionization_energies: [
-        906.4, 1733.3, 3833, 5731, 7970, 10400, 12900, 16800, 19600, 23000, 26400, 29990, 40490, 43800, 47300, 52300,
-        55900, 59700, 67300, 71200, 179100,
+        906.4, 1733.3, 3833, 5731, 7970, 10400, 12900, 16800, 19600, 23000, 26400, 29990, 40490,
+        43800, 47300, 52300, 55900, 59700, 67300, 71200, 179100,
       ],
       'cpk-hex': '7d80b0',
       image: {
@@ -1457,7 +1483,8 @@ export const ELEMENT_DATA: Elements = {
       ionization_energies: [947, 1798, 2735, 4837, 6043, 12310],
       'cpk-hex': 'bd80e3',
       image: {
-        title: 'Ultrapure Metallic Arsenic under Argon, 1 - 2 grams. Original size of each piece in cm: 0.5 x 1',
+        title:
+          'Ultrapure Metallic Arsenic under Argon, 1 - 2 grams. Original size of each piece in cm: 0.5 x 1',
         url: 'https://upload.wikimedia.org/wikipedia/commons/3/3b/Arsenic_%2833_As%29.jpg',
         attribution:
           'Hi-Res Images ofChemical Elements, CC BY 3.0 <https://creativecommons.org/licenses/by/3.0>, via Wikimedia Commons, source: https://images-of-elements.com/arsenic.php',
@@ -1584,8 +1611,9 @@ export const ELEMENT_DATA: Elements = {
       electron_affinity: -96,
       electronegativity_pauling: 3,
       ionization_energies: [
-        1350.8, 2350.4, 3565, 5070, 6240, 7570, 10710, 12138, 22274, 25880, 29700, 33800, 37700, 43100, 47500, 52200,
-        57100, 61800, 75800, 80400, 85300, 90400, 96300, 101400, 111100, 116290, 282500, 296200, 311400, 326200,
+        1350.8, 2350.4, 3565, 5070, 6240, 7570, 10710, 12138, 22274, 25880, 29700, 33800, 37700,
+        43100, 47500, 52200, 57100, 61800, 75800, 80400, 85300, 90400, 96300, 101400, 111100,
+        116290, 282500, 296200, 311400, 326200,
       ],
       'cpk-hex': '5cb8d1',
       image: {
@@ -1634,7 +1662,8 @@ export const ELEMENT_DATA: Elements = {
       image: {
         title: 'Rubidium Metal Sample',
         url: 'https://upload.wikimedia.org/wikipedia/commons/c/c9/Rb5.JPG',
-        attribution: 'Dnn87, CC BY 3.0 <https://creativecommons.org/licenses/by/3.0>, via Wikimedia Commons',
+        attribution:
+          'Dnn87, CC BY 3.0 <https://creativecommons.org/licenses/by/3.0>, via Wikimedia Commons',
       },
       block: 's',
     },
@@ -1671,7 +1700,9 @@ export const ELEMENT_DATA: Elements = {
       electron_configuration_semantic: '[Kr] 5s2',
       electron_affinity: 5.023,
       electronegativity_pauling: 0.95,
-      ionization_energies: [549.5, 1064.2, 4138, 5500, 6910, 8760, 10230, 11800, 15600, 17100, 31270],
+      ionization_energies: [
+        549.5, 1064.2, 4138, 5500, 6910, 8760, 10230, 11800, 15600, 17100, 31270,
+      ],
       'cpk-hex': '00ff00',
       image: {
         title: 'Strontium Pieces under Paraffin Oil.',
@@ -1714,7 +1745,9 @@ export const ELEMENT_DATA: Elements = {
       electron_configuration_semantic: '[Kr] 4d1 5s2',
       electron_affinity: 29.6,
       electronegativity_pauling: 1.22,
-      ionization_energies: [600, 1180, 1980, 5847, 7430, 8970, 11190, 12450, 14110, 18400, 19900, 36090],
+      ionization_energies: [
+        600, 1180, 1980, 5847, 7430, 8970, 11190, 12450, 14110, 18400, 19900, 36090,
+      ],
       'cpk-hex': '94ffff',
       image: {
         title: '6,21g Yttrium, Reinheit mindestens 99%.',
@@ -1844,8 +1877,9 @@ export const ELEMENT_DATA: Elements = {
       electron_affinity: 72.1,
       electronegativity_pauling: 2.16,
       ionization_energies: [
-        684.3, 1560, 2618, 4480, 5257, 6640.8, 12125, 13860, 15835, 17980, 20190, 22219, 26930, 29196, 52490, 55000,
-        61400, 67700, 74000, 80400, 87000, 93400, 98420, 104400, 121900, 127700, 133800, 139800, 148100, 154500,
+        684.3, 1560, 2618, 4480, 5257, 6640.8, 12125, 13860, 15835, 17980, 20190, 22219, 26930,
+        29196, 52490, 55000, 61400, 67700, 74000, 80400, 87000, 93400, 98420, 104400, 121900,
+        127700, 133800, 139800, 148100, 154500,
       ],
       'cpk-hex': '54b5b5',
       image: {
@@ -1895,7 +1929,8 @@ export const ELEMENT_DATA: Elements = {
         title:
           'Technetium Sample inside a sealed glass ampoule, filled with argon gas. 6x1 mm goldfoil covered with 99Tc powder (electroplated).',
         url: 'https://upload.wikimedia.org/wikipedia/commons/a/ab/Technetium-sample-cropped.jpg',
-        attribution: 'GFDL, CC BY-SA 4.0 <https://creativecommons.org/licenses/by-sa/4.0>, via Wikimedia Commons',
+        attribution:
+          'GFDL, CC BY-SA 4.0 <https://creativecommons.org/licenses/by-sa/4.0>, via Wikimedia Commons',
       },
       block: 'd',
     },
@@ -2175,7 +2210,8 @@ export const ELEMENT_DATA: Elements = {
       source: 'https://en.wikipedia.org/wiki/Tin',
       bohr_model_image:
         'https://storage.googleapis.com/search-ar-edu/periodic-table/element_050_tin/element_050_tin_srp_th.png',
-      bohr_model_3d: 'https://storage.googleapis.com/search-ar-edu/periodic-table/element_050_tin/element_050_tin.glb',
+      bohr_model_3d:
+        'https://storage.googleapis.com/search-ar-edu/periodic-table/element_050_tin/element_050_tin.glb',
       spectral_img: null,
       summary:
         'Tin is a chemical element with the symbol Sn (for Latin:stannum) and atomic number 50. It is a main group metal in group 14 of the periodic table. Tin shows a chemical similarity to both neighboring group-14 elements, germanium and lead, and has two possible oxidation states, +2 and the slightly more stable +4.',
@@ -2329,7 +2365,8 @@ export const ELEMENT_DATA: Elements = {
     },
     {
       name: 'Xenon',
-      appearance: 'colorless gas, exhibiting a blue glow when placed in a high voltage electric field',
+      appearance:
+        'colorless gas, exhibiting a blue glow when placed in a high voltage electric field',
       atomic_mass: 131.2936,
       boil: 165.051,
       category: 'noble gas',
@@ -2621,7 +2658,8 @@ export const ELEMENT_DATA: Elements = {
       ionization_energies: [533.1, 1040, 2130, 3900],
       'cpk-hex': 'c7ffc7',
       image: {
-        title: 'Ultrapure Neodymium under Argon, 5 grams. Original length of the large piece in cm: 1',
+        title:
+          'Ultrapure Neodymium under Argon, 5 grams. Original length of the large piece in cm: 1',
         url: 'https://upload.wikimedia.org/wikipedia/commons/c/c9/Neodymium_%2860_Nd%29.jpg',
         attribution:
           'Hi-Res Images ofChemical Elements, CC BY 3.0 <https://creativecommons.org/licenses/by/3.0>, via Wikimedia Commons, source: https://images-of-elements.com/neodymium.php',
@@ -2751,7 +2789,8 @@ export const ELEMENT_DATA: Elements = {
       ionization_energies: [547.1, 1085, 2404, 4120],
       'cpk-hex': '61ffc7',
       image: {
-        title: 'Weakly Oxidized Europium, hence slightly yellowish. 1.5 grams, large piece 0.6 x 1.6 cm.',
+        title:
+          'Weakly Oxidized Europium, hence slightly yellowish. 1.5 grams, large piece 0.6 x 1.6 cm.',
         url: 'https://upload.wikimedia.org/wikipedia/commons/6/6a/Europium.jpg',
         attribution:
           'Jurii, CC BY 3.0 <https://creativecommons.org/licenses/by/3.0>, via Wikimedia Commons, source: https://images-of-elements.com/europium.php',
@@ -2794,7 +2833,8 @@ export const ELEMENT_DATA: Elements = {
       ionization_energies: [593.4, 1170, 1990, 4250],
       'cpk-hex': '45ffc7',
       image: {
-        title: 'Pure (99.95%) Amorphous Gadolinium, about 12 grams, 2 × 1.5 × 0.5 cm, cast in acrylic glass',
+        title:
+          'Pure (99.95%) Amorphous Gadolinium, about 12 grams, 2 × 1.5 × 0.5 cm, cast in acrylic glass',
         url: 'https://upload.wikimedia.org/wikipedia/commons/c/c2/Gadolinium-2.jpg',
         attribution:
           'Jurii, CC BY 3.0 <https://creativecommons.org/licenses/by/3.0>, via Wikimedia Commons, source: https://images-of-elements.com/gadolinium.php',
@@ -3399,7 +3439,8 @@ export const ELEMENT_DATA: Elements = {
       image: {
         title: 'Crystals of Pure Platinum grown by gas phase transport',
         url: 'https://upload.wikimedia.org/wikipedia/commons/6/68/Platinum_crystals.jpg',
-        attribution: 'Periodictableru, CC BY 3.0 <https://creativecommons.org/licenses/by/3.0>, via Wikimedia Commons',
+        attribution:
+          'Periodictableru, CC BY 3.0 <https://creativecommons.org/licenses/by/3.0>, via Wikimedia Commons',
       },
       block: 'd',
     },
@@ -3832,7 +3873,8 @@ export const ELEMENT_DATA: Elements = {
         title:
           'Radium electroplated on a very small sample of copper foil and covered with polyurethane to prevent reaction with the air',
         url: 'https://upload.wikimedia.org/wikipedia/commons/b/bb/Radium226.jpg',
-        attribution: 'grenadier, CC BY 3.0 <https://creativecommons.org/licenses/by/3.0>, via Wikimedia Commons',
+        attribution:
+          'grenadier, CC BY 3.0 <https://creativecommons.org/licenses/by/3.0>, via Wikimedia Commons',
       },
       block: 's',
     },
@@ -3865,7 +3907,8 @@ export const ELEMENT_DATA: Elements = {
       wxpos: 3,
       wypos: 7,
       shells: [2, 8, 18, 32, 18, 9, 2],
-      electron_configuration: '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 6d1',
+      electron_configuration:
+        '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 6d1',
       electron_configuration_semantic: '[Rn] 6d1 7s2',
       electron_affinity: 33.77,
       electronegativity_pauling: 1.1,
@@ -3909,7 +3952,8 @@ export const ELEMENT_DATA: Elements = {
       wxpos: 4,
       wypos: 7,
       shells: [2, 8, 18, 32, 18, 10, 2],
-      electron_configuration: '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 6d2',
+      electron_configuration:
+        '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 6d2',
       electron_configuration_semantic: '[Rn] 6d2 7s2',
       electron_affinity: 112.72,
       electronegativity_pauling: 1.3,
@@ -3918,7 +3962,8 @@ export const ELEMENT_DATA: Elements = {
       image: {
         title: 'Thorium Metal in Ampoule, corroded',
         url: 'https://upload.wikimedia.org/wikipedia/commons/f/f7/Thorium-1.jpg',
-        attribution: 'W. Oelen, CC BY-SA 3.0 <https://creativecommons.org/licenses/by-sa/3.0>, via Wikimedia Commons',
+        attribution:
+          'W. Oelen, CC BY-SA 3.0 <https://creativecommons.org/licenses/by-sa/3.0>, via Wikimedia Commons',
       },
       block: 'f',
     },
@@ -3951,7 +3996,8 @@ export const ELEMENT_DATA: Elements = {
       wxpos: 5,
       wypos: 7,
       shells: [2, 8, 18, 32, 20, 9, 2],
-      electron_configuration: '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f2 6d1',
+      electron_configuration:
+        '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f2 6d1',
       electron_configuration_semantic: '[Rn] 5f2 6d1 7s2',
       electron_affinity: 53.03,
       electronegativity_pauling: 1.5,
@@ -3994,7 +4040,8 @@ export const ELEMENT_DATA: Elements = {
       wxpos: 6,
       wypos: 7,
       shells: [2, 8, 18, 32, 21, 9, 2],
-      electron_configuration: '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f3 6d1',
+      electron_configuration:
+        '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f3 6d1',
       electron_configuration_semantic: '[Rn] 5f3 6d1 7s2',
       electron_affinity: 50.94,
       electronegativity_pauling: 1.38,
@@ -4036,7 +4083,8 @@ export const ELEMENT_DATA: Elements = {
       wxpos: 7,
       wypos: 7,
       shells: [2, 8, 18, 32, 22, 9, 2],
-      electron_configuration: '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f4 6d1',
+      electron_configuration:
+        '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f4 6d1',
       electron_configuration_semantic: '[Rn] 5f4 6d1 7s2',
       electron_affinity: 45.85,
       electronegativity_pauling: 1.36,
@@ -4078,7 +4126,8 @@ export const ELEMENT_DATA: Elements = {
       wxpos: 8,
       wypos: 7,
       shells: [2, 8, 18, 32, 24, 8, 2],
-      electron_configuration: '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f6',
+      electron_configuration:
+        '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f6',
       electron_configuration_semantic: '[Rn] 5f6 7s2',
       electron_affinity: -48.33,
       electronegativity_pauling: 1.28,
@@ -4120,7 +4169,8 @@ export const ELEMENT_DATA: Elements = {
       wxpos: 9,
       wypos: 7,
       shells: [2, 8, 18, 32, 25, 8, 2],
-      electron_configuration: '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f7',
+      electron_configuration:
+        '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f7',
       electron_configuration_semantic: '[Rn] 5f7 7s2',
       electron_affinity: 9.93,
       electronegativity_pauling: 1.13,
@@ -4129,7 +4179,8 @@ export const ELEMENT_DATA: Elements = {
       image: {
         title: 'A small disc of Am-241 under the microscope.',
         url: 'https://upload.wikimedia.org/wikipedia/commons/e/ee/Americium_microscope.jpg',
-        attribution: 'Bionerd, CC BY 3.0 <https://creativecommons.org/licenses/by/3.0>, via Wikimedia Commons',
+        attribution:
+          'Bionerd, CC BY 3.0 <https://creativecommons.org/licenses/by/3.0>, via Wikimedia Commons',
       },
       block: 'f',
     },
@@ -4162,7 +4213,8 @@ export const ELEMENT_DATA: Elements = {
       wxpos: 10,
       wypos: 7,
       shells: [2, 8, 18, 32, 25, 9, 2],
-      electron_configuration: '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f7 6d1',
+      electron_configuration:
+        '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f7 6d1',
       electron_configuration_semantic: '[Rn] 5f7 6d1 7s2',
       electron_affinity: 27.17,
       electronegativity_pauling: 1.28,
@@ -4205,14 +4257,16 @@ export const ELEMENT_DATA: Elements = {
       wxpos: 11,
       wypos: 7,
       shells: [2, 8, 18, 32, 27, 8, 2],
-      electron_configuration: '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f9',
+      electron_configuration:
+        '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f9',
       electron_configuration_semantic: '[Rn] 5f9 7s2',
       electron_affinity: -165.24,
       electronegativity_pauling: 1.3,
       ionization_energies: [601],
       'cpk-hex': '8a4fe3',
       image: {
-        title: 'It took 250 days to make enough berkelium, shown here (in dissolved state), to synthesize element 117',
+        title:
+          'It took 250 days to make enough berkelium, shown here (in dissolved state), to synthesize element 117',
         url: 'https://upload.wikimedia.org/wikipedia/commons/f/fc/Berkelium.jpg',
         attribution: 'ORNL, Department of Energy, Public domain, via Wikimedia Commons',
       },
@@ -4247,7 +4301,8 @@ export const ELEMENT_DATA: Elements = {
       wxpos: 12,
       wypos: 7,
       shells: [2, 8, 18, 32, 28, 8, 2],
-      electron_configuration: '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f10',
+      electron_configuration:
+        '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f10',
       electron_configuration_semantic: '[Rn] 5f10 7s2',
       electron_affinity: -97.31,
       electronegativity_pauling: 1.3,
@@ -4291,7 +4346,8 @@ export const ELEMENT_DATA: Elements = {
       wxpos: 13,
       wypos: 7,
       shells: [2, 8, 18, 32, 29, 8, 2],
-      electron_configuration: '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f11',
+      electron_configuration:
+        '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f11',
       electron_configuration_semantic: '[Rn] 5f11 7s2',
       electron_affinity: -28.6,
       electronegativity_pauling: 1.3,
@@ -4334,7 +4390,8 @@ export const ELEMENT_DATA: Elements = {
       wxpos: 14,
       wypos: 7,
       shells: [2, 8, 18, 32, 30, 8, 2],
-      electron_configuration: '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f12',
+      electron_configuration:
+        '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f12',
       electron_configuration_semantic: '[Rn] 5f12 7s2',
       electron_affinity: 33.96,
       electronegativity_pauling: 1.3,
@@ -4376,7 +4433,8 @@ export const ELEMENT_DATA: Elements = {
       wxpos: 15,
       wypos: 7,
       shells: [2, 8, 18, 32, 31, 8, 2],
-      electron_configuration: '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f13',
+      electron_configuration:
+        '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f13',
       electron_configuration_semantic: '[Rn] 5f13 7s2',
       electron_affinity: 93.91,
       electronegativity_pauling: 1.3,
@@ -4420,7 +4478,8 @@ export const ELEMENT_DATA: Elements = {
       wxpos: 16,
       wypos: 7,
       shells: [2, 8, 18, 32, 32, 8, 2],
-      electron_configuration: '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f14',
+      electron_configuration:
+        '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f14',
       electron_configuration_semantic: '[Rn] 5f14 7s2',
       electron_affinity: -223.22,
       electronegativity_pauling: 1.3,
@@ -4464,7 +4523,8 @@ export const ELEMENT_DATA: Elements = {
       wxpos: 17,
       wypos: 7,
       shells: [2, 8, 18, 32, 32, 8, 3],
-      electron_configuration: '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f14 7p1',
+      electron_configuration:
+        '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f14 7p1',
       electron_configuration_semantic: '[Rn] 5f14 7s2 7p1',
       electron_affinity: -30.04,
       electronegativity_pauling: 1.3,
@@ -4508,7 +4568,8 @@ export const ELEMENT_DATA: Elements = {
       wxpos: 18,
       wypos: 7,
       shells: [2, 8, 18, 32, 32, 10, 2],
-      electron_configuration: '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f14 6d2',
+      electron_configuration:
+        '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f14 6d2',
       electron_configuration_semantic: '[Rn] 5f14 6d2 7s2',
       electron_affinity: null,
       electronegativity_pauling: null,
@@ -4552,7 +4613,8 @@ export const ELEMENT_DATA: Elements = {
       wxpos: 19,
       wypos: 7,
       shells: [2, 8, 18, 32, 32, 11, 2],
-      electron_configuration: '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f14 6d3',
+      electron_configuration:
+        '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f14 6d3',
       electron_configuration_semantic: '*[Rn] 5f14 6d3 7s2',
       electron_affinity: null,
       electronegativity_pauling: null,
@@ -4595,7 +4657,8 @@ export const ELEMENT_DATA: Elements = {
       wxpos: 20,
       wypos: 7,
       shells: [2, 8, 18, 32, 32, 12, 2],
-      electron_configuration: '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f14 6d4',
+      electron_configuration:
+        '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f14 6d4',
       electron_configuration_semantic: '*[Rn] 5f14 6d4 7s2',
       electron_affinity: null,
       electronegativity_pauling: null,
@@ -4638,7 +4701,8 @@ export const ELEMENT_DATA: Elements = {
       wxpos: 21,
       wypos: 7,
       shells: [2, 8, 18, 32, 32, 13, 2],
-      electron_configuration: '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f14 6d5',
+      electron_configuration:
+        '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f14 6d5',
       electron_configuration_semantic: '*[Rn] 5f14 6d5 7s2',
       electron_affinity: null,
       electronegativity_pauling: null,
@@ -4681,7 +4745,8 @@ export const ELEMENT_DATA: Elements = {
       wxpos: 22,
       wypos: 7,
       shells: [2, 8, 18, 32, 32, 14, 2],
-      electron_configuration: '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f14 6d6',
+      electron_configuration:
+        '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f14 6d6',
       electron_configuration_semantic: '*[Rn] 5f14 6d6 7s2',
       electron_affinity: null,
       electronegativity_pauling: null,
@@ -4724,7 +4789,8 @@ export const ELEMENT_DATA: Elements = {
       wxpos: 23,
       wypos: 7,
       shells: [2, 8, 18, 32, 32, 15, 2],
-      electron_configuration: '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f14 6d7',
+      electron_configuration:
+        '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f14 6d7',
       electron_configuration_semantic: '*[Rn] 5f14 6d7 7s2',
       electron_affinity: null,
       electronegativity_pauling: null,
@@ -4767,7 +4833,8 @@ export const ELEMENT_DATA: Elements = {
       wxpos: 24,
       wypos: 7,
       shells: [2, 8, 18, 32, 32, 16, 2],
-      electron_configuration: '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f14 6d8',
+      electron_configuration:
+        '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f14 6d8',
       electron_configuration_semantic: '*[Rn] 5f14 6d9 7s1',
       electron_affinity: null,
       electronegativity_pauling: null,
@@ -4810,7 +4877,8 @@ export const ELEMENT_DATA: Elements = {
       wxpos: 25,
       wypos: 7,
       shells: [2, 8, 18, 32, 32, 17, 2],
-      electron_configuration: '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f14 6d9',
+      electron_configuration:
+        '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f14 6d9',
       electron_configuration_semantic: '*[Rn] 5f14 6d10 7s1',
       electron_affinity: 151,
       electronegativity_pauling: null,
@@ -4853,7 +4921,8 @@ export const ELEMENT_DATA: Elements = {
       wxpos: 26,
       wypos: 7,
       shells: [2, 8, 18, 32, 32, 18, 2],
-      electron_configuration: '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f14 6d10',
+      electron_configuration:
+        '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f14 6d10',
       electron_configuration_semantic: '*[Rn] 5f14 6d10 7s2',
       electron_affinity: null,
       electronegativity_pauling: null,
@@ -4896,7 +4965,8 @@ export const ELEMENT_DATA: Elements = {
       wxpos: 27,
       wypos: 7,
       shells: [2, 8, 18, 32, 32, 18, 3],
-      electron_configuration: '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f14 6d10 7p1',
+      electron_configuration:
+        '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f14 6d10 7p1',
       electron_configuration_semantic: '*[Rn] 5f14 6d10 7s2 7p1',
       electron_affinity: 66.6,
       electronegativity_pauling: null,
@@ -4939,7 +5009,8 @@ export const ELEMENT_DATA: Elements = {
       wxpos: 28,
       wypos: 7,
       shells: [2, 8, 18, 32, 32, 18, 4],
-      electron_configuration: '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f14 6d10 7p2',
+      electron_configuration:
+        '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f14 6d10 7p2',
       electron_configuration_semantic: '*[Rn] 5f14 6d10 7s2 7p2',
       electron_affinity: null,
       electronegativity_pauling: null,
@@ -4982,7 +5053,8 @@ export const ELEMENT_DATA: Elements = {
       wxpos: 29,
       wypos: 7,
       shells: [2, 8, 18, 32, 32, 18, 5],
-      electron_configuration: '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f14 6d10 7p3',
+      electron_configuration:
+        '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f14 6d10 7p3',
       electron_configuration_semantic: '*[Rn] 5f14 6d10 7s2 7p3',
       electron_affinity: 35.3,
       electronegativity_pauling: null,
@@ -5025,7 +5097,8 @@ export const ELEMENT_DATA: Elements = {
       wxpos: 30,
       wypos: 7,
       shells: [2, 8, 18, 32, 32, 18, 6],
-      electron_configuration: '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f14 6d10 7p4',
+      electron_configuration:
+        '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f14 6d10 7p4',
       electron_configuration_semantic: '*[Rn] 5f14 6d10 7s2 7p4',
       electron_affinity: 74.9,
       electronegativity_pauling: null,
@@ -5068,7 +5141,8 @@ export const ELEMENT_DATA: Elements = {
       wxpos: 31,
       wypos: 7,
       shells: [2, 8, 18, 32, 32, 18, 7],
-      electron_configuration: '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f14 6d10 7p5',
+      electron_configuration:
+        '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f14 6d10 7p5',
       electron_configuration_semantic: '*[Rn] 5f14 6d10 7s2 7p5',
       electron_affinity: 165.9,
       electronegativity_pauling: null,
@@ -5111,7 +5185,8 @@ export const ELEMENT_DATA: Elements = {
       wxpos: 32,
       wypos: 7,
       shells: [2, 8, 18, 32, 32, 18, 8],
-      electron_configuration: '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f14 6d10 7p6',
+      electron_configuration:
+        '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f14 6d10 7p6',
       electron_configuration_semantic: '*[Rn] 5f14 6d10 7s2 7p6',
       electron_affinity: 5.40318,
       electronegativity_pauling: null,
@@ -5152,7 +5227,8 @@ export const ELEMENT_DATA: Elements = {
       wxpos: 1,
       wypos: 8,
       shells: [2, 8, 18, 32, 32, 18, 8, 1],
-      electron_configuration: '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f14 6d10 7p6 8s1',
+      electron_configuration:
+        '1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6 7s2 5f14 6d10 7p6 8s1',
       electron_configuration_semantic: '*[Uuo] 8s1',
       electron_affinity: 63.87,
       electronegativity_pauling: null,

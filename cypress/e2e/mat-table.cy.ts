@@ -1,79 +1,114 @@
-function getMatCell(row: number, column: number) {
-  if (column > 13) {
-    throw new Error('Column must be less than 14');
-  }
-  const rowMod = row * 14;
-  const columnMod = column;
-  return cy.get('.mat-mdc-cell').eq(rowMod + columnMod);
+function getDataRows() {
+  return cy.get('tr.mat-mdc-row.example-element-row');
 }
 
-describe('Mat Table Tab', () => {
+function getRow(index: number) {
+  return getDataRows().eq(index);
+}
+
+function getFirstRowNameCell() {
+  return getRow(0).find('td.mat-column-name');
+}
+
+describe('Mat table tab', () => {
   beforeEach(() => {
     cy.visit('/');
+    cy.contains('[role="tab"]', 'Mat Table').should('have.attr', 'aria-selected', 'true');
   });
 
-  it('should load', () => {
-    cy.get('.mat-mdc-tab').eq(0).should('contain.text', 'Mat Table');
+  it('renders expected default columns and footer summary', () => {
+    cy.get('th.mat-column-name').should('contain.text', 'name');
+    cy.get('th.mat-column-atomic_mass').should('contain.text', 'atomic_mass');
+    cy.get('th.mat-column-symbol').should('contain.text', 'symbol');
+    cy.get('th[aria-label="row actions"]').should('exist');
+
+    cy.get('td.mat-column-name.mat-mdc-footer-cell').should('contain.text', 'Total # of elements:');
+    cy.get('td.mat-column-atomic_mass.mat-mdc-footer-cell')
+      .invoke('text')
+      .then((text) => {
+        const total = Number.parseInt(text.trim(), 10);
+        expect(total).to.be.greaterThan(100);
+      });
   });
 
-  it('should display row details when the row is clicked', () => {
-    getMatCell(0, 0).should('contain.text', 'Hydrogen');
-    getMatCell(0, 12).should('contain.text', 'keyboard_arrow_down');
-    getMatCell(0, 13).should('contain.text', 'Hydrogen');
-    getMatCell(0, 13).invoke('height').should('eq', 0);
-    getMatCell(1, 0).should('contain.text', 'Helium');
+  it('expands and collapses details when a row is clicked', () => {
+    getRow(0).as('hydrogenRow');
+    cy.get('@hydrogenRow').should('contain.text', 'Hydrogen');
+    cy.get('@hydrogenRow').should('not.have.class', 'example-expanded-row');
 
-    getMatCell(0, 0).click();
+    cy.get('@hydrogenRow').click();
+    cy.get('@hydrogenRow').should('have.class', 'example-expanded-row');
+    cy.get('div.example-element-detail-wrapper-expanded').should('contain.text', 'Hydrogen');
 
-    getMatCell(0, 12).should('contain.text', 'keyboard_arrow_up');
-    getMatCell(0, 13).should('contain.text', 'Hydrogen');
-    getMatCell(0, 13).invoke('height').should('be.gt', 0);
+    cy.get('@hydrogenRow').click();
+    cy.get('@hydrogenRow').should('not.have.class', 'example-expanded-row');
   });
 
-  it('should overflow extra rows with a scroll bar', () => {
-    getMatCell(20, 0).should('contain.text', 'Scandium').not('be.visible');
-    getMatCell(20, 0).scrollIntoView().should('be.visible');
+  it('uses the expand icon button to toggle row details and icon state', () => {
+    getRow(0).within(() => {
+      cy.get('button[aria-label="expand row"]').as('expandButton');
+      cy.get('@expandButton').should('contain.text', 'keyboard_arrow_down');
+      cy.get('@expandButton').click();
+      cy.get('@expandButton').should('contain.text', 'keyboard_arrow_up');
+      cy.get('@expandButton').click();
+      cy.get('@expandButton').should('contain.text', 'keyboard_arrow_down');
+    });
   });
 
-  it('should sort the table when a column header is clicked', () => {
-    getMatCell(0, 0).should('contain.text', 'Hydrogen');
-    getMatCell(1, 0).should('contain.text', 'Helium');
+  it('allows only one expanded row at a time', () => {
+    getRow(0).click();
+    getRow(0).should('have.class', 'example-expanded-row');
 
-    cy.get('.mat-mdc-header-cell').eq(0).click();
-
-    getMatCell(0, 0).should('contain.text', 'Actinium');
-    getMatCell(1, 0).should('contain.text', 'Aluminium');
-
-    cy.get('.mat-mdc-header-cell').eq(0).click();
-
-    getMatCell(0, 0).should('contain.text', 'Zirconium');
-    getMatCell(1, 0).should('contain.text', 'Zinc');
+    getRow(1).click();
+    getRow(0).should('not.have.class', 'example-expanded-row');
+    getRow(1).should('have.class', 'example-expanded-row');
   });
 
-  it('should change the number of rows displayed when the paginator is changed', () => {
-    getMatCell(0, 0).should('contain.text', 'Hydrogen');
-    getMatCell(5, 0).should('exist');
+  it('sorts by name column in both directions', () => {
+    getFirstRowNameCell().should('contain.text', 'Hydrogen');
+    getRow(1).find('td.mat-column-name').should('contain.text', 'Helium');
 
+    cy.get('th.mat-column-name').click();
+    getFirstRowNameCell().should('contain.text', 'Actinium');
+    getRow(1).find('td.mat-column-name').should('contain.text', 'Aluminium');
+
+    cy.get('th.mat-column-name').click();
+    getFirstRowNameCell().should('contain.text', 'Zirconium');
+    getRow(1).find('td.mat-column-name').should('contain.text', 'Zinc');
+  });
+
+  it('changes page size using paginator options', () => {
+    getDataRows().should('have.length', 25);
     cy.get('.mat-mdc-paginator-touch-target').click();
-    cy.get('.mat-mdc-option').eq(0).click();
-
-    getMatCell(0, 0).should('contain.text', 'Hydrogen');
-    getMatCell(5, 0).should('not.exist');
+    cy.contains('mat-option', '5').click();
+    getDataRows().should('have.length', 5);
   });
 
-  it('should change the page when the paginator is clicked', () => {
-    getMatCell(0, 0).should('contain.text', 'Hydrogen');
-
+  it('changes current page when next button is clicked', () => {
+    getFirstRowNameCell().should('contain.text', 'Hydrogen');
     cy.get('.mat-mdc-paginator-navigation-next').click();
-
-    getMatCell(0, 0).should('contain.text', 'Iron');
+    getFirstRowNameCell().should('contain.text', 'Iron');
   });
 
-  it('should filter the table when the filter input is changed', () => {
-    getMatCell(0, 0).should('contain.text', 'Hydrogen');
-    cy.get('.mat-mdc-input-element').eq(0).type('Zinc');
-    getMatCell(0, 0).should('contain.text', 'Zinc');
-    cy.get('.mat-mdc-input-element').eq(0).clear();
-    getMatCell(0, 0).should('contain.text', 'Hydrogen');
+  it('filters rows case-insensitively with trimmed input and resets paginator to first page', () => {
+    cy.get('.mat-mdc-paginator-navigation-next').click();
+    getFirstRowNameCell().should('contain.text', 'Iron');
+
+    cy.get('input[matinput]').type('  zInc  ');
+    cy.get('.mat-mdc-paginator-range-label').should('contain.text', 'of 3');
+    getFirstRowNameCell().should('contain.text', 'Zinc');
+
+    cy.get('input[matinput]').clear();
+    getFirstRowNameCell().should('contain.text', 'Hydrogen');
+  });
+
+  it('supports selecting displayed columns from the column chooser', () => {
+    cy.get('th[aria-label="row actions"] mat-select').click();
+    cy.contains('mat-option', 'atomic_mass').click();
+    cy.get('body').click(0, 0);
+
+    cy.get('th.mat-column-atomic_mass').should('not.exist');
+    cy.get('td.mat-column-atomic_mass').should('not.exist');
+    cy.get('th.mat-column-name').should('exist');
   });
 });
