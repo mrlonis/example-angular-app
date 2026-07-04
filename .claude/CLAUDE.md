@@ -4,12 +4,13 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 
 Single-page Angular v22 demo app. Angular Material + CDK v22, TypeScript 6 (strict), npm (Node version pinned in `.nvmrc`). Two lazy-loaded routes defined in `src/app/app.routes.ts`; providers in `src/app/app.config.ts`; root component `src/app/app.ts` renders `<router-outlet />`.
 
-- `''` → `MatTabs` (`components/mat-tabs`): tabs hosting `MatTable` (periodic-elements Material table: sort, filter, paginate, expandable rows, column picker) and `ExampleIframe` (`iframe-resizer` demo).
-- `'toolbar'` → `MatToolbar` (`components/mat-toolbar`): toolbar with a `mat-drawer` sidenav.
+- `''` → `MatTabs` (`pages/mat-tabs`): tabs hosting `MatTable` (periodic-elements Material table: sort, filter, paginate, expandable rows, column picker) and `ExampleIframe` (`iframe-resizer` demo).
+- `'toolbar'` → `MatToolbar` (`pages/mat-toolbar`): toolbar with a `mat-drawer` sidenav.
 
 ## Repository Map
 
-- `src/app/components/<name>/` — standalone feature components as `<name>.{ts,html,scss,spec.ts}`.
+- `src/app/pages/<name>/` — route-level ("page") components loaded lazily from `app.routes.ts`.
+- `src/app/components/<name>/` — reusable components used across pages. Components are standalone, laid out as `<name>.{ts,html,scss,spec.ts}`.
 - `src/app/services/` — signal-based singletons (`selected-page`, `url-cache`), `providedIn: 'root'`.
 - `src/app/directives/` — `iframe-resizer` attribute directive (`[appIframeResizer]`).
 - `src/app/interfaces/` — types and periodic-element data (`data.ts`).
@@ -19,6 +20,7 @@ Single-page Angular v22 demo app. Angular Material + CDK v22, TypeScript 6 (stri
 
 ## Conventions
 
+- Put route-level components (one per route) in `src/app/pages/`; put components reused across pages in `src/app/components/`.
 - File names have no `.component`/`.service`/`.directive` suffix (Angular v20+ style): e.g. `mat-table.ts`, `url-cache.ts`.
 - New components default to SCSS and external templates/styles.
 - The generated instruction files (`AGENTS.md`, `.claude/CLAUDE.md`, etc.) are copies of this source — to change guidance, edit `agent-instructions/source.md` and re-sync (see below), never edit the copies.

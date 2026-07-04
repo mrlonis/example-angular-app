@@ -29,7 +29,7 @@ describe('Iframe resizer tab', () => {
     cy.get('iframe[appiframeresizer]').should('be.visible');
 
     cy.contains('[role="tab"]', 'Mat Table').click();
-    cy.get('app-table').should('exist');
+    cy.get('app-mat-table').should('exist');
 
     cy.contains('[role="tab"]', 'iframe-resizer').click();
     cy.get('iframe[appiframeresizer]').should('be.visible');

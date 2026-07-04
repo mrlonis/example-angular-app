@@ -32,7 +32,7 @@ describe('MatTabs', () => {
 
   it('shows mat table content by default', () => {
     const host = fixture.nativeElement as HTMLElement;
-    expect(host.querySelector('app-table')).toBeTruthy();
+    expect(host.querySelector('app-mat-table')).toBeTruthy();
   });
 
   it('renders an interactive tablist', () => {

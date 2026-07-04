@@ -28,10 +28,10 @@ A reference Angular v22 application that demonstrates modern Angular patterns �
 
 The app exposes two lazy-loaded routes:
 
-- **`/` — Tabbed layout** ([`MatTabs`](src/app/components/mat-tabs/mat-tabs.ts))
+- **`/` — Tabbed layout** ([`MatTabs`](src/app/pages/mat-tabs/mat-tabs.ts))
   - **Mat Table** ([`MatTable`](src/app/components/mat-table/mat-table.ts)): an Angular Material data table of the periodic elements with client-side sorting, text filtering, pagination, expandable rows, and a multi-select control to choose which columns are displayed.
   - **iframe-resizer** ([`ExampleIframe`](src/app/components/example-iframe/example-iframe.ts)): demonstrates the [`IFrameResizer`](src/app/directives/iframe-resizer.ts) directive, which auto-sizes an embedded `<iframe>` to its content using the [`iframe-resizer`](https://github.com/davidjbradshaw/iframe-resizer) library. URLs are sanitized and memoized through the [`UrlCache`](src/app/services/url-cache.ts) service.
-- **`/toolbar` — Toolbar + side drawer** ([`MatToolbar`](src/app/components/mat-toolbar/mat-toolbar.ts)): a Material toolbar with a collapsible `mat-drawer` navigation, backed by the [`SelectedPage`](src/app/services/selected-page.ts) signal service.
+- **`/toolbar` — Toolbar + side drawer** ([`MatToolbar`](src/app/pages/mat-toolbar/mat-toolbar.ts)): a Material toolbar with a collapsible `mat-drawer` navigation, backed by the [`SelectedPage`](src/app/services/selected-page.ts) signal service.
 
 ## Tech Stack
 
@@ -49,7 +49,8 @@ The app exposes two lazy-loaded routes:
 ```text
 src/
 ├── app/
-│   ├── components/          # Feature components (mat-tabs, mat-table, mat-toolbar, example-iframe)
+│   ├── pages/               # Route-level components (mat-tabs, mat-toolbar)
+│   ├── components/          # Reusable components (mat-table, example-iframe)
 │   ├── directives/          # iframe-resizer attribute directive
 │   ├── interfaces/          # Type definitions and periodic element data
 │   ├── services/            # Signal-based singleton services (selected-page, url-cache)

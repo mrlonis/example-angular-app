@@ -48,3 +48,6 @@ Thumbs.db
 # Cypress
 cypress/downloads
 cypress/screenshots
+
+# Codacy
+.codacy/
