@@ -1,20 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { vi } from 'vitest';
-import { SelectedPage } from '../../services/selected-page';
 import { MatToolbar } from './mat-toolbar';
 
 describe('MatToolbar', () => {
   let component: MatToolbar;
   let fixture: ComponentFixture<MatToolbar>;
-  const selectedPage = {
-    selectMatTable: vi.fn(),
-    selectIframeResizer: vi.fn(),
-  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [MatToolbar],
-      providers: [{ provide: SelectedPage, useValue: selectedPage }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(MatToolbar);
@@ -22,13 +16,10 @@ describe('MatToolbar', () => {
     fixture.detectChanges();
   });
 
-  beforeEach(() => {
-    selectedPage.selectMatTable.mockClear();
-    selectedPage.selectIframeResizer.mockClear();
-  });
-
   it('should create', () => {
     expect(component).toBeTruthy();
+    expect(component.matTable()).toBe(true);
+    expect(component.iframeResizer()).toBe(false);
   });
 
   it('toggles the drawer when available', () => {
@@ -42,22 +33,37 @@ describe('MatToolbar', () => {
     expect(toggleSpy).toHaveBeenCalledTimes(1);
   });
 
-  it('does not throw when toggling before view child is initialized', () => {
+  it('can toggle drawer on a fresh component instance', () => {
     const freshFixture = TestBed.createComponent(MatToolbar);
+    freshFixture.detectChanges();
 
     expect(() => freshFixture.componentInstance.toggleDrawer()).not.toThrow();
   });
 
-  it('calls SelectedPage methods from component API', () => {
+  it('updates signals when selecting mat table', () => {
+    const toggleSpy = vi.spyOn(component, 'toggleDrawer');
+
     component.selectMatTable();
+
+    expect(component.matTable()).toBe(true);
+    expect(component.iframeResizer()).toBe(false);
+    expect(toggleSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it('updates signals when selecting iframe resizer', () => {
+    const toggleSpy = vi.spyOn(component, 'toggleDrawer');
+
     component.selectIframeResizer();
 
-    expect(selectedPage.selectMatTable).toHaveBeenCalledTimes(1);
-    expect(selectedPage.selectIframeResizer).toHaveBeenCalledTimes(1);
+    expect(component.matTable()).toBe(false);
+    expect(component.iframeResizer()).toBe(true);
+    expect(toggleSpy).toHaveBeenCalledTimes(1);
   });
 
   it('wires toolbar and drawer button clicks to component behavior', () => {
     const toggleSpy = vi.spyOn(component, 'toggleDrawer');
+    const selectMatTableSpy = vi.spyOn(component, 'selectMatTable');
+    const selectIframeResizerSpy = vi.spyOn(component, 'selectIframeResizer');
     const host = fixture.nativeElement as HTMLElement;
     const toolbarToggleButton = host.querySelector<HTMLButtonElement>('mat-toolbar button');
     const drawerButtons = host.querySelectorAll<HTMLButtonElement>('mat-drawer button');
@@ -70,8 +76,8 @@ describe('MatToolbar', () => {
     matTableButton.click();
     iframeButton.click();
 
-    expect(toggleSpy).toHaveBeenCalledTimes(1);
-    expect(selectedPage.selectMatTable).toHaveBeenCalledTimes(1);
-    expect(selectedPage.selectIframeResizer).toHaveBeenCalledTimes(1);
+    expect(toggleSpy).toHaveBeenCalledTimes(3);
+    expect(selectMatTableSpy).toHaveBeenCalledTimes(1);
+    expect(selectIframeResizerSpy).toHaveBeenCalledTimes(1);
   });
 });
