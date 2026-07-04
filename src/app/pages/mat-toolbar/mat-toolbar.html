@@ -26,7 +26,7 @@
       </div>
     </mat-drawer>
     @if (matTable()) {
-      <app-table />
+      <app-table class="flex-column max-height-100-percent" />
     } @else if (iframeResizer()) {
       <app-example-iframe />
     }
