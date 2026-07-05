@@ -103,7 +103,7 @@ describe('Mat table tab', () => {
   });
 
   it('supports selecting displayed columns from the column chooser', () => {
-    cy.get('th[aria-label="row actions"] button').click();
+    cy.get('[data-testid="column-chooser-trigger"]').click();
     cy.contains('.cdk-overlay-container mat-checkbox', 'atomic_mass').should('be.visible').click();
 
     cy.get('th.mat-column-atomic_mass').should('not.exist');

@@ -52,3 +52,10 @@ tr.example-element-row:not(.example-expanded-row):active {
 .overflow-auto {
   overflow: auto;
 }
+
+.column-chooser-container {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.25rem 0;
+  align-items: center;
+}

@@ -285,7 +285,7 @@ describe('MatTable', () => {
 
     it('opens and closes the column chooser overlay from the header button', () => {
       const chooserButton = fixture.debugElement.query(
-        By.css('th[aria-label="row actions"] button'),
+        By.css('[data-testid="column-chooser-trigger"]'),
       );
       expect(component.isOpen()).toBe(false);
 
