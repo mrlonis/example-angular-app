@@ -12,7 +12,7 @@ import { FilterState } from '../../../interfaces/filter-state';
 export class Filter {
   readonly value = model<FilterState>({ name: '' });
 
-  emitValue(event: Event) {
+  setValue(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     const currentValue = this.value();
     this.value.set({ ...currentValue, name: filterValue.trim() });

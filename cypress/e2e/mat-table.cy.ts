@@ -95,7 +95,7 @@ describe('Mat table tab', () => {
     getFirstRowNameCell().should('contain.text', 'Iron');
 
     cy.get('input[matinput]').type('  zInc  ');
-    cy.get('.mat-mdc-paginator-range-label').should('contain.text', 'of 3');
+    cy.get('.mat-mdc-paginator-range-label').should('contain.text', 'of 1');
     getFirstRowNameCell().should('contain.text', 'Zinc');
 
     cy.get('input[matinput]').clear();

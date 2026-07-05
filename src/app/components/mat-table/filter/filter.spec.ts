@@ -25,14 +25,14 @@ describe('Filter', () => {
   it('renders the filter input with expected placeholder', () => {
     const input = fixture.debugElement.query(By.css('input[matInput]'));
     expect(input).toBeTruthy();
-    expect((input.nativeElement as HTMLInputElement).placeholder).toBe('Ex. ium');
+    expect((input.nativeElement as HTMLInputElement).placeholder).toBe('Ex. Aluminium');
   });
 
-  it('sets trimmed name in filter state from emitValue', () => {
+  it('sets trimmed name in filter state from value set', () => {
     const setSpy = vi.spyOn(component.value, 'set');
     const event = { target: { value: '  HeLIum  ' } } as unknown as Event;
 
-    component.emitValue(event);
+    component.setValue(event);
 
     expect(setSpy).toHaveBeenCalledWith({ name: 'HeLIum' });
   });
@@ -41,7 +41,7 @@ describe('Filter', () => {
     const setSpy = vi.spyOn(component.value, 'set');
     const event = { target: { value: '   ' } } as unknown as Event;
 
-    component.emitValue(event);
+    component.setValue(event);
 
     expect(setSpy).toHaveBeenCalledWith({ name: '' });
   });
@@ -63,7 +63,7 @@ describe('Filter', () => {
       includeArchived: boolean;
     });
 
-    component.emitValue({ target: { value: ' neon ' } } as unknown as Event);
+    component.setValue({ target: { value: ' neon ' } } as unknown as Event);
 
     expect(component.value()).toEqual({ name: 'neon', includeArchived: true });
   });
