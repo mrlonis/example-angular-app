@@ -1,8 +1,4 @@
-<mat-form-field>
-  <mat-label>Filter</mat-label>
-  <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input />
-</mat-form-field>
-
+<app-filter (valueChange)="applyFilter($event)" />
 <div class="overflow-auto">
   <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8" matSort>
     <!-- Columns Definitions -->

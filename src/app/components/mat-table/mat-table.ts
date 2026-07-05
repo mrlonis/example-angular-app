@@ -1,15 +1,13 @@
 import { Component, computed, effect, signal, viewChild } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ELEMENT_DATA } from '../../interfaces/data';
 import { PeriodicElement } from '../../interfaces/periodic-element';
 import { ColumnSelect } from './column-select/column-select';
+import { Filter } from './filter/filter';
 import { PeriodicElementDetail } from './periodic-element-detail/periodic-element-detail';
 
 export const FULL_LIST_OF_COLUMNS = [
@@ -65,11 +63,9 @@ export const DEFAULT_COLUMNS = [
   selector: 'app-mat-table',
   imports: [
     ColumnSelect,
-    FormsModule,
+    Filter,
     MatButtonModule,
-    MatFormFieldModule,
     MatIconModule,
-    MatInputModule,
     MatPaginatorModule,
     MatTableModule,
     MatSortModule,
@@ -107,9 +103,8 @@ export class MatTable {
     this.columnsToDisplay.set(columns);
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  applyFilter(event: string) {
+    this.dataSource.filter = event;
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();

@@ -93,14 +93,14 @@ describe('MatTable', () => {
   });
 
   describe('Filtering', () => {
-    it('applies normalized filter (lowercase, trimmed) to dataSource', () => {
-      component.applyFilter({ target: { value: '  HeLIum  ' } } as unknown as Event);
+    it('applies provided filter value to dataSource', () => {
+      component.applyFilter('helium');
       expect(component.dataSource.filter).toBe('helium');
     });
 
     it('applies filter without pagination if paginator is absent', () => {
       component.dataSource.paginator = null;
-      component.applyFilter({ target: { value: 'hydrogen' } } as unknown as Event);
+      component.applyFilter('hydrogen');
       expect(component.dataSource.filter).toBe('hydrogen');
     });
 
@@ -112,23 +112,23 @@ describe('MatTable', () => {
       }
       const firstPageSpy = vi.spyOn(paginator, 'firstPage');
 
-      component.applyFilter({ target: { value: 'H' } } as unknown as Event);
+      component.applyFilter('h');
 
       expect(firstPageSpy).toHaveBeenCalledTimes(1);
     });
 
     it('handles empty filter string', () => {
-      component.applyFilter({ target: { value: '' } } as unknown as Event);
+      component.applyFilter('');
       expect(component.dataSource.filter).toBe('');
     });
 
     it('handles filter with special characters', () => {
-      component.applyFilter({ target: { value: '  Au*  ' } } as unknown as Event);
+      component.applyFilter('au*');
       expect(component.dataSource.filter).toBe('au*');
     });
 
     it('handles filter with numbers', () => {
-      component.applyFilter({ target: { value: '  79  ' } } as unknown as Event);
+      component.applyFilter('79');
       expect(component.dataSource.filter).toBe('79');
     });
   });
@@ -363,24 +363,18 @@ describe('MatTable', () => {
     });
   });
 
-  describe('Template Integration - Filter Input', () => {
-    it('renders filter input field', () => {
-      const filterInput = fixture.debugElement.query(By.css('input[placeholder="Ex. ium"]'));
-      expect(filterInput).toBeTruthy();
+  describe('Template Integration - Filter', () => {
+    it('renders app-filter component', () => {
+      const filter = fixture.debugElement.query(By.css('app-filter'));
+      expect(filter).toBeTruthy();
     });
 
-    it('has correct placeholder text', () => {
-      const filterInput = fixture.debugElement.query(By.css('input[placeholder="Ex. ium"]'));
-      expect((filterInput.nativeElement as HTMLInputElement).placeholder).toBe('Ex. ium');
-    });
-
-    it('calls applyFilter on keyup event', () => {
-      const filterInput = fixture.debugElement.query(By.css('input[matInput]'));
+    it('calls applyFilter when app-filter emits valueChange', () => {
+      const filter = fixture.debugElement.query(By.css('app-filter'));
       const spy = vi.spyOn(component, 'applyFilter');
 
-      const event = { target: { value: 'test' } } as unknown as KeyboardEvent;
-      filterInput.triggerEventHandler('keyup', event);
-      expect(spy).toHaveBeenCalled();
+      filter.triggerEventHandler('valueChange', 'test');
+      expect(spy).toHaveBeenCalledWith('test');
     });
   });
 
@@ -467,7 +461,7 @@ describe('MatTable', () => {
 
     it('handles filtering with special characters in search', () => {
       expect(() => {
-        component.applyFilter({ target: { value: '!@#$%' } } as unknown as Event);
+        component.applyFilter('!@#$%');
       }).not.toThrow();
     });
 
