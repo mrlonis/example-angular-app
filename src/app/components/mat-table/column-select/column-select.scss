@@ -1,7 +1,7 @@
 .example-card {
-  display: flex !important;
-  flex: auto !important;
-  flex-direction: column !important;
+  display: flex;
+  flex: auto;
+  flex-direction: column;
   min-width: 100px;
   border: solid 1px #ccc;
   border-radius: 5px;
@@ -13,10 +13,10 @@
 }
 
 .card-content {
-  display: flex !important;
-  flex: auto !important;
-  flex-direction: column !important;
-  align-items: flex-start !important;
+  display: flex;
+  flex: auto;
+  flex-direction: column;
+  align-items: flex-start;
   overflow: auto;
   max-height: 300px;
 }

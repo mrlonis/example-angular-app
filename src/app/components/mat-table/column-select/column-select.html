@@ -1,9 +1,9 @@
 <mat-card class="example-card" appearance="outlined">
   <mat-card-content class="card-content">
-    @for (column of fullListOfColumns(); track $index) {
+    @for (column of fullListOfColumns(); track column) {
       <mat-checkbox
         [checked]="columnsToDisplay().includes(column)"
-        (change)="setColumnsToDisplay($event, $index)"
+        (change)="setColumnsToDisplay($event, column)"
       >
         {{ column }}
       </mat-checkbox>

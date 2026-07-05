@@ -76,13 +76,21 @@ describe('ColumnSelect', () => {
     });
 
     it('adds a checked column while preserving full list order', () => {
-      component.setColumnsToDisplay({ checked: true } as MatCheckboxChange, 1);
+      component.setColumnsToDisplay({ checked: true } as MatCheckboxChange, 'atomic_mass');
       expect(component.columnsToDisplay()).toEqual(['name', 'atomic_mass', 'symbol']);
     });
 
     it('removes an unchecked column', () => {
-      component.setColumnsToDisplay({ checked: false } as MatCheckboxChange, 0);
+      component.setColumnsToDisplay({ checked: false } as MatCheckboxChange, 'name');
       expect(component.columnsToDisplay()).toEqual(['symbol']);
+    });
+
+    it('preserves selected columns that are not in the full list when toggling', () => {
+      component.columnsToDisplay.set(['name', 'source']);
+
+      component.setColumnsToDisplay({ checked: true } as MatCheckboxChange, 'atomic_mass');
+
+      expect(component.columnsToDisplay()).toEqual(['name', 'atomic_mass', 'source']);
     });
   });
 

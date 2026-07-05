@@ -300,6 +300,28 @@ describe('MatTable', () => {
       expect(overlayContainerElement.querySelector('app-column-select')).toBeNull();
     });
 
+    it('closes the column chooser overlay when backdrop is clicked', () => {
+      const chooserButton = fixture.debugElement.query(
+        By.css('[data-testid="column-chooser-trigger"]'),
+      );
+
+      chooserButton.triggerEventHandler('click', new MouseEvent('click'));
+      fixture.detectChanges();
+      expect(component.isOpen()).toBe(true);
+
+      const backdrop = overlayContainerElement.querySelector('.cdk-overlay-backdrop');
+      expect(backdrop).toBeTruthy();
+      if (!backdrop) {
+        throw new Error('Expected overlay backdrop to exist');
+      }
+
+      backdrop.dispatchEvent(new MouseEvent('click'));
+      fixture.detectChanges();
+
+      expect(component.isOpen()).toBe(false);
+      expect(overlayContainerElement.querySelector('app-column-select')).toBeNull();
+    });
+
     it('passes fullListOfColumns and columnsToDisplay to column-select when overlay is open', () => {
       component.isOpen.set(true);
       fixture.detectChanges();

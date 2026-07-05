@@ -12,19 +12,37 @@ export class ColumnSelect {
   readonly fullListOfColumns = input.required<string[]>();
   readonly columnsToDisplay = model.required<string[]>();
 
-  setColumnsToDisplay(event: MatCheckboxChange, index: number) {
+  setColumnsToDisplay(event: MatCheckboxChange, column: string) {
     if (event.checked) {
-      this.columnsToDisplay.set(
-        this.fullListOfColumns().filter((value, i) => {
-          return i === index || this.columnsToDisplay().includes(value);
-        }),
-      );
-    } else {
-      this.columnsToDisplay.set(
-        this.fullListOfColumns().filter((value, i) => {
-          return i !== index && this.columnsToDisplay().includes(value);
-        }),
-      );
+      this.columnsToDisplay.update((currentColumns) => {
+        if (currentColumns.includes(column)) {
+          return currentColumns;
+        }
+
+        const fullListOfColumns = this.fullListOfColumns();
+
+        return [...currentColumns, column].sort((a, b) => {
+          const columnAIndex = fullListOfColumns.indexOf(a);
+          const columnBIndex = fullListOfColumns.indexOf(b);
+
+          if (columnAIndex === -1 && columnBIndex === -1) {
+            return 0;
+          }
+          if (columnAIndex === -1) {
+            return 1;
+          }
+          if (columnBIndex === -1) {
+            return -1;
+          }
+
+          return columnAIndex - columnBIndex;
+        });
+      });
+      return;
     }
+
+    this.columnsToDisplay.update((currentColumns) => {
+      return currentColumns.filter((currentColumn) => currentColumn !== column);
+    });
   }
 }

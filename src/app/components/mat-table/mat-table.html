@@ -16,6 +16,8 @@
     cdkConnectedOverlay
     [cdkConnectedOverlayOrigin]="origin"
     [cdkConnectedOverlayOpen]="isOpen()"
+    [cdkConnectedOverlayHasBackdrop]="true"
+    (backdropClick)="isOpen.set(false)"
     (detach)="isOpen.set(false)"
   >
     <app-column-select
