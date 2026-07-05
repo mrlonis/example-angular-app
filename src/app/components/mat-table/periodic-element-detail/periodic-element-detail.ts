@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { PeriodicElement } from '../../interfaces/periodic-element';
+import { PeriodicElement } from '../../../interfaces/periodic-element';
 
 @Component({
   selector: 'app-periodic-element-detail',

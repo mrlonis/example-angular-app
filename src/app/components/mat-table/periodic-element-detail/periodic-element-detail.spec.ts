@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { PeriodicElement } from '../../interfaces/periodic-element';
+import { PeriodicElement } from '../../../interfaces/periodic-element';
 import { PeriodicElementDetail } from './periodic-element-detail';
 
 describe('PeriodicElementDetail', () => {
