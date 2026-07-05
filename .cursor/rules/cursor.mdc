@@ -105,7 +105,11 @@ Single-page Angular v22 demo app. Angular Material + CDK v22, TypeScript 6 (stri
 ## Linting Guidelines
 
 - Run linting for every change set; linting is required for all changes, not optional.
-- Use `npm run lint` as the default lint command.
+- Use the lint command that matches the files you changed:
+  - Angular app files: `npm run lint:angular`
+  - Cypress files: `npm run lint:cypress`
+  - Mixed changes (Angular + Cypress) or full-repo linting: `npm run lint`
+- For scoped linting, pass extra arguments through the matching script (for example: `npm run lint:angular -- <args>` or `npm run lint:cypress -- <args>`).
 - Treat lint failures as real issues to fix in code rather than bypass.
 - Never disable ESLint rules to make code pass linting.
   - Do not disable rules in root/shared ESLint config files.
