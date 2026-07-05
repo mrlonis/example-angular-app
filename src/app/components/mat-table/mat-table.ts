@@ -110,10 +110,6 @@ export class MatTable {
     });
   }
 
-  setColumnsToDisplay(columns: string[]) {
-    this.columnsToDisplay.set(columns);
-  }
-
   applyFilter(event: FilterState) {
     this.dataSource.filter = JSON.stringify(event);
 

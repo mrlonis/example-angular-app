@@ -61,34 +61,34 @@ describe('MatTable', () => {
   });
 
   describe('Column Management', () => {
-    it('setColumnsToDisplay updates columnsToDisplay signal', () => {
+    it('updates columnsToDisplay signal', () => {
       const newColumns = ['name', 'symbol'];
-      component.setColumnsToDisplay(newColumns);
+      component.columnsToDisplay.set(newColumns);
       expect(component.columnsToDisplay()).toEqual(newColumns);
     });
 
     it('columnsToDisplayWithExpand updates when columnsToDisplay changes', () => {
       const newColumns = ['name', 'symbol', 'atomic_mass'];
-      component.setColumnsToDisplay(newColumns);
+      component.columnsToDisplay.set(newColumns);
       expect(component.columnsToDisplayWithExpand()).toEqual([...newColumns, 'expand']);
     });
 
-    it('setColumnsToDisplay can handle empty array', () => {
-      component.setColumnsToDisplay([]);
+    it('handles empty array of displayed columns', () => {
+      component.columnsToDisplay.set([]);
       expect(component.columnsToDisplay()).toEqual([]);
       expect(component.columnsToDisplayWithExpand()).toEqual(['expand']);
     });
 
-    it('setColumnsToDisplay can handle all columns from fullListOfColumns', () => {
-      component.setColumnsToDisplay(FULL_LIST_OF_COLUMNS);
+    it('can set all columns from fullListOfColumns', () => {
+      component.columnsToDisplay.set(FULL_LIST_OF_COLUMNS);
       expect(component.columnsToDisplay()).toEqual(FULL_LIST_OF_COLUMNS);
     });
 
-    it('setColumnsToDisplay can reset to DEFAULT_COLUMNS', () => {
-      component.setColumnsToDisplay(['name', 'symbol']);
+    it('can reset displayed columns to DEFAULT_COLUMNS', () => {
+      component.columnsToDisplay.set(['name', 'symbol']);
       expect(component.columnsToDisplay()).not.toEqual(DEFAULT_COLUMNS);
 
-      component.setColumnsToDisplay(DEFAULT_COLUMNS);
+      component.columnsToDisplay.set(DEFAULT_COLUMNS);
       expect(component.columnsToDisplay()).toEqual(DEFAULT_COLUMNS);
     });
   });
@@ -300,7 +300,7 @@ describe('MatTable', () => {
 
     it('column-select reflects current columnsToDisplay selection', () => {
       const newColumns = ['name', 'symbol'];
-      component.setColumnsToDisplay(newColumns);
+      component.columnsToDisplay.set(newColumns);
       fixture.detectChanges();
 
       const columnSelect = fixture.debugElement.query(By.css('app-column-select'));
@@ -507,7 +507,7 @@ describe('MatTable', () => {
       const initialHeaders = fixture.debugElement.queryAll(By.css('th[mat-header-cell]'));
       const initialCount = initialHeaders.length;
 
-      component.setColumnsToDisplay(['name', 'symbol']);
+      component.columnsToDisplay.set(['name', 'symbol']);
       fixture.detectChanges();
 
       const updatedHeaders = fixture.debugElement.queryAll(By.css('th[mat-header-cell]'));
@@ -516,7 +516,7 @@ describe('MatTable', () => {
     });
 
     it('expandedDetail row maintains proper colspan after column change', () => {
-      component.setColumnsToDisplay(['name', 'symbol']);
+      component.columnsToDisplay.set(['name', 'symbol']);
       fixture.detectChanges();
 
       // Find the detail row cell with the example-element-detail-wrapper
@@ -547,10 +547,10 @@ describe('MatTable', () => {
 
     it('handles rapid column changes', () => {
       expect(() => {
-        component.setColumnsToDisplay(['name']);
-        component.setColumnsToDisplay(['symbol']);
-        component.setColumnsToDisplay(['atomic_mass']);
-        component.setColumnsToDisplay(DEFAULT_COLUMNS);
+        component.columnsToDisplay.set(['name']);
+        component.columnsToDisplay.set(['symbol']);
+        component.columnsToDisplay.set(['atomic_mass']);
+        component.columnsToDisplay.set(DEFAULT_COLUMNS);
       }).not.toThrow();
 
       expect(component.columnsToDisplay()).toEqual(DEFAULT_COLUMNS);
