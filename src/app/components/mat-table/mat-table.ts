@@ -1,15 +1,15 @@
 import { Component, computed, effect, signal, viewChild } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatSelectModule } from '@angular/material/select';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ELEMENT_DATA } from '../../interfaces/data';
+import { FilterState } from '../../interfaces/filter-state';
 import { PeriodicElement } from '../../interfaces/periodic-element';
+import { ColumnSelect } from './column-select/column-select';
+import { Filter } from './filter/filter';
+import { PeriodicElementDetail } from './periodic-element-detail/periodic-element-detail';
 
 export const FULL_LIST_OF_COLUMNS = [
   'name',
@@ -63,20 +63,23 @@ export const DEFAULT_COLUMNS = [
 @Component({
   selector: 'app-mat-table',
   imports: [
-    FormsModule,
+    ColumnSelect,
+    Filter,
     MatButtonModule,
-    MatFormFieldModule,
     MatIconModule,
-    MatInputModule,
     MatPaginatorModule,
-    MatSelectModule,
     MatTableModule,
     MatSortModule,
+    PeriodicElementDetail,
   ],
   templateUrl: './mat-table.html',
   styleUrl: './mat-table.scss',
 })
 export class MatTable {
+  private readonly emptyFilterState: FilterState = { name: '' };
+  private cachedFilterString = JSON.stringify(this.emptyFilterState);
+  private cachedFilterState = this.emptyFilterState;
+
   readonly paginator = viewChild(MatPaginator);
   readonly sort = viewChild(MatSort);
 
@@ -84,9 +87,16 @@ export class MatTable {
   readonly columnsToDisplay = signal<string[]>(DEFAULT_COLUMNS);
   readonly columnsToDisplayWithExpand = computed(() => [...this.columnsToDisplay(), 'expand']);
   readonly fullListOfColumns = FULL_LIST_OF_COLUMNS;
+  readonly defaultColumns = DEFAULT_COLUMNS;
   readonly expandedElement = signal<PeriodicElement | null>(null);
 
   constructor() {
+    this.dataSource.filterPredicate = (data: PeriodicElement, filter: string) => {
+      const filterState = this.getCachedFilterState(filter);
+
+      return data.name.toLowerCase().startsWith(filterState.name.toLowerCase());
+    };
+    this.dataSource.filter = JSON.stringify(this.emptyFilterState);
     effect(() => {
       const paginator = this.paginator();
       const sort = this.sort();
@@ -100,24 +110,74 @@ export class MatTable {
     });
   }
 
-  setColumnsToDisplay(columns: string[] | null) {
-    this.columnsToDisplay.set(columns ?? DEFAULT_COLUMNS);
-  }
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  applyFilter(event: FilterState) {
+    this.dataSource.filter = JSON.stringify(event);
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
   }
 
-  toggleExpanded(element: PeriodicElement) {
+  toggleExpanded(event: Event, element: PeriodicElement) {
+    if (event instanceof KeyboardEvent) {
+      if (
+        event.currentTarget instanceof HTMLElement &&
+        event.target instanceof HTMLElement &&
+        event.target !== event.currentTarget
+      ) {
+        return;
+      }
+
+      if (event.key !== 'Enter' && event.key !== ' ') {
+        return;
+      }
+      if (event.key === ' ') {
+        event.preventDefault();
+      }
+    }
+
+    event.stopPropagation();
     this.expandedElement.update((current) => (current === element ? null : element));
   }
 
   isExpanded(element: PeriodicElement) {
     return this.expandedElement() === element;
+  }
+
+  private getCachedFilterState(filter: string): FilterState {
+    if (filter === this.cachedFilterString) {
+      return this.cachedFilterState;
+    }
+
+    const filterState = this.parseFilterState(filter);
+    this.cachedFilterString = filter;
+    this.cachedFilterState = filterState;
+
+    return filterState;
+  }
+
+  private parseFilterState(filter: string): FilterState {
+    if (!filter) {
+      return this.emptyFilterState;
+    }
+
+    try {
+      const parsedFilter = JSON.parse(filter) as unknown;
+
+      if (
+        typeof parsedFilter === 'object' &&
+        parsedFilter !== null &&
+        'name' in parsedFilter &&
+        typeof parsedFilter.name === 'string'
+      ) {
+        return { name: parsedFilter.name };
+      }
+    } catch (error) {
+      if (!(error instanceof SyntaxError)) {
+        throw error;
+      }
+    }
+
+    return this.emptyFilterState;
   }
 }

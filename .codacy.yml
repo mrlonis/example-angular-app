@@ -1,0 +1,14 @@
+---
+exclude_paths:
+  - '.claude/**'
+  - '.cursor/**'
+  - '.gemini/**'
+  - '.github/**'
+  - '.husky/**'
+  - '.junie/**'
+  - '.windsurf/**'
+  - 'agent-instructions/**'
+  - 'cypress/**'
+  - 'public/**'
+  - 'scripts/**'
+  - 'src/**/*.spec.ts'

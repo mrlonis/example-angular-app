@@ -1,0 +1,13 @@
+<mat-select
+  [value]="columnsToDisplay()"
+  (valueChange)="setColumnsToDisplay($event)"
+  [panelWidth]="null"
+  multiple
+>
+  <mat-select-trigger>
+    <mat-icon>filter_alt</mat-icon>
+  </mat-select-trigger>
+  @for (column of fullListOfColumns(); track $index) {
+    <mat-option [value]="column">{{ column }}</mat-option>
+  }
+</mat-select>
