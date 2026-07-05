@@ -102,6 +102,16 @@ Single-page Angular v22 demo app. Angular Material + CDK v22, TypeScript 6 (stri
   - `npm run sync:agent-instructions`
   - `npm run sync:agent-instructions:check`
 
+## Linting Guidelines
+
+- Run linting for every change set; linting is required for all changes, not optional.
+- Use `npm run lint` as the default lint command.
+- Treat lint failures as real issues to fix in code rather than bypass.
+- Never disable ESLint rules to make code pass linting.
+  - Do not disable rules in root/shared ESLint config files.
+  - Do not disable rules at the file level.
+  - Do not disable rules inline (for example with `eslint-disable` comments).
+
 ## Testing Guidelines
 
 - This project uses `vitest` (v4) for unit testing. Write and update unit tests using Vitest APIs and patterns.
