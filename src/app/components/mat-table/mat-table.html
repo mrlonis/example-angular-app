@@ -19,11 +19,27 @@
     <!-- Expand Column Definition -->
     <ng-container matColumnDef="expand">
       <th mat-header-cell *matHeaderCellDef aria-label="row actions">
-        <app-column-select
-          [fullListOfColumns]="fullListOfColumns"
-          [columnsToDisplay]="columnsToDisplay()"
-          (columnsToDisplayChange)="columnsToDisplay.set($event)"
-        />
+        <button
+          matIconButton
+          (click)="isOpen.set(!isOpen())"
+          type="button"
+          cdkOverlayOrigin
+          #origin="cdkOverlayOrigin"
+        >
+          <mat-icon>filter_alt</mat-icon>
+        </button>
+        <ng-template
+          cdkConnectedOverlay
+          [cdkConnectedOverlayOrigin]="origin"
+          [cdkConnectedOverlayOpen]="isOpen()"
+          (detach)="isOpen.set(false)"
+        >
+          <app-column-select
+            [fullListOfColumns]="fullListOfColumns"
+            [columnsToDisplay]="columnsToDisplay()"
+            (columnsToDisplayChange)="columnsToDisplay.set($event)"
+          />
+        </ng-template>
       </th>
       <td mat-cell *matCellDef="let element">
         <button mat-icon-button aria-label="expand row" (click)="toggleExpanded($event, element)">

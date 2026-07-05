@@ -1,13 +1,12 @@
-<mat-select
-  [value]="columnsToDisplay()"
-  (valueChange)="setColumnsToDisplay($event)"
-  [panelWidth]="null"
-  multiple
->
-  <mat-select-trigger>
-    <mat-icon>filter_alt</mat-icon>
-  </mat-select-trigger>
-  @for (column of fullListOfColumns(); track $index) {
-    <mat-option [value]="column">{{ column }}</mat-option>
-  }
-</mat-select>
+<mat-card class="example-card" appearance="outlined">
+  <mat-card-content class="card-content">
+    @for (column of fullListOfColumns(); track $index) {
+      <mat-checkbox
+        [checked]="columnsToDisplay().includes(column)"
+        (change)="setColumnsToDisplay($event, $index)"
+      >
+        {{ column }}
+      </mat-checkbox>
+    }
+  </mat-card-content>
+</mat-card>

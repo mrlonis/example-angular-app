@@ -1,3 +1,4 @@
+import { OverlayContainer } from '@angular/cdk/overlay';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { vi } from 'vitest';
@@ -8,15 +9,23 @@ import { DEFAULT_COLUMNS, FULL_LIST_OF_COLUMNS, MatTable } from './mat-table';
 describe('MatTable', () => {
   let component: MatTable;
   let fixture: ComponentFixture<MatTable>;
+  let overlayContainer: OverlayContainer;
+  let overlayContainerElement: HTMLElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [MatTable],
     }).compileComponents();
 
+    overlayContainer = TestBed.inject(OverlayContainer);
+    overlayContainerElement = overlayContainer.getContainerElement();
     fixture = TestBed.createComponent(MatTable);
     component = fixture.componentInstance;
     fixture.detectChanges();
+  });
+
+  afterEach(() => {
+    overlayContainer.ngOnDestroy();
   });
 
   describe('Component Initialization', () => {
@@ -269,44 +278,54 @@ describe('MatTable', () => {
   });
 
   describe('Template Integration - Column Select', () => {
-    it('renders app-column-select component', () => {
-      const columnSelect = fixture.debugElement.query(By.css('app-column-select'));
-      expect(columnSelect).toBeTruthy();
+    it('keeps column chooser overlay closed by default', () => {
+      const columnSelect = overlayContainerElement.querySelector('app-column-select');
+      expect(columnSelect).toBeNull();
     });
 
-    it('passes fullListOfColumns to column-select', () => {
-      const columnSelect = fixture.debugElement.query(By.css('app-column-select'));
+    it('opens and closes the column chooser overlay from the header button', () => {
+      const chooserButton = fixture.debugElement.query(
+        By.css('th[aria-label="row actions"] button'),
+      );
+      expect(component.isOpen()).toBe(false);
+
+      chooserButton.triggerEventHandler('click', new MouseEvent('click'));
+      fixture.detectChanges();
+      expect(component.isOpen()).toBe(true);
+      expect(overlayContainerElement.querySelector('app-column-select')).toBeTruthy();
+
+      chooserButton.triggerEventHandler('click', new MouseEvent('click'));
+      fixture.detectChanges();
+      expect(component.isOpen()).toBe(false);
+      expect(overlayContainerElement.querySelector('app-column-select')).toBeNull();
+    });
+
+    it('passes fullListOfColumns and columnsToDisplay to column-select when overlay is open', () => {
+      component.isOpen.set(true);
+      fixture.detectChanges();
+
+      const columnSelect = fixture.debugElement.query(By.directive(ColumnSelect));
+      expect(columnSelect).toBeTruthy();
       expect((columnSelect.componentInstance as ColumnSelect).fullListOfColumns()).toEqual(
         FULL_LIST_OF_COLUMNS,
       );
-    });
-
-    it('passes columnsToDisplay to column-select', () => {
-      const columnSelect = fixture.debugElement.query(By.css('app-column-select'));
       expect((columnSelect.componentInstance as ColumnSelect).columnsToDisplay()).toEqual(
         DEFAULT_COLUMNS,
       );
     });
 
     it('updates columnsToDisplay when column-select emits columnsToDisplayChange', () => {
-      const columnSelect = fixture.debugElement.query(By.css('app-column-select'));
+      component.isOpen.set(true);
+      fixture.detectChanges();
+
+      const columnSelect = fixture.debugElement.query(By.directive(ColumnSelect));
+      expect(columnSelect).toBeTruthy();
       const newColumns = ['name', 'symbol', 'atomic_mass'];
 
       columnSelect.triggerEventHandler('columnsToDisplayChange', newColumns);
       fixture.detectChanges();
 
       expect(component.columnsToDisplay()).toEqual(newColumns);
-    });
-
-    it('column-select reflects current columnsToDisplay selection', () => {
-      const newColumns = ['name', 'symbol'];
-      component.columnsToDisplay.set(newColumns);
-      fixture.detectChanges();
-
-      const columnSelect = fixture.debugElement.query(By.css('app-column-select'));
-      expect((columnSelect.componentInstance as ColumnSelect).columnsToDisplay()).toEqual(
-        newColumns,
-      );
     });
   });
 
