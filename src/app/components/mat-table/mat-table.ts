@@ -10,6 +10,7 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ELEMENT_DATA } from '../../interfaces/data';
 import { PeriodicElement } from '../../interfaces/periodic-element';
+import { PeriodicElementDetail } from '../periodic-element-detail/periodic-element-detail';
 
 export const FULL_LIST_OF_COLUMNS = [
   'name',
@@ -72,6 +73,7 @@ export const DEFAULT_COLUMNS = [
     MatSelectModule,
     MatTableModule,
     MatSortModule,
+    PeriodicElementDetail,
   ],
   templateUrl: './mat-table.html',
   styleUrl: './mat-table.scss',
