@@ -23,19 +23,11 @@
     <!-- Expand Column Definition -->
     <ng-container matColumnDef="expand">
       <th mat-header-cell *matHeaderCellDef aria-label="row actions">
-        <mat-select
-          [value]="columnsToDisplay()"
-          (valueChange)="setColumnsToDisplay($event)"
-          [panelWidth]="null"
-          multiple
-        >
-          <mat-select-trigger>
-            <mat-icon>filter_alt</mat-icon>
-          </mat-select-trigger>
-          @for (column of fullListOfColumns; track column) {
-            <mat-option [value]="column">{{ column }}</mat-option>
-          }
-        </mat-select>
+        <app-column-select
+          [fullListOfColumns]="fullListOfColumns"
+          [columnsToDisplay]="columnsToDisplay()"
+          (columnsToDisplayChange)="columnsToDisplay.set($event)"
+        />
       </th>
       <td mat-cell *matCellDef="let element">
         <button
