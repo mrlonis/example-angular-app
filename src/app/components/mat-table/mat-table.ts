@@ -117,7 +117,8 @@ export class MatTable {
     }
   }
 
-  toggleExpanded(element: PeriodicElement) {
+  toggleExpanded(event: Event, element: PeriodicElement) {
+    event.stopPropagation();
     this.expandedElement.update((current) => (current === element ? null : element));
   }
 

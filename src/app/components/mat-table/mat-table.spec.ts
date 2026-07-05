@@ -149,16 +149,16 @@ describe('MatTable', () => {
       const element = component.dataSource.data[0];
       expect(component.expandedElement()).toBeNull();
 
-      component.toggleExpanded(element);
+      component.toggleExpanded(new MouseEvent('click'), element);
       expect(component.expandedElement()).toBe(element);
     });
 
     it('toggleExpanded clears expandedElement when same element is toggled', () => {
       const element = component.dataSource.data[0];
-      component.toggleExpanded(element);
+      component.toggleExpanded(new MouseEvent('click'), element);
       expect(component.expandedElement()).toBe(element);
 
-      component.toggleExpanded(element);
+      component.toggleExpanded(new MouseEvent('click'), element);
       expect(component.expandedElement()).toBeNull();
     });
 
@@ -166,16 +166,16 @@ describe('MatTable', () => {
       const element1 = component.dataSource.data[0];
       const element2 = component.dataSource.data[1];
 
-      component.toggleExpanded(element1);
+      component.toggleExpanded(new MouseEvent('click'), element1);
       expect(component.expandedElement()).toBe(element1);
 
-      component.toggleExpanded(element2);
+      component.toggleExpanded(new MouseEvent('click'), element2);
       expect(component.expandedElement()).toBe(element2);
     });
 
     it('isExpanded returns true when element is expanded', () => {
       const element = component.dataSource.data[0];
-      component.toggleExpanded(element);
+      component.toggleExpanded(new MouseEvent('click'), element);
       expect(component.isExpanded(element)).toBe(true);
     });
 
@@ -183,10 +183,10 @@ describe('MatTable', () => {
       const element = component.dataSource.data[0];
       expect(component.isExpanded(element)).toBe(false);
 
-      component.toggleExpanded(element);
+      component.toggleExpanded(new MouseEvent('click'), element);
       expect(component.isExpanded(element)).toBe(true);
 
-      component.toggleExpanded(element);
+      component.toggleExpanded(new MouseEvent('click'), element);
       expect(component.isExpanded(element)).toBe(false);
     });
 
@@ -194,7 +194,7 @@ describe('MatTable', () => {
       const element1 = component.dataSource.data[0];
       const element2 = component.dataSource.data[1];
 
-      component.toggleExpanded(element1);
+      component.toggleExpanded(new MouseEvent('click'), element1);
       expect(component.isExpanded(element1)).toBe(true);
       expect(component.isExpanded(element2)).toBe(false);
     });
@@ -289,7 +289,7 @@ describe('MatTable', () => {
       const element = component.dataSource.data[0];
       const expandButton = fixture.debugElement.query(By.css('button[aria-label="expand row"]'));
 
-      component.toggleExpanded(element);
+      component.toggleExpanded(new MouseEvent('click'), element);
       fixture.detectChanges();
 
       expect((expandButton.nativeElement as HTMLElement).textContent).toContain(
@@ -349,7 +349,7 @@ describe('MatTable', () => {
         false,
       );
 
-      component.toggleExpanded(element);
+      component.toggleExpanded(new MouseEvent('click'), element);
       fixture.detectChanges();
 
       row = fixture.debugElement.query(By.css('tr.example-element-row'));
@@ -360,13 +360,13 @@ describe('MatTable', () => {
 
     it('removes example-expanded-row class when row is collapsed', () => {
       const element = component.dataSource.data[0];
-      component.toggleExpanded(element);
+      component.toggleExpanded(new MouseEvent('click'), element);
       fixture.detectChanges();
 
       let row = fixture.debugElement.query(By.css('tr.example-expanded-row'));
       expect(row).toBeTruthy();
 
-      component.toggleExpanded(element);
+      component.toggleExpanded(new MouseEvent('click'), element);
       fixture.detectChanges();
 
       row = fixture.debugElement.query(By.css('tr.example-expanded-row'));
@@ -467,7 +467,7 @@ describe('MatTable', () => {
       // Even with data, ensure toggle works correctly
       const firstElement = component.dataSource.data[0];
       expect(() => {
-        component.toggleExpanded(firstElement);
+        component.toggleExpanded(new MouseEvent('click'), firstElement);
       }).not.toThrow();
     });
 
@@ -491,12 +491,12 @@ describe('MatTable', () => {
     it('handles multiple expand toggles on same element', () => {
       const element = component.dataSource.data[0];
       for (let i = 0; i < 5; i++) {
-        component.toggleExpanded(element);
+        component.toggleExpanded(new MouseEvent('click'), element);
       }
       // After odd number of toggles, should be expanded
       expect(component.isExpanded(element)).toBe(true);
 
-      component.toggleExpanded(element);
+      component.toggleExpanded(new MouseEvent('click'), element);
       expect(component.isExpanded(element)).toBe(false);
     });
   });

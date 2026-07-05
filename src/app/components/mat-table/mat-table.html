@@ -26,11 +26,7 @@
         />
       </th>
       <td mat-cell *matCellDef="let element">
-        <button
-          mat-icon-button
-          aria-label="expand row"
-          (click)="toggleExpanded(element); $event.stopPropagation()"
-        >
+        <button mat-icon-button aria-label="expand row" (click)="toggleExpanded($event, element)">
           @if (isExpanded(element)) {
             <mat-icon>keyboard_arrow_up</mat-icon>
           } @else {
@@ -60,8 +56,8 @@
       *matRowDef="let element; columns: columnsToDisplayWithExpand()"
       class="example-element-row"
       [class.example-expanded-row]="isExpanded(element)"
-      (click)="toggleExpanded(element)"
-      (keypress)="toggleExpanded(element)"
+      (click)="toggleExpanded($event, element)"
+      (keypress)="toggleExpanded($event, element)"
     ></tr>
     <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
     <tr mat-footer-row *matFooterRowDef="columnsToDisplayWithExpand(); sticky: true"></tr>
