@@ -76,6 +76,8 @@ export const DEFAULT_COLUMNS = [
   styleUrl: './mat-table.scss',
 })
 export class MatTable {
+  private readonly emptyFilterState: FilterState = { name: '' };
+
   readonly paginator = viewChild(MatPaginator);
   readonly sort = viewChild(MatSort);
 
@@ -88,10 +90,11 @@ export class MatTable {
 
   constructor() {
     this.dataSource.filterPredicate = (data: PeriodicElement, filter: string) => {
-      const filterState = JSON.parse(filter) as FilterState;
+      const filterState = this.parseFilterState(filter);
 
       return data.name.toLowerCase().startsWith(filterState.name.toLowerCase());
     };
+    this.dataSource.filter = JSON.stringify(this.emptyFilterState);
     effect(() => {
       const paginator = this.paginator();
       const sort = this.sort();
@@ -118,11 +121,45 @@ export class MatTable {
   }
 
   toggleExpanded(event: Event, element: PeriodicElement) {
+    if (event instanceof KeyboardEvent) {
+      if (event.key !== 'Enter' && event.key !== ' ') {
+        return;
+      }
+      if (event.key === ' ') {
+        event.preventDefault();
+      }
+    }
+
     event.stopPropagation();
     this.expandedElement.update((current) => (current === element ? null : element));
   }
 
   isExpanded(element: PeriodicElement) {
     return this.expandedElement() === element;
+  }
+
+  private parseFilterState(filter: string): FilterState {
+    if (!filter) {
+      return this.emptyFilterState;
+    }
+
+    try {
+      const parsedFilter = JSON.parse(filter) as unknown;
+
+      if (
+        typeof parsedFilter === 'object' &&
+        parsedFilter !== null &&
+        'name' in parsedFilter &&
+        typeof parsedFilter.name === 'string'
+      ) {
+        return { name: parsedFilter.name };
+      }
+    } catch (error) {
+      if (!(error instanceof SyntaxError)) {
+        throw error;
+      }
+    }
+
+    return this.emptyFilterState;
   }
 }

@@ -94,6 +94,10 @@ describe('MatTable', () => {
   });
 
   describe('Filtering', () => {
+    it('initializes dataSource filter to an empty serialized filter state', () => {
+      expect(component.dataSource.filter).toBe(JSON.stringify({ name: '' }));
+    });
+
     it('applies serialized filter state to dataSource', () => {
       const filterState: FilterState = { name: 'helium' };
       component.applyFilter(filterState);
@@ -142,6 +146,18 @@ describe('MatTable', () => {
       expect(filteredNames.length).toBeGreaterThan(0);
       expect(filteredNames.every((name) => name.toLowerCase().startsWith('hel'))).toBeTruthy();
     });
+
+    it('falls back to empty filter state when filter string is empty', () => {
+      component.dataSource.filter = '';
+
+      expect(component.dataSource.filteredData).toHaveLength(component.dataSource.data.length);
+    });
+
+    it('falls back to empty filter state when filter string is invalid JSON', () => {
+      component.dataSource.filter = 'not-json';
+
+      expect(component.dataSource.filteredData).toHaveLength(component.dataSource.data.length);
+    });
   });
 
   describe('Expand/Collapse Functionality', () => {
@@ -171,6 +187,33 @@ describe('MatTable', () => {
 
       component.toggleExpanded(new MouseEvent('click'), element2);
       expect(component.expandedElement()).toBe(element2);
+    });
+
+    it('toggleExpanded ignores keyboard keys other than Enter and Space', () => {
+      const element = component.dataSource.data[0];
+
+      component.toggleExpanded(new KeyboardEvent('keydown', { key: 'Escape' }), element);
+
+      expect(component.expandedElement()).toBeNull();
+    });
+
+    it('toggleExpanded expands row when Enter is pressed', () => {
+      const element = component.dataSource.data[0];
+
+      component.toggleExpanded(new KeyboardEvent('keydown', { key: 'Enter' }), element);
+
+      expect(component.expandedElement()).toBe(element);
+    });
+
+    it('toggleExpanded prevents default when Space is pressed', () => {
+      const element = component.dataSource.data[0];
+      const keyboardEvent = new KeyboardEvent('keydown', { key: ' ', cancelable: true });
+      const preventDefaultSpy = vi.spyOn(keyboardEvent, 'preventDefault');
+
+      component.toggleExpanded(keyboardEvent, element);
+
+      expect(preventDefaultSpy).toHaveBeenCalledTimes(1);
+      expect(component.expandedElement()).toBe(element);
     });
 
     it('isExpanded returns true when element is expanded', () => {

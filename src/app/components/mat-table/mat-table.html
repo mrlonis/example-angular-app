@@ -57,7 +57,7 @@
       class="example-element-row"
       [class.example-expanded-row]="isExpanded(element)"
       (click)="toggleExpanded($event, element)"
-      (keypress)="toggleExpanded($event, element)"
+      (keydown)="toggleExpanded($event, element)"
     ></tr>
     <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
     <tr mat-footer-row *matFooterRowDef="columnsToDisplayWithExpand(); sticky: true"></tr>
