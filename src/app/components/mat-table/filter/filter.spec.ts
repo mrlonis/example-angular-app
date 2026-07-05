@@ -46,13 +46,13 @@ describe('Filter', () => {
     expect(setSpy).toHaveBeenCalledWith({ name: '' });
   });
 
-  it('updates value model on keyup from template input', () => {
+  it('updates value model on input from template input', () => {
     const setSpy = vi.spyOn(component.value, 'set');
     const input = fixture.debugElement.query(By.css('input[matInput]'))
       .nativeElement as HTMLInputElement;
 
     input.value = '  Au*  ';
-    input.dispatchEvent(new KeyboardEvent('keyup'));
+    input.dispatchEvent(new Event('input'));
     fixture.detectChanges();
 
     expect(setSpy).toHaveBeenCalledWith({ name: 'Au*' });
