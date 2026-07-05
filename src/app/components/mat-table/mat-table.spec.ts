@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { vi } from 'vitest';
+import { ColumnSelect } from './column-select/column-select';
 import { DEFAULT_COLUMNS, FULL_LIST_OF_COLUMNS, MatTable } from './mat-table';
 
 describe('MatTable', () => {
@@ -196,16 +197,16 @@ describe('MatTable', () => {
 
     it('passes fullListOfColumns to column-select', () => {
       const columnSelect = fixture.debugElement.query(By.css('app-column-select'));
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unnecessary-type-assertion, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-      expect((columnSelect.componentInstance as any).fullListOfColumns()).toEqual(
+      expect((columnSelect.componentInstance as ColumnSelect).fullListOfColumns()).toEqual(
         FULL_LIST_OF_COLUMNS,
       );
     });
 
     it('passes columnsToDisplay to column-select', () => {
       const columnSelect = fixture.debugElement.query(By.css('app-column-select'));
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unnecessary-type-assertion, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-      expect((columnSelect.componentInstance as any).columnsToDisplay()).toEqual(DEFAULT_COLUMNS);
+      expect((columnSelect.componentInstance as ColumnSelect).columnsToDisplay()).toEqual(
+        DEFAULT_COLUMNS,
+      );
     });
 
     it('updates columnsToDisplay when column-select emits columnsToDisplayChange', () => {
@@ -224,8 +225,9 @@ describe('MatTable', () => {
       fixture.detectChanges();
 
       const columnSelect = fixture.debugElement.query(By.css('app-column-select'));
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unnecessary-type-assertion, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-      expect((columnSelect.componentInstance as any).columnsToDisplay()).toEqual(newColumns);
+      expect((columnSelect.componentInstance as ColumnSelect).columnsToDisplay()).toEqual(
+        newColumns,
+      );
     });
   });
 

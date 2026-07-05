@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatSelect } from '@angular/material/select';
 import { By } from '@angular/platform-browser';
 import { vi } from 'vitest';
 import { ColumnSelect } from './column-select';
@@ -117,14 +118,12 @@ describe('ColumnSelect', () => {
 
     it('should set mat-select panelWidth to null', () => {
       const matSelect = fixture.debugElement.query(By.css('mat-select'));
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unnecessary-type-assertion, @typescript-eslint/no-unsafe-member-access
-      expect((matSelect.componentInstance as any).panelWidth).toBeNull();
+      expect((matSelect.componentInstance as MatSelect).panelWidth).toBeNull();
     });
 
     it('should bind mat-select value to columnsToDisplay', () => {
       const matSelect = fixture.debugElement.query(By.css('mat-select'));
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unnecessary-type-assertion, @typescript-eslint/no-unsafe-member-access
-      expect((matSelect.componentInstance as any).value).toEqual(['name', 'symbol']);
+      expect((matSelect.componentInstance as MatSelect).value).toEqual(['name', 'symbol']);
     });
   });
 
