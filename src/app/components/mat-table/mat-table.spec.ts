@@ -158,6 +158,19 @@ describe('MatTable', () => {
 
       expect(component.dataSource.filteredData).toHaveLength(component.dataSource.data.length);
     });
+
+    it('caches parsed filter state for repeated predicate evaluations with same filter', () => {
+      const parseSpy = vi.spyOn(JSON, 'parse');
+      const element = component.dataSource.data[0];
+      const filter = JSON.stringify({ name: 'he' });
+
+      component.dataSource.filterPredicate(element, filter);
+      component.dataSource.filterPredicate(element, filter);
+      component.dataSource.filterPredicate(element, filter);
+
+      expect(parseSpy).toHaveBeenCalledTimes(1);
+      parseSpy.mockRestore();
+    });
   });
 
   describe('Expand/Collapse Functionality', () => {
@@ -203,6 +216,18 @@ describe('MatTable', () => {
       component.toggleExpanded(new KeyboardEvent('keydown', { key: 'Enter' }), element);
 
       expect(component.expandedElement()).toBe(element);
+    });
+
+    it('toggleExpanded ignores bubbled keyboard events from child elements', () => {
+      const element = component.dataSource.data[0];
+      const row = document.createElement('tr');
+      const button = document.createElement('button');
+      row.append(button);
+      row.addEventListener('keydown', (event) => component.toggleExpanded(event, element));
+
+      button.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+
+      expect(component.expandedElement()).toBeNull();
     });
 
     it('toggleExpanded prevents default when Space is pressed', () => {

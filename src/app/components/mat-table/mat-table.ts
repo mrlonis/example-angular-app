@@ -77,6 +77,8 @@ export const DEFAULT_COLUMNS = [
 })
 export class MatTable {
   private readonly emptyFilterState: FilterState = { name: '' };
+  private cachedFilterString = JSON.stringify(this.emptyFilterState);
+  private cachedFilterState = this.emptyFilterState;
 
   readonly paginator = viewChild(MatPaginator);
   readonly sort = viewChild(MatSort);
@@ -90,7 +92,7 @@ export class MatTable {
 
   constructor() {
     this.dataSource.filterPredicate = (data: PeriodicElement, filter: string) => {
-      const filterState = this.parseFilterState(filter);
+      const filterState = this.getCachedFilterState(filter);
 
       return data.name.toLowerCase().startsWith(filterState.name.toLowerCase());
     };
@@ -122,6 +124,14 @@ export class MatTable {
 
   toggleExpanded(event: Event, element: PeriodicElement) {
     if (event instanceof KeyboardEvent) {
+      if (
+        event.currentTarget instanceof HTMLElement &&
+        event.target instanceof HTMLElement &&
+        event.target !== event.currentTarget
+      ) {
+        return;
+      }
+
       if (event.key !== 'Enter' && event.key !== ' ') {
         return;
       }
@@ -136,6 +146,18 @@ export class MatTable {
 
   isExpanded(element: PeriodicElement) {
     return this.expandedElement() === element;
+  }
+
+  private getCachedFilterState(filter: string): FilterState {
+    if (filter === this.cachedFilterString) {
+      return this.cachedFilterState;
+    }
+
+    const filterState = this.parseFilterState(filter);
+    this.cachedFilterString = filter;
+    this.cachedFilterState = filterState;
+
+    return filterState;
   }
 
   private parseFilterState(filter: string): FilterState {
