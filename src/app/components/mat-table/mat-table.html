@@ -5,6 +5,7 @@
 
 <div class="overflow-auto">
   <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8" matSort>
+    <!-- Columns Definitions -->
     @for (column of columnsToDisplay(); track column) {
       <ng-container matColumnDef="{{ column }}">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ column }}</th>
@@ -18,6 +19,8 @@
         }
       </ng-container>
     }
+
+    <!-- Expand Column Definition -->
     <ng-container matColumnDef="expand">
       <th mat-header-cell *matHeaderCellDef aria-label="row actions">
         <mat-select
@@ -62,6 +65,7 @@
       </td>
     </ng-container>
 
+    <!-- Row Definitions -->
     <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand(); sticky: true"></tr>
     <tr
       mat-row
