@@ -5,6 +5,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ELEMENT_DATA } from '../../interfaces/data';
+import { FilterState } from '../../interfaces/filter-state';
 import { PeriodicElement } from '../../interfaces/periodic-element';
 import { ColumnSelect } from './column-select/column-select';
 import { Filter } from './filter/filter';
@@ -86,6 +87,11 @@ export class MatTable {
   readonly expandedElement = signal<PeriodicElement | null>(null);
 
   constructor() {
+    this.dataSource.filterPredicate = (data: PeriodicElement, filter: string) => {
+      const filterState = JSON.parse(filter) as FilterState;
+
+      return data.name.toLowerCase().startsWith(filterState.name.toLowerCase());
+    };
     effect(() => {
       const paginator = this.paginator();
       const sort = this.sort();
@@ -103,8 +109,8 @@ export class MatTable {
     this.columnsToDisplay.set(columns);
   }
 
-  applyFilter(event: string) {
-    this.dataSource.filter = event;
+  applyFilter(event: FilterState) {
+    this.dataSource.filter = JSON.stringify(event);
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();

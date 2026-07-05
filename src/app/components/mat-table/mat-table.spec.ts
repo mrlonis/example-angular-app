@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { vi } from 'vitest';
+import { FilterState } from '../../interfaces/filter-state';
 import { ColumnSelect } from './column-select/column-select';
 import { DEFAULT_COLUMNS, FULL_LIST_OF_COLUMNS, MatTable } from './mat-table';
 
@@ -93,15 +94,17 @@ describe('MatTable', () => {
   });
 
   describe('Filtering', () => {
-    it('applies provided filter value to dataSource', () => {
-      component.applyFilter('helium');
-      expect(component.dataSource.filter).toBe('helium');
+    it('applies serialized filter state to dataSource', () => {
+      const filterState: FilterState = { name: 'helium' };
+      component.applyFilter(filterState);
+      expect(component.dataSource.filter).toBe(JSON.stringify(filterState));
     });
 
     it('applies filter without pagination if paginator is absent', () => {
       component.dataSource.paginator = null;
-      component.applyFilter('hydrogen');
-      expect(component.dataSource.filter).toBe('hydrogen');
+      const filterState: FilterState = { name: 'hydrogen' };
+      component.applyFilter(filterState);
+      expect(component.dataSource.filter).toBe(JSON.stringify(filterState));
     });
 
     it('resets to first page when filtering with active paginator', () => {
@@ -112,24 +115,32 @@ describe('MatTable', () => {
       }
       const firstPageSpy = vi.spyOn(paginator, 'firstPage');
 
-      component.applyFilter('h');
+      component.applyFilter({ name: 'h' });
 
       expect(firstPageSpy).toHaveBeenCalledTimes(1);
     });
 
     it('handles empty filter string', () => {
-      component.applyFilter('');
-      expect(component.dataSource.filter).toBe('');
+      component.applyFilter({ name: '' });
+      expect(component.dataSource.filter).toBe(JSON.stringify({ name: '' }));
     });
 
     it('handles filter with special characters', () => {
-      component.applyFilter('au*');
-      expect(component.dataSource.filter).toBe('au*');
+      component.applyFilter({ name: 'au*' });
+      expect(component.dataSource.filter).toBe(JSON.stringify({ name: 'au*' }));
     });
 
     it('handles filter with numbers', () => {
-      component.applyFilter('79');
-      expect(component.dataSource.filter).toBe('79');
+      component.applyFilter({ name: '79' });
+      expect(component.dataSource.filter).toBe(JSON.stringify({ name: '79' }));
+    });
+
+    it('filters names using case-insensitive startsWith predicate', () => {
+      component.applyFilter({ name: 'heL' });
+      const filteredNames = component.dataSource.filteredData.map(({ name }) => name);
+
+      expect(filteredNames.length).toBeGreaterThan(0);
+      expect(filteredNames.every((name) => name.toLowerCase().startsWith('hel'))).toBeTruthy();
     });
   });
 
@@ -372,9 +383,10 @@ describe('MatTable', () => {
     it('calls applyFilter when app-filter emits valueChange', () => {
       const filter = fixture.debugElement.query(By.css('app-filter'));
       const spy = vi.spyOn(component, 'applyFilter');
+      const filterState: FilterState = { name: 'test' };
 
-      filter.triggerEventHandler('valueChange', 'test');
-      expect(spy).toHaveBeenCalledWith('test');
+      filter.triggerEventHandler('valueChange', filterState);
+      expect(spy).toHaveBeenCalledWith(filterState);
     });
   });
 
@@ -461,7 +473,7 @@ describe('MatTable', () => {
 
     it('handles filtering with special characters in search', () => {
       expect(() => {
-        component.applyFilter('!@#$%');
+        component.applyFilter({ name: '!@#$%' });
       }).not.toThrow();
     });
 
