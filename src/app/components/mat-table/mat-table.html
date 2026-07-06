@@ -17,6 +17,7 @@
     [cdkConnectedOverlayOrigin]="origin"
     [cdkConnectedOverlayOpen]="isOpen()"
     [cdkConnectedOverlayHasBackdrop]="true"
+    [cdkConnectedOverlayRestoreFocus]="true"
     (backdropClick)="isOpen.set(false)"
     (detach)="isOpen.set(false)"
   >
