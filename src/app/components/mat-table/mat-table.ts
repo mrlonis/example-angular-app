@@ -1,3 +1,4 @@
+import { OverlayModule } from '@angular/cdk/overlay';
 import { Component, computed, effect, signal, viewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -70,6 +71,7 @@ export const DEFAULT_COLUMNS = [
     MatPaginatorModule,
     MatTableModule,
     MatSortModule,
+    OverlayModule,
     PeriodicElementDetail,
   ],
   templateUrl: './mat-table.html',
@@ -89,6 +91,7 @@ export class MatTable {
   readonly fullListOfColumns = FULL_LIST_OF_COLUMNS;
   readonly defaultColumns = DEFAULT_COLUMNS;
   readonly expandedElement = signal<PeriodicElement | null>(null);
+  readonly isOpen = signal(false);
 
   constructor() {
     this.dataSource.filterPredicate = (data: PeriodicElement, filter: string) => {
