@@ -9,6 +9,7 @@ vi.mock('iframe-resizer', () => ({
 }));
 
 @Component({
+  selector: 'app-host',
   imports: [IFrameResizer],
   template:
     '<iframe appIframeResizer [heightCalculationMethod]="heightCalculationMethod" [scrolling]="scrolling"></iframe>',
