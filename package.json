@@ -18,7 +18,7 @@
     "sync:agent-instructions": "node scripts/sync-agent-instructions.mjs",
     "sync:agent-instructions:check": "node scripts/sync-agent-instructions.mjs --check",
     "test": "npm run test:unit && npm run test:e2e",
-    "test:e2e": "npm run playwright:install && playwright test --config='./tests/playwright.config.ts'",
+    "test:e2e": "npm run playwright:install && playwright test --config=./tests/playwright.config.ts",
     "test:unit": "ng test --no-watch",
     "watch": "ng build --watch --configuration development"
   },

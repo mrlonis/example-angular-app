@@ -135,7 +135,7 @@ Run `npm run test:e2e` to execute the end-to-end tests via [Playwright](https://
 To use interactive UI mode, run:
 
 ```shell
-npx playwright test --ui --config='./tests/playwright.config.ts'
+npx playwright test --ui --config=./tests/playwright.config.ts
 ```
 
 Specs live in [`tests/`](tests).
