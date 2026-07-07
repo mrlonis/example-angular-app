@@ -20,7 +20,7 @@ Single-page Angular v22 demo app. Angular Material + CDK v22, TypeScript 6 (stri
 - `src/app/services/` — signal-based singletons (`selected-page`, `url-cache`), `providedIn: 'root'`.
 - `src/app/directives/` — `iframe-resizer` attribute directive (`[appIframeResizer]`).
 - `src/app/interfaces/` — types and periodic-element data (`data.ts`).
-- `cypress/e2e/` — end-to-end specs; `cypress/cypress.config.ts` — Cypress config.
+- `tests/` — Playwright end-to-end specs and config.
 - `agent-instructions/source.md` — edit this, then sync (see below). Do not edit generated files directly.
 - `scripts/sync-agent-instructions.mjs` — generator for the AI instruction files.
 
@@ -35,7 +35,7 @@ Single-page Angular v22 demo app. Angular Material + CDK v22, TypeScript 6 (stri
 
 - Dev server: `npm run start` (http://localhost:4200/). Build: `npm run build` (prod) / `npm run build:dev`.
 - Scoped unit test: `npm run test:unit -- --include src/app/app.spec.ts`. Full unit run: `npm run test:unit`.
-- E2E: `npm run test:cypress` (headless; `start-server-and-test` boots the app automatically). Interactive: `npm run test:cypress:open`.
+- E2E: `npm run test:e2e`. Interactive UI mode: `npx playwright test --ui --config='./tests/playwright.config.ts'`.
 - Lint: `npm run lint` (auto-fix: `npm run lint:fix`). Format: `npm run prettier` (check: `npm run prettier:test`).
 - CI (`.github/workflows/actions.yml`) runs, in order: sync check, lint, `npm run test`, Codacy coverage upload, build. Match this locally before pushing.
 
@@ -107,9 +107,9 @@ Single-page Angular v22 demo app. Angular Material + CDK v22, TypeScript 6 (stri
 - Run linting for every change set; linting is required for all changes, not optional.
 - Use the lint command that matches the files you changed:
   - Angular app files: `npm run lint:angular`
-  - Cypress files: `npm run lint:cypress`
-  - Mixed changes (Angular + Cypress) or full-repo linting: `npm run lint`
-- For scoped linting, pass extra arguments through the matching script (for example: `npm run lint:angular -- <args>` or `npm run lint:cypress -- <args>`).
+  - Playwright files: `npm run lint:playwright`
+  - Mixed changes (Angular + Playwright) or full-repo linting: `npm run lint`
+- For scoped linting, pass extra arguments through the matching script (for example: `npm run lint:angular -- <args>` or `npm run lint:playwright -- <args>`).
 - Treat lint failures as real issues to fix in code rather than bypass.
 - Never disable ESLint rules to make code pass linting.
   - Do not disable rules in root/shared ESLint config files.

@@ -1,6 +1,6 @@
 # Example Angular App
 
-A reference Angular v22 application that demonstrates modern Angular patterns — standalone components, signals, lazy-loaded routes, and Angular Material — alongside a fully wired tooling and CI setup (ESLint, Prettier, Husky, Vitest, Cypress, and Codacy coverage).
+A reference Angular v22 application that demonstrates modern Angular patterns — standalone components, signals, lazy-loaded routes, and Angular Material — alongside a fully wired tooling and CI setup (ESLint, Prettier, Husky, Vitest, Playwright, and Codacy coverage).
 
 ## Table of Contents
 
@@ -39,7 +39,7 @@ The app exposes two lazy-loaded routes:
 - **UI:** [Angular Material](https://material.angular.io/) + CDK v22
 - **Language:** [TypeScript](https://www.typescriptlang.org/) 6 (strict)
 - **Unit testing:** [Vitest](https://vitest.dev/) v4 (via `@angular/build:unit-test`)
-- **E2E testing:** [Cypress](https://www.cypress.io/) v15
+- **E2E testing:** [Playwright](https://playwright.dev/)
 - **Linting:** [ESLint](https://eslint.org/) v9 with [angular-eslint](https://github.com/angular-eslint/angular-eslint) and [typescript-eslint](https://typescript-eslint.io/)
 - **Formatting:** [Prettier](https://prettier.io/)
 - **Git hooks:** [Husky](https://typicode.github.io/husky/) + [lint-staged](https://github.com/lint-staged/lint-staged)
@@ -60,7 +60,7 @@ src/
 ├── styles/                  # Material M3 theme
 ├── main.ts                  # Bootstrap entry point
 └── styles.scss              # Global styles
-cypress/                     # End-to-end tests and Cypress config
+tests/                       # Playwright end-to-end tests and config
 agent-instructions/          # Source of truth for generated AI agent instruction files
 scripts/                     # sync-agent-instructions.mjs and other tooling
 public/                      # Static assets served as-is
@@ -100,9 +100,8 @@ Then open [http://localhost:4200/](http://localhost:4200/).
 | `npm run watch`                         | Development build in watch mode.                                  |
 | `npm run test`                          | Run unit tests, then end-to-end tests.                            |
 | `npm run test:unit`                     | Run Vitest unit tests once (no watch).                            |
-| `npm run test:cypress`                  | Serve the app and run Cypress headless.                           |
-| `npm run test:cypress:open`             | Serve the app and open the interactive Cypress runner.            |
-| `npm run lint`                          | Lint the Angular source and Cypress tests.                        |
+| `npm run test:e2e`                      | Install Playwright browsers and run E2E tests.                    |
+| `npm run lint`                          | Lint the Angular source and Playwright tests.                     |
 | `npm run lint:fix`                      | Lint and auto-fix.                                                |
 | `npm run prettier`                      | Format the entire repository.                                     |
 | `npm run prettier:test`                 | Check formatting without writing changes.                         |
@@ -131,13 +130,19 @@ npm run test:unit -- --include src/app/app.spec.ts
 
 ### End-to-End Tests
 
-Run `npm run test:cypress` to execute the end-to-end tests via [Cypress](https://www.cypress.io/) headless. To use the interactive Cypress runner instead, run `npm run test:cypress:open`.
+Run `npm run test:e2e` to execute the end-to-end tests via [Playwright](https://playwright.dev/).
 
-Both commands use [start-server-and-test](https://www.npmjs.com/package/start-server-and-test) to boot the app and run the tests from a single terminal. Specs live in [`cypress/e2e/`](cypress/e2e).
+To use interactive UI mode, run:
+
+```shell
+npx playwright test --ui --config='./tests/playwright.config.ts'
+```
+
+Specs live in [`tests/`](tests).
 
 ## Linting and Formatting
 
-- `npm run lint` runs ESLint over both the Angular source (`src/`) and the Cypress tests (`cypress/`).
+- `npm run lint` runs ESLint over both the Angular source (`src/`) and the Playwright tests (`tests/`).
 - `npm run prettier` formats the whole repository; `npm run prettier:test` checks formatting in CI.
 - A [lint-staged](https://github.com/lint-staged/lint-staged) pre-commit hook (configured in [`package.json`](package.json) and wired through Husky) automatically lints, formats, and sorts staged files.
 

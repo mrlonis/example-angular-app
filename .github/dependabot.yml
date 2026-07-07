@@ -59,13 +59,13 @@ updates:
           - 'patch'
           - 'minor'
     ignore:
+      - dependency-name: '@playwright/test'
+        update-types: ['version-update:semver-major']
       - dependency-name: '@types/iframe-resizer'
         update-types: ['version-update:semver-major']
       - dependency-name: '@types/node'
         update-types: ['version-update:semver-major']
       - dependency-name: '*angular*'
-        update-types: ['version-update:semver-major']
-      - dependency-name: 'cypress'
         update-types: ['version-update:semver-major']
       - dependency-name: '*eslint*'
         update-types: ['version-update:semver-major']
@@ -74,6 +74,4 @@ updates:
       - dependency-name: 'ngx*'
         update-types: ['version-update:semver-major']
       - dependency-name: 'typescript'
-        update-types: ['version-update:semver-major', 'version-update:semver-minor']
-      - dependency-name: 'zone.js'
         update-types: ['version-update:semver-major', 'version-update:semver-minor']
