@@ -5,22 +5,20 @@
   "scripts": {
     "build": "ng build",
     "build:dev": "npm run build -- --configuration development",
-    "cypress:headless": "cypress run --config-file cypress/cypress.config.ts --headless -b chrome",
-    "cypress:open": "cypress open --config-file cypress/cypress.config.ts",
-    "lint": "npm run lint:angular && npm run lint:cypress",
+    "lint": "npm run lint:angular && npm run lint:playwright",
     "lint:angular": "ng lint",
-    "lint:cypress": "eslint -c ./cypress/eslint.config.js ./cypress",
-    "lint:fix": "npm run lint:angular -- --fix && npm run lint:cypress -- --fix",
+    "lint:fix": "npm run lint:angular -- --fix && npm run lint:playwright -- --fix",
+    "lint:playwright": "eslint -c ./tests/eslint.config.js ./tests",
     "ng": "ng",
+    "playwright:install": "playwright install --with-deps",
     "prepare": "husky",
     "prettier": "prettier --write . --ignore-unknown",
     "prettier:test": "prettier --check . --ignore-unknown",
     "start": "ng serve",
     "sync:agent-instructions": "node scripts/sync-agent-instructions.mjs",
     "sync:agent-instructions:check": "node scripts/sync-agent-instructions.mjs --check",
-    "test": "npm run test:unit && npm run test:cypress",
-    "test:cypress": "start-server-and-test start http://localhost:4200 cypress:headless",
-    "test:cypress:open": "start-server-and-test start http://localhost:4200 cypress:open",
+    "test": "npm run test:unit && npm run test:e2e",
+    "test:e2e": "npm run playwright:install && playwright test --config=./tests/playwright.config.ts",
     "test:unit": "ng test --no-watch",
     "watch": "ng build --watch --configuration development"
   },
@@ -33,13 +31,13 @@
       "sort-package-json",
       "prettier --write"
     ],
-    "cypress/**/*.ts": [
-      "eslint -c ./cypress/eslint.config.js --fix"
-    ],
     "src/**/*.{html,ts}": [
       "ng-lint-staged lint:angular --fix --"
     ],
-    "!({.vscode/settings.json,package.json,cypress/**/*.ts,src/**/*.{html,ts}})": [
+    "tests/**/*.ts": [
+      "eslint -c ./tests/eslint.config.js --fix"
+    ],
+    "!({.vscode/settings.json,package.json,src/**/*.{html,ts},tests/**/*.ts})": [
       "prettier --write --ignore-unknown"
     ]
   },
@@ -61,15 +59,14 @@
     "@angular/cli": "^22",
     "@angular/compiler-cli": "^22",
     "@eslint/js": "^9",
+    "@playwright/test": "^1",
     "@types/iframe-resizer": "^4",
     "@types/node": "^26",
     "@vitest/coverage-v8": "^4",
     "angular-eslint": "^22",
-    "cypress": "^15",
     "eslint": "^9",
     "eslint-config-prettier": "^10",
     "eslint-import-resolver-typescript": "^4",
-    "eslint-plugin-cypress": "^6",
     "eslint-plugin-import": "^2",
     "eslint-plugin-prettier": "^5",
     "husky": "^9",
@@ -79,7 +76,6 @@
     "prettier": "^3",
     "sort-json": "^2",
     "sort-package-json": "^4",
-    "start-server-and-test": "^3",
     "typescript": "~6.0",
     "typescript-eslint": "^8",
     "vitest": "^4"
@@ -87,9 +83,9 @@
   "packageManager": "npm@11.17.0",
   "allowScripts": {
     "@parcel/watcher@2.5.6": true,
-    "cypress@15.18.0": true,
     "esbuild@0.28.1": true,
     "esbuild@0.27.7": true,
+    "fsevents@2.3.2": true,
     "fsevents@2.3.3": true,
     "iframe-resizer@4.4.5": true,
     "lmdb@3.5.4": true,

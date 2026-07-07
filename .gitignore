@@ -44,10 +44,11 @@ Thumbs.db
 # Test Reports
 /coverage
 /test-reports
-
-# Cypress
-cypress/downloads
-cypress/screenshots
+/test-results
+/playwright-report
 
 # Codacy
 .codacy/
+
+#Ignore vscode AI rules
+.github/instructions/codacy.instructions.md
