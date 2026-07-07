@@ -10,7 +10,7 @@
     "lint:fix": "npm run lint:angular -- --fix && npm run lint:playwright -- --fix",
     "lint:playwright": "eslint -c ./tests/eslint.config.js ./tests",
     "ng": "ng",
-    "playwright:install": "playwright install",
+    "playwright:install": "playwright install --with-deps",
     "prepare": "husky",
     "prettier": "prettier --write . --ignore-unknown",
     "prettier:test": "prettier --check . --ignore-unknown",
