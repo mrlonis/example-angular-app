@@ -3,9 +3,9 @@ const eslint = require('@eslint/js');
 const { defineConfig } = require('eslint/config');
 const tseslint = require('typescript-eslint');
 const angular = require('angular-eslint');
-const eslintConfigPrettier = require('eslint-config-prettier');
-const eslintPluginPrettierRecommended = require('eslint-plugin-prettier/recommended');
 const importPlugin = require('eslint-plugin-import');
+const eslintPluginPrettierRecommended = require('eslint-plugin-prettier/recommended');
+const eslintConfigPrettier = require('eslint-config-prettier');
 const path = require('node:path');
 
 module.exports = defineConfig([
