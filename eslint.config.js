@@ -21,6 +21,14 @@ module.exports = defineConfig([
     'playwright-report/',
     'test-results/',
     'package-lock.json',
+    // Generated agent instruction files (source of truth: agent-instructions/source.md)
+    'AGENTS.md',
+    '.claude/CLAUDE.md',
+    '.gemini/GEMINI.md',
+    '.github/copilot-instructions.md',
+    '.junie/guidelines.md',
+    '.windsurf/rules/guidelines.md',
+    '.cursor/rules/cursor.mdc',
   ]),
   {
     files: ['**/*.json'],

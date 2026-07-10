@@ -39,7 +39,13 @@
     "tests/**/*.ts": [
       "eslint -c ./tests/eslint.config.js --fix"
     ],
-    "!({.vscode/settings.json,package.json,src/**/*.{html,ts},tests/**/*.ts})": [
+    "!(package|package-lock|**/settings).{json,jsonc,json5}": [
+      "eslint -c ./eslint.config.js --fix"
+    ],
+    "**/*.md": [
+      "eslint -c ./eslint.config.js --fix"
+    ],
+    "!**/*.{json,jsonc,json5,md,html,ts}": [
       "prettier --write --ignore-unknown"
     ]
   },
