@@ -71,6 +71,7 @@ module.exports = defineConfig([
   },
   {
     files: ['**/*.md'],
+    language: 'markdown/gfm',
     plugins: {
       markdown,
     },
