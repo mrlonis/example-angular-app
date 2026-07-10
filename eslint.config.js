@@ -6,6 +6,7 @@ const eslint = require('@eslint/js');
 const tseslint = require('typescript-eslint');
 const angular = require('angular-eslint');
 const importPlugin = require('eslint-plugin-import');
+const depend = require('eslint-plugin-depend').default;
 const eslintPluginPrettierRecommended = require('eslint-plugin-prettier/recommended');
 const eslintConfigPrettier = require('eslint-config-prettier');
 const path = require('node:path');
@@ -22,20 +23,38 @@ module.exports = defineConfig([
     'package-lock.json',
   ]),
   {
+    files: ['**/*.json'],
+    language: 'json/json',
     plugins: {
       json,
     },
-  },
-  {
-    files: ['**/*.json'],
-    language: 'json/json',
     rules: {
       'json/no-duplicate-keys': 'error',
     },
   },
   {
+    files: ['package.json'],
+    language: 'json/json',
+    plugins: {
+      depend,
+      json,
+    },
+    extends: ['depend/flat/recommended'],
+    rules: {
+      'depend/ban-dependencies': [
+        'error',
+        {
+          allowed: ['eslint-plugin-import', 'lint-staged'],
+        },
+      ],
+    },
+  },
+  {
     files: ['**/*.jsonc', '.vscode/*.json', '**/tsconfig*.json'],
     language: 'json/jsonc',
+    plugins: {
+      json,
+    },
     rules: {
       'json/no-duplicate-keys': 'error',
     },
@@ -43,6 +62,9 @@ module.exports = defineConfig([
   {
     files: ['**/*.json5'],
     language: 'json/json5',
+    plugins: {
+      json,
+    },
     rules: {
       'json/no-duplicate-keys': 'error',
     },
@@ -53,9 +75,15 @@ module.exports = defineConfig([
       markdown,
     },
     extends: ['markdown/recommended'],
+    rules: {
+      'markdown/no-html': 'error',
+    },
   },
   {
     files: ['**/*.ts'],
+    plugins: {
+      depend,
+    },
     extends: [
       eslint.configs.recommended,
       tseslint.configs.recommendedTypeChecked,
@@ -63,6 +91,7 @@ module.exports = defineConfig([
       angular.configs.tsRecommended,
       importPlugin.flatConfigs.recommended,
       importPlugin.flatConfigs.typescript,
+      'depend/flat/recommended',
     ],
     settings: {
       'import/resolver': {
