@@ -1,6 +1,7 @@
 // @ts-check
 const { defineConfig, globalIgnores } = require('eslint/config');
 const json = require('@eslint/json').default;
+const markdown = require('@eslint/markdown').default;
 const eslint = require('@eslint/js');
 const tseslint = require('typescript-eslint');
 const angular = require('angular-eslint');
@@ -13,6 +14,7 @@ module.exports = defineConfig([
   globalIgnores([
     '.angular/',
     '.codacy/',
+    '.github/instructions/',
     'coverage/',
     'dist/',
     'playwright-report/',
@@ -44,6 +46,13 @@ module.exports = defineConfig([
     rules: {
       'json/no-duplicate-keys': 'error',
     },
+  },
+  {
+    files: ['**/*.md'],
+    plugins: {
+      markdown,
+    },
+    extends: ['markdown/recommended'],
   },
   {
     files: ['**/*.ts'],
