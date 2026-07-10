@@ -27,7 +27,7 @@
   "lint-staged": {
     ".vscode/settings.json": [
       "sort-json --indent 2 --depth 4",
-      "prettier --write"
+      "eslint -c ./eslint.config.js --fix"
     ],
     "package.json": [
       "sort-package-json",
