@@ -5,9 +5,11 @@
   "scripts": {
     "build": "ng build",
     "build:dev": "npm run build -- --configuration development",
-    "lint": "npm run lint:angular && npm run lint:playwright",
+    "lint": "npm run lint:angular && npm run lint:playwright && npm run lint:json && npm run lint:markdown",
     "lint:angular": "ng lint",
-    "lint:fix": "npm run lint:angular -- --fix && npm run lint:playwright -- --fix",
+    "lint:fix": "npm run lint:angular -- --fix && npm run lint:playwright -- --fix && npm run lint:json -- --fix && npm run lint:markdown -- --fix",
+    "lint:json": "eslint -c ./eslint.config.js --ext .json,.jsonc,.json5 .",
+    "lint:markdown": "eslint -c ./eslint.config.js --ext .md .",
     "lint:playwright": "eslint -c ./tests/eslint.config.js ./tests",
     "ng": "ng",
     "playwright:install": "playwright install --with-deps",
@@ -25,11 +27,11 @@
   "lint-staged": {
     ".vscode/settings.json": [
       "sort-json --indent 2 --depth 4",
-      "prettier --write"
+      "eslint -c ./eslint.config.js --fix"
     ],
     "package.json": [
       "sort-package-json",
-      "prettier --write"
+      "eslint -c ./eslint.config.js --fix"
     ],
     "src/**/*.{html,ts}": [
       "ng-lint-staged lint:angular --fix --"
@@ -37,7 +39,13 @@
     "tests/**/*.ts": [
       "eslint -c ./tests/eslint.config.js --fix"
     ],
-    "!({.vscode/settings.json,package.json,src/**/*.{html,ts},tests/**/*.ts})": [
+    "!(package|package-lock|**/settings).{json,jsonc,json5}": [
+      "eslint -c ./eslint.config.js --fix"
+    ],
+    "**/*.md": [
+      "eslint -c ./eslint.config.js --fix"
+    ],
+    "!**/*.{json,jsonc,json5,md,html,ts}": [
       "prettier --write --ignore-unknown"
     ]
   },
@@ -59,6 +67,8 @@
     "@angular/cli": "^22",
     "@angular/compiler-cli": "^22",
     "@eslint/js": "^9",
+    "@eslint/json": "^2",
+    "@eslint/markdown": "^8",
     "@playwright/test": "^1",
     "@types/iframe-resizer": "^4",
     "@types/node": "^26",
@@ -67,6 +77,7 @@
     "eslint": "^9",
     "eslint-config-prettier": "^10",
     "eslint-import-resolver-typescript": "^4",
+    "eslint-plugin-depend": "^1",
     "eslint-plugin-import": "^2",
     "eslint-plugin-prettier": "^5",
     "husky": "^9",

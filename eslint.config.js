@@ -1,16 +1,98 @@
 // @ts-check
-const path = require('node:path');
+const { defineConfig, globalIgnores } = require('eslint/config');
+const json = require('@eslint/json').default;
+const markdown = require('@eslint/markdown').default;
 const eslint = require('@eslint/js');
-const angular = require('angular-eslint');
 const tseslint = require('typescript-eslint');
-const eslintConfigPrettier = require('eslint-config-prettier');
-const eslintPluginPrettierRecommended = require('eslint-plugin-prettier/recommended');
+const angular = require('angular-eslint');
 const importPlugin = require('eslint-plugin-import');
-const { defineConfig } = require('eslint/config');
+const depend = require('eslint-plugin-depend').default;
+const eslintPluginPrettierRecommended = require('eslint-plugin-prettier/recommended');
+const eslintConfigPrettier = require('eslint-config-prettier');
+const path = require('node:path');
 
 module.exports = defineConfig([
+  globalIgnores([
+    '.angular/',
+    '.codacy/',
+    '.github/instructions/',
+    'coverage/',
+    'dist/',
+    'playwright-report/',
+    'test-results/',
+    'package-lock.json',
+    // Generated agent instruction files (source of truth: agent-instructions/source.md)
+    'AGENTS.md',
+    '.claude/CLAUDE.md',
+    '.gemini/GEMINI.md',
+    '.github/copilot-instructions.md',
+    '.junie/guidelines.md',
+    '.windsurf/rules/guidelines.md',
+    '.cursor/rules/cursor.mdc',
+  ]),
+  {
+    files: ['**/*.json'],
+    language: 'json/json',
+    plugins: {
+      json,
+    },
+    rules: {
+      'json/no-duplicate-keys': 'error',
+    },
+  },
+  {
+    files: ['package.json'],
+    language: 'json/json',
+    plugins: {
+      depend,
+      json,
+    },
+    extends: ['depend/flat/recommended'],
+    rules: {
+      'depend/ban-dependencies': [
+        'error',
+        {
+          allowed: ['eslint-plugin-import', 'lint-staged'],
+        },
+      ],
+    },
+  },
+  {
+    files: ['**/*.jsonc', '.vscode/*.json', '**/tsconfig*.json'],
+    language: 'json/jsonc',
+    plugins: {
+      json,
+    },
+    rules: {
+      'json/no-duplicate-keys': 'error',
+    },
+  },
+  {
+    files: ['**/*.json5'],
+    language: 'json/json5',
+    plugins: {
+      json,
+    },
+    rules: {
+      'json/no-duplicate-keys': 'error',
+    },
+  },
+  {
+    files: ['**/*.md'],
+    language: 'markdown/gfm',
+    plugins: {
+      markdown,
+    },
+    extends: ['markdown/recommended'],
+    rules: {
+      'markdown/no-html': 'error',
+    },
+  },
   {
     files: ['**/*.ts'],
+    plugins: {
+      depend,
+    },
     extends: [
       eslint.configs.recommended,
       tseslint.configs.recommendedTypeChecked,
@@ -18,6 +100,7 @@ module.exports = defineConfig([
       angular.configs.tsRecommended,
       importPlugin.flatConfigs.recommended,
       importPlugin.flatConfigs.typescript,
+      'depend/flat/recommended',
     ],
     settings: {
       'import/resolver': {

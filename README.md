@@ -68,7 +68,7 @@ public/                      # Static assets served as-is
 
 ## Prerequisites
 
-- **Node.js** — the version pinned in [`.nvmrc`](.nvmrc) (v26.4.0). With [nvm](https://github.com/nvm-sh/nvm) installed, run `nvm use`.
+- **Node.js** — the version pinned in [`.nvmrc`](.nvmrc). With [nvm](https://github.com/nvm-sh/nvm) installed, run `nvm use`.
 - **npm** v11+ (bundled with the Node version above).
 
 ## Getting Started
