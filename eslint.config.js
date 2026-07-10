@@ -1,6 +1,7 @@
 // @ts-check
+const { defineConfig, globalIgnores } = require('eslint/config');
+const json = require('@eslint/json').default;
 const eslint = require('@eslint/js');
-const { defineConfig } = require('eslint/config');
 const tseslint = require('typescript-eslint');
 const angular = require('angular-eslint');
 const importPlugin = require('eslint-plugin-import');
@@ -9,6 +10,41 @@ const eslintConfigPrettier = require('eslint-config-prettier');
 const path = require('node:path');
 
 module.exports = defineConfig([
+  globalIgnores([
+    '.angular/',
+    '.codacy/',
+    'coverage/',
+    'dist/',
+    'playwright-report/',
+    'test-results/',
+    'package-lock.json',
+  ]),
+  {
+    plugins: {
+      json,
+    },
+  },
+  {
+    files: ['**/*.json'],
+    language: 'json/json',
+    rules: {
+      'json/no-duplicate-keys': 'error',
+    },
+  },
+  {
+    files: ['**/*.jsonc', '.vscode/*.json', '**/tsconfig*.json'],
+    language: 'json/jsonc',
+    rules: {
+      'json/no-duplicate-keys': 'error',
+    },
+  },
+  {
+    files: ['**/*.json5'],
+    language: 'json/json5',
+    rules: {
+      'json/no-duplicate-keys': 'error',
+    },
+  },
   {
     files: ['**/*.ts'],
     extends: [
