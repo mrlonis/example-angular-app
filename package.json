@@ -37,6 +37,9 @@
     "src/**/*.{html,ts}": [
       "ng-lint-staged lint:angular --fix --"
     ],
+    "src/**/*.scss": [
+      "stylelint --fix"
+    ],
     "tests/**/*.ts": [
       "eslint -c ./tests/eslint.config.js --fix"
     ],
