@@ -41,6 +41,7 @@ The app exposes two lazy-loaded routes:
 - **Unit testing:** [Vitest](https://vitest.dev/) v4 (via `@angular/build:unit-test`)
 - **E2E testing:** [Playwright](https://playwright.dev/)
 - **Linting:** [ESLint](https://eslint.org/) v9 with [angular-eslint](https://github.com/angular-eslint/angular-eslint) and [typescript-eslint](https://typescript-eslint.io/)
+- **Stylesheet linting:** [Stylelint](https://stylelint.io/) with [stylelint-config-standard-scss](https://github.com/stylelint-scss/stylelint-config-standard-scss)
 - **Formatting:** [Prettier](https://prettier.io/)
 - **Git hooks:** [Husky](https://typicode.github.io/husky/) + [lint-staged](https://github.com/lint-staged/lint-staged)
 
@@ -101,8 +102,11 @@ Then open [http://localhost:4200/](http://localhost:4200/).
 | `npm run test`                          | Run unit tests, then end-to-end tests.                            |
 | `npm run test:unit`                     | Run Vitest unit tests once (no watch).                            |
 | `npm run test:e2e`                      | Install Playwright browsers and run E2E tests.                    |
-| `npm run lint`                          | Lint the Angular source and Playwright tests.                     |
-| `npm run lint:fix`                      | Lint and auto-fix.                                                |
+| `npm run lint`                          | Lint all sources (Angular, SCSS, Playwright, JSON, Markdown).     |
+| `npm run lint:angular`                  | Lint Angular source files only.                                   |
+| `npm run lint:style`                    | Lint SCSS stylesheets with Stylelint.                             |
+| `npm run lint:playwright`               | Lint Playwright test files only.                                  |
+| `npm run lint:fix`                      | Lint and auto-fix all sources.                                    |
 | `npm run prettier`                      | Format the entire repository.                                     |
 | `npm run prettier:test`                 | Check formatting without writing changes.                         |
 | `npm run sync:agent-instructions`       | Regenerate AI agent instruction files from the source.            |
@@ -142,7 +146,8 @@ Specs live in [`tests/`](tests).
 
 ## Linting and Formatting
 
-- `npm run lint` runs ESLint over both the Angular source (`src/`) and the Playwright tests (`tests/`).
+- `npm run lint` runs all linters: ESLint over the Angular source and Playwright tests, Stylelint over SCSS files, and ESLint over JSON and Markdown files.
+- `npm run lint:style` runs [Stylelint](https://stylelint.io/) over all SCSS files in `src/`. Configuration lives in [`.stylelintrc.json`](.stylelintrc.json).
 - `npm run prettier` formats the whole repository; `npm run prettier:test` checks formatting in CI.
 - A [lint-staged](https://github.com/lint-staged/lint-staged) pre-commit hook (configured in [`package.json`](package.json) and wired through Husky) automatically lints, formats, and sorts staged files.
 
