@@ -1,0 +1,11 @@
+/** @type {import('stylelint').Config} */
+module.exports = {
+  extends: ['stylelint-config-standard-scss', 'stylelint-prettier/recommended'],
+  ignoreFiles: ['src/styles/stylesm3-theme.scss'],
+  rules: {
+    'no-empty-source': null,
+    'scss/at-mixin-argumentless-call-parentheses': 'always',
+    'scss/double-slash-comment-empty-line-before': null,
+    'scss/dollar-variable-empty-line-before': null,
+  },
+};
