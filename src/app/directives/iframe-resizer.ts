@@ -2,15 +2,15 @@ import { AfterViewInit, Directive, ElementRef, OnDestroy, inject, input } from '
 import { HeightCalculationMethod, IFrameComponent, iframeResizer } from 'iframe-resizer';
 
 @Directive({
-  selector: '[appIframeResizer]',
+  selector: 'iframe[appIframeResizer]',
 })
 export class IFrameResizer implements AfterViewInit, OnDestroy {
-  private readonly element = inject(ElementRef<HTMLElement>);
+  private readonly element = inject(ElementRef<HTMLIFrameElement>);
 
   readonly heightCalculationMethod = input<HeightCalculationMethod>('lowestElement');
   readonly scrolling = input(false);
 
-  private component: IFrameComponent | null = null;
+  private component?: IFrameComponent[];
 
   ngAfterViewInit() {
     const components = iframeResizer(
@@ -22,19 +22,25 @@ export class IFrameResizer implements AfterViewInit, OnDestroy {
         autoResize: true,
         // interval: -1,
       },
-      this.element.nativeElement as string | HTMLElement,
+      this.element.nativeElement as string | HTMLIFrameElement,
     );
 
-    /* save component reference so we can close it later */
-    this.component = components.length > 0 ? components[0] : null;
-    if (this.component?.iFrameResizer) {
-      this.component.iFrameResizer.resize();
+    /* save component references so we can close them later */
+    this.component = components;
+    for (const component of components) {
+      if (component.iFrameResizer) {
+        component.iFrameResizer.resize();
+      }
     }
   }
 
   ngOnDestroy(): void {
-    if (this.component?.iFrameResizer) {
-      this.component.iFrameResizer.close();
+    if (this.component) {
+      for (const component of this.component) {
+        if (component.iFrameResizer) {
+          component.iFrameResizer.close();
+        }
+      }
     }
   }
 }
