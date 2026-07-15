@@ -22,7 +22,7 @@ const options = {
 };
 
 function getCursorEol() {
-  const raw = (process.env.CURSOR_EOL ?? 'preserve').toLowerCase();
+  const raw = (process.env['CURSOR_EOL'] ?? 'preserve').toLowerCase();
 
   if (raw === 'lf') {
     return '\n';
@@ -35,29 +35,29 @@ function getCursorEol() {
   return 'preserve';
 }
 
-function detectEol(content) {
+function detectEol(content: string): '\r\n' | '\n' {
   return content.includes('\r\n') ? '\r\n' : '\n';
 }
 
-function normalizeEol(content, eol) {
+function normalizeEol(content: string, eol: string): string {
   return content.replace(/\r?\n/g, eol);
 }
 
-function ensureTrailingNewline(content) {
+function ensureTrailingNewline(content: string): string {
   return content.endsWith('\n') ? content : `${content}\n`;
 }
 
-function readExisting(path) {
-  if (!existsSync(path)) {
+function readExisting(filePath: string): { exists: boolean; content: string; eol: '\r\n' | '\n' } {
+  if (!existsSync(filePath)) {
     return { exists: false, content: '', eol: '\n' };
   }
 
-  const content = readFileSync(path, 'utf8');
+  const content = readFileSync(filePath, 'utf8');
   return { exists: true, content, eol: detectEol(content) };
 }
 
-function maybeWrite(path, nextContent) {
-  const existing = readExisting(path);
+function maybeWrite(filePath: string, nextContent: string): { changed: boolean; wrote: boolean } {
+  const existing = readExisting(filePath);
   const changed = existing.content !== nextContent;
 
   if (options.check) {
@@ -65,7 +65,7 @@ function maybeWrite(path, nextContent) {
   }
 
   if (changed) {
-    writeFileSync(path, nextContent, 'utf8');
+    writeFileSync(filePath, nextContent, 'utf8');
   }
 
   return { changed, wrote: changed };
