@@ -31,6 +31,9 @@
       "path": "./scripts/tsconfig.json"
     },
     {
+      "path": "./scripts/tsconfig.spec.json"
+    },
+    {
       "path": "./tests/tsconfig.json"
     }
   ]

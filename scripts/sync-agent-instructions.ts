@@ -2,6 +2,7 @@
 
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const root = process.cwd();
 const sourcePath = resolve(root, 'agent-instructions/source.md');
@@ -35,19 +36,23 @@ function getCursorEol() {
   return 'preserve';
 }
 
-function detectEol(content: string): '\r\n' | '\n' {
+export function detectEol(content: string): '\r\n' | '\n' {
   return content.includes('\r\n') ? '\r\n' : '\n';
 }
 
-function normalizeEol(content: string, eol: string): string {
+export function normalizeEol(content: string, eol: string): string {
   return content.replace(/\r?\n/g, eol);
 }
 
-function ensureTrailingNewline(content: string): string {
+export function ensureTrailingNewline(content: string): string {
   return content.endsWith('\n') ? content : `${content}\n`;
 }
 
-function readExisting(filePath: string): { exists: boolean; content: string; eol: '\r\n' | '\n' } {
+export function readExisting(filePath: string): {
+  exists: boolean;
+  content: string;
+  eol: '\r\n' | '\n';
+} {
   if (!existsSync(filePath)) {
     return { exists: false, content: '', eol: '\n' };
   }
@@ -56,7 +61,10 @@ function readExisting(filePath: string): { exists: boolean; content: string; eol
   return { exists: true, content, eol: detectEol(content) };
 }
 
-function maybeWrite(filePath: string, nextContent: string): { changed: boolean; wrote: boolean } {
+export function maybeWrite(
+  filePath: string,
+  nextContent: string,
+): { changed: boolean; wrote: boolean } {
   const existing = readExisting(filePath);
   const changed = existing.content !== nextContent;
 
@@ -115,4 +123,6 @@ function main() {
   console.log(`\nDone. ${changedCount} file(s) ${options.check ? 'out of sync' : 'updated'}.`);
 }
 
-main();
+if (resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  main();
+}

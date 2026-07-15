@@ -3,9 +3,8 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "outDir": "../out-tsc/scripts",
-    "types": ["node"]
+    "outDir": "../out-tsc/scripts-spec",
+    "types": ["node", "vitest/globals"]
   },
-  "include": ["./**/*.ts", "tsconfig.spec.json"],
-  "exclude": ["./**/*.spec.ts"]
+  "include": ["./**/*.spec.ts"]
 }
