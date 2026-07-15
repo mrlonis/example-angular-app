@@ -5,12 +5,13 @@
   "scripts": {
     "build": "ng build",
     "build:dev": "npm run build -- --configuration development",
-    "lint": "npm run lint:angular && npm run lint:style && npm run lint:playwright && npm run lint:json && npm run lint:markdown",
+    "lint": "npm run lint:angular && npm run lint:style && npm run lint:playwright && npm run lint:scripts && npm run lint:json && npm run lint:markdown",
     "lint:angular": "ng lint",
-    "lint:fix": "npm run lint:angular -- --fix && npm run lint:style -- --fix && npm run lint:playwright -- --fix && npm run lint:json -- --fix && npm run lint:markdown -- --fix",
+    "lint:fix": "npm run lint:angular -- --fix && npm run lint:style -- --fix && npm run lint:playwright -- --fix && npm run lint:scripts -- --fix && npm run lint:json -- --fix && npm run lint:markdown -- --fix",
     "lint:json": "eslint -c ./eslint.config.js --ext .json,.jsonc,.json5 .",
     "lint:markdown": "eslint -c ./eslint.config.js --ext .md .",
     "lint:playwright": "eslint -c ./tests/eslint.config.js ./tests",
+    "lint:scripts": "eslint -c ./scripts/eslint.config.js ./scripts",
     "lint:style": "stylelint 'src/**/*.scss'",
     "ng": "ng",
     "playwright:install": "playwright install --with-deps",
@@ -18,10 +19,11 @@
     "prettier": "prettier --write . --ignore-unknown",
     "prettier:test": "prettier --check . --ignore-unknown",
     "start": "ng serve",
-    "sync:agent-instructions": "node scripts/sync-agent-instructions.mjs",
-    "sync:agent-instructions:check": "node scripts/sync-agent-instructions.mjs --check",
-    "test": "npm run test:unit && npm run test:e2e",
+    "sync:agent-instructions": "tsx scripts/sync-agent-instructions.ts",
+    "sync:agent-instructions:check": "tsx scripts/sync-agent-instructions.ts --check",
+    "test": "npm run test:unit && npm run test:scripts && npm run test:e2e",
     "test:e2e": "npm run playwright:install && playwright test --config=./tests/playwright.config.ts",
+    "test:scripts": "vitest run --config scripts/vitest.config.ts",
     "test:unit": "ng test --no-watch",
     "watch": "ng build --watch --configuration development"
   },
@@ -33,6 +35,9 @@
     "package.json": [
       "sort-package-json",
       "eslint -c ./eslint.config.js --fix"
+    ],
+    "scripts/**/*.ts": [
+      "eslint -c ./scripts/eslint.config.js --fix"
     ],
     "src/**/*.{html,ts}": [
       "ng-lint-staged lint:angular --fix --"
@@ -94,6 +99,7 @@
     "stylelint": "^17",
     "stylelint-config-standard-scss": "^17",
     "stylelint-prettier": "^5",
+    "tsx": "^4",
     "typescript": "~6.0",
     "typescript-eslint": "^8",
     "vitest": "^4"
