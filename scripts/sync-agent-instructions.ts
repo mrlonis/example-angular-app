@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import { existsSync, readFileSync, writeFileSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = process.cwd();
@@ -72,6 +72,7 @@ export function maybeWrite(
   }
 
   if (changed) {
+    mkdirSync(dirname(filePath), { recursive: true });
     writeFileSync(filePath, nextContent, 'utf8');
   }
 
