@@ -1,12 +1,14 @@
 import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { afterAll, beforeAll, describe, expect, it } from 'vitest';
+import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
 import {
+  TARGETS,
   detectEol,
   ensureTrailingNewline,
   maybeWrite,
   normalizeEol,
+  parseTargets,
   readExisting,
 } from './sync-agent-instructions';
 
@@ -120,5 +122,48 @@ describe('maybeWrite', () => {
     const result = maybeWrite(filePath, 'brand new');
     expect(result).toEqual({ changed: true, wrote: true });
     expect(readFileSync(filePath, 'utf8')).toBe('brand new');
+  });
+
+  it('creates missing parent directories before writing', () => {
+    const filePath = join(tmpDir, 'nested', 'deep', 'write-nested.txt');
+    const result = maybeWrite(filePath, 'nested content');
+    expect(result).toEqual({ changed: true, wrote: true });
+    expect(readFileSync(filePath, 'utf8')).toBe('nested content');
+  });
+});
+
+describe('parseTargets', () => {
+  it('returns all targets when no --targets flag is provided', () => {
+    expect(parseTargets([])).toEqual(Object.values(TARGETS));
+  });
+
+  it('returns all targets for --targets=all', () => {
+    expect(parseTargets(['--targets=all'])).toEqual(Object.values(TARGETS));
+  });
+
+  it('returns only the specified target', () => {
+    expect(parseTargets(['--targets=claude'])).toEqual([TARGETS['claude']]);
+  });
+
+  it('returns multiple specified targets in order', () => {
+    expect(parseTargets(['--targets=claude,github,gemini'])).toEqual([
+      TARGETS['claude'],
+      TARGETS['github'],
+      TARGETS['gemini'],
+    ]);
+  });
+
+  it('cursor target has isCursor flag', () => {
+    const result = parseTargets(['--targets=cursor']);
+    expect(result).toEqual([TARGETS['cursor']]);
+    expect(result[0].isCursor).toBe(true);
+  });
+
+  it('exits with error for unknown target', () => {
+    const exitSpy = vi.spyOn(process, 'exit').mockImplementation(() => {
+      throw new Error('process.exit called');
+    });
+    expect(() => parseTargets(['--targets=unknown'])).toThrow('process.exit called');
+    exitSpy.mockRestore();
   });
 });

@@ -1,25 +1,52 @@
 #!/usr/bin/env node
 
-import { existsSync, readFileSync, writeFileSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = process.cwd();
-const sourcePath = resolve(root, 'agent-instructions/source.md');
-const markdownTargets = [
-  'AGENTS.md',
-  '.claude/CLAUDE.md',
-  '.gemini/GEMINI.md',
-  '.github/copilot-instructions.md',
-  '.junie/guidelines.md',
-  '.windsurf/rules/guidelines.md',
-];
-const cursorTarget = '.cursor/rules/cursor.mdc';
+const sourcePath = resolve(root, 'AGENTS.md');
 const cursorHeader = ['---', 'context: true', 'priority: high', 'scope: project', '---'].join('\n');
+
+interface TargetDef {
+  path: string;
+  isCursor?: boolean;
+}
+
+export const TARGETS: Record<string, TargetDef> = {
+  claude: { path: '.claude/CLAUDE.md' },
+  gemini: { path: '.gemini/GEMINI.md' },
+  github: { path: '.github/copilot-instructions.md' },
+  junie: { path: '.junie/guidelines.md' },
+  windsurf: { path: '.windsurf/rules/guidelines.md' },
+  cursor: { path: '.cursor/rules/cursor.mdc', isCursor: true },
+};
+
+export function parseTargets(argv: string[]): TargetDef[] {
+  const flag = argv.find((arg) => arg.startsWith('--targets='));
+
+  const names = flag ? flag.slice('--targets='.length).split(',').filter(Boolean) : ['all'];
+
+  if (names.includes('all')) {
+    return Object.values(TARGETS);
+  }
+
+  const unknown = names.filter((name) => !(name in TARGETS));
+
+  if (unknown.length > 0) {
+    console.error(
+      `Unknown target(s): ${unknown.join(', ')}. Valid targets: all, ${Object.keys(TARGETS).join(', ')}`,
+    );
+    process.exit(1);
+  }
+
+  return names.map((name) => TARGETS[name]);
+}
 
 const options = {
   check: process.argv.includes('--check'),
   cursorEol: getCursorEol(),
+  targets: parseTargets(process.argv),
 };
 
 function getCursorEol() {
@@ -73,6 +100,7 @@ export function maybeWrite(
   }
 
   if (changed) {
+    mkdirSync(dirname(filePath), { recursive: true });
     writeFileSync(filePath, nextContent, 'utf8');
   }
 
@@ -84,27 +112,24 @@ function main() {
   const sourceBody = ensureTrailingNewline(sourceRaw.trimEnd());
   const results = [];
 
-  for (const relativeTarget of markdownTargets) {
-    const targetPath = resolve(root, relativeTarget);
-    const { eol } = readExisting(targetPath);
-    const targetContent = normalizeEol(sourceBody, eol);
+  for (const target of options.targets) {
+    const targetPath = resolve(root, target.path);
+    const existing = readExisting(targetPath);
+
+    let content: string;
+
+    if (target.isCursor) {
+      const eol = options.cursorEol === 'preserve' ? existing.eol : options.cursorEol;
+      content = normalizeEol(`${cursorHeader}\n\n${sourceBody}`, eol);
+    } else {
+      content = normalizeEol(sourceBody, existing.eol);
+    }
 
     results.push({
-      file: relativeTarget,
-      ...maybeWrite(targetPath, targetContent),
+      file: target.path,
+      ...maybeWrite(targetPath, content),
     });
   }
-
-  const cursorPath = resolve(root, cursorTarget);
-  const cursorExisting = readExisting(cursorPath);
-  const cursorEol = options.cursorEol === 'preserve' ? cursorExisting.eol : options.cursorEol;
-  const cursorContentRaw = `${cursorHeader}\n\n${sourceBody}`;
-  const cursorContent = normalizeEol(cursorContentRaw, cursorEol);
-
-  results.push({
-    file: cursorTarget,
-    ...maybeWrite(cursorPath, cursorContent),
-  });
 
   const changedCount = results.filter((result) => result.changed).length;
 

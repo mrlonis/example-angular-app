@@ -62,8 +62,7 @@ src/
 ├── main.ts                  # Bootstrap entry point
 └── styles.scss              # Global styles
 tests/                       # Playwright end-to-end tests and config
-agent-instructions/          # Source of truth for generated AI agent instruction files
-scripts/                     # sync-agent-instructions.mjs and other tooling
+scripts/                     # sync-agent-instructions.ts and other tooling
 public/                      # Static assets served as-is
 ```
 
@@ -153,9 +152,9 @@ Specs live in [`tests/`](tests).
 
 ## AI Agent Instructions
 
-Instruction files for various AI coding assistants (`AGENTS.md`, `.claude/CLAUDE.md`, `.gemini/GEMINI.md`, `.github/copilot-instructions.md`, `.junie/guidelines.md`, `.windsurf/rules/guidelines.md`, `.cursor/rules/cursor.mdc`) are **generated** and must not be edited by hand.
+Instruction files for various AI coding assistants (`.claude/CLAUDE.md`, `.gemini/GEMINI.md`, `.github/copilot-instructions.md`, `.junie/guidelines.md`, `.windsurf/rules/guidelines.md`, `.cursor/rules/cursor.mdc`) are **generated** from [`AGENTS.md`](AGENTS.md) and must not be edited by hand.
 
-Edit only [`agent-instructions/source.md`](agent-instructions/source.md), then run:
+Edit only [`AGENTS.md`](AGENTS.md), then run:
 
 ```shell
 npm run sync:agent-instructions
