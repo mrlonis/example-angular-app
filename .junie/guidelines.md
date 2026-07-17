@@ -15,15 +15,14 @@ Single-page Angular v22 demo app. Angular Material + CDK v22, TypeScript 6 (stri
 - `src/app/directives/` — `iframe-resizer` attribute directive (`[appIframeResizer]`).
 - `src/app/interfaces/` — types and periodic-element data (`data.ts`).
 - `tests/` — Playwright end-to-end specs and config.
-- `agent-instructions/source.md` — edit this, then sync (see below). Do not edit generated files directly.
-- `scripts/sync-agent-instructions.mjs` — generator for the AI instruction files.
+- `scripts/sync-agent-instructions.ts` — syncs `AGENTS.md` to all other AI instruction files.
 
 ## Conventions
 
 - Put route-level components (one per route) in `src/app/pages/`; put components reused across pages in `src/app/components/`.
 - File names have no `.component`/`.service`/`.directive` suffix (Angular v20+ style): e.g. `mat-table.ts`, `url-cache.ts`.
 - New components default to SCSS and external templates/styles.
-- The generated instruction files (`AGENTS.md`, `.claude/CLAUDE.md`, etc.) are copies of this source — to change guidance, edit `agent-instructions/source.md` and re-sync (see below), never edit the copies.
+- The generated instruction files (`.claude/CLAUDE.md`, `.gemini/GEMINI.md`, etc.) are copies of `AGENTS.md` — to change guidance, edit `AGENTS.md` and re-sync (see below), never edit the copies.
 
 ## Common Commands
 
@@ -90,8 +89,8 @@ Single-page Angular v22 demo app. Angular Material + CDK v22, TypeScript 6 (stri
 
 ## AI Instruction Source of Truth
 
-- Do not manually edit generated AI instruction files such as `AGENTS.md`, `.claude/CLAUDE.md`, `.gemini/GEMINI.md`, `.github/copilot-instructions.md`, `.junie/guidelines.md`, `.windsurf/rules/guidelines.md`, or `.cursor/rules/cursor.mdc`.
-- Edit only `agent-instructions/source.md`.
+- Do not manually edit generated AI instruction files such as `.claude/CLAUDE.md`, `.gemini/GEMINI.md`, `.github/copilot-instructions.md`, `.junie/guidelines.md`, `.windsurf/rules/guidelines.md`, or `.cursor/rules/cursor.mdc`.
+- Edit only `AGENTS.md`.
 - After editing, run:
   - `npm run sync:agent-instructions`
   - `npm run sync:agent-instructions:check`

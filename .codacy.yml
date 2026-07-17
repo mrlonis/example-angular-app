@@ -8,7 +8,6 @@ exclude_paths:
   - '.junie/**'
   - '.vscode/**'
   - '.windsurf/**'
-  - 'agent-instructions/**'
   - 'public/**'
   - 'scripts/**'
   - 'src/**/*.spec.ts'

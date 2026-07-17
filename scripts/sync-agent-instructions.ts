@@ -5,9 +5,8 @@ import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = process.cwd();
-const sourcePath = resolve(root, 'agent-instructions/source.md');
+const sourcePath = resolve(root, 'AGENTS.md');
 const markdownTargets = [
-  'AGENTS.md',
   '.claude/CLAUDE.md',
   '.gemini/GEMINI.md',
   '.github/copilot-instructions.md',
