@@ -123,6 +123,13 @@ describe('maybeWrite', () => {
     expect(result).toEqual({ changed: true, wrote: true });
     expect(readFileSync(filePath, 'utf8')).toBe('brand new');
   });
+
+  it('creates missing parent directories before writing', () => {
+    const filePath = join(tmpDir, 'nested', 'deep', 'write-nested.txt');
+    const result = maybeWrite(filePath, 'nested content');
+    expect(result).toEqual({ changed: true, wrote: true });
+    expect(readFileSync(filePath, 'utf8')).toBe('nested content');
+  });
 });
 
 describe('parseTargets', () => {
