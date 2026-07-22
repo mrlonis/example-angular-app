@@ -13,6 +13,7 @@
     "lint:playwright": "eslint -c ./tests/eslint.config.js ./tests",
     "lint:scripts": "eslint -c ./scripts/eslint.config.js ./scripts",
     "lint:style": "stylelint 'src/**/*.scss'",
+    "lint-staged": "lint-staged",
     "ng": "ng",
     "playwright:install": "playwright install --with-deps",
     "prepare": "husky",
