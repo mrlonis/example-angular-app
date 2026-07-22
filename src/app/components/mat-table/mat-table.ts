@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { ColumnResize } from '../../directives/column-resize';
 import { ELEMENT_DATA } from '../../interfaces/data';
 import { FilterState } from '../../interfaces/filter-state';
 import { PeriodicElement } from '../../interfaces/periodic-element';
@@ -61,9 +62,13 @@ export const DEFAULT_COLUMNS = [
   'block',
 ];
 
+export const DEFAULT_COLUMN_WIDTH = 150;
+export const EXPAND_COLUMN_WIDTH = 56;
+
 @Component({
   selector: 'app-mat-table',
   imports: [
+    ColumnResize,
     ColumnSelect,
     Filter,
     MatButtonModule,
@@ -88,10 +93,21 @@ export class MatTable {
   readonly dataSource = new MatTableDataSource(ELEMENT_DATA.elements);
   readonly columnsToDisplay = signal<string[]>(DEFAULT_COLUMNS);
   readonly columnsToDisplayWithExpand = computed(() => [...this.columnsToDisplay(), 'expand']);
+  readonly tableWidth = computed(() => {
+    const widths = this.columnWidths();
+    const dataTotal = this.columnsToDisplay().reduce(
+      (total, column) => total + (widths[column] ?? DEFAULT_COLUMN_WIDTH),
+      0,
+    );
+
+    return dataTotal + EXPAND_COLUMN_WIDTH;
+  });
   readonly fullListOfColumns = FULL_LIST_OF_COLUMNS;
   readonly defaultColumns = DEFAULT_COLUMNS;
   readonly expandedElement = signal<PeriodicElement | null>(null);
   readonly isOpen = signal(false);
+  readonly columnWidths = signal<Record<string, number>>({});
+  readonly expandColumnWidth = EXPAND_COLUMN_WIDTH;
 
   constructor() {
     this.dataSource.filterPredicate = (data: PeriodicElement, filter: string) => {
@@ -145,6 +161,14 @@ export class MatTable {
 
   isExpanded(element: PeriodicElement) {
     return this.expandedElement() === element;
+  }
+
+  columnWidth(column: string): number {
+    return this.columnWidths()[column] ?? DEFAULT_COLUMN_WIDTH;
+  }
+
+  setColumnWidth(column: string, width: number): void {
+    this.columnWidths.update((widths) => ({ ...widths, [column]: width }));
   }
 
   private getCachedFilterState(filter: string): FilterState {
