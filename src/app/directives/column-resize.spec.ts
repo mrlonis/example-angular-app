@@ -249,11 +249,13 @@ describe('ColumnResize', () => {
     expect(parentClick).not.toHaveBeenCalled();
   });
 
-  it('sets the aria-label from the column at initialization', () => {
+  it('updates the aria-label when the column input changes at runtime', () => {
+    expect(handle.getAttribute('aria-label')).toBe('Resize name column');
+
     host.column.set('symbol');
     fixture.detectChanges();
 
-    expect(handle.getAttribute('aria-label')).toBe('Resize name column');
+    expect(handle.getAttribute('aria-label')).toBe('Resize symbol column');
   });
 
   it('removes handle listeners on destroy', () => {
@@ -263,5 +265,23 @@ describe('ColumnResize', () => {
     handle.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
 
     expect(host.widths).toHaveLength(0);
+  });
+});
+
+@Component({
+  selector: 'app-sticky-host',
+  imports: [ColumnResize],
+  template: `<th appColumnResize="name" style="position: sticky">Header</th>`,
+})
+class StickyHostComponent {}
+
+describe('ColumnResize with a pre-positioned host', () => {
+  it('does not override an existing position such as sticky', () => {
+    TestBed.configureTestingModule({ imports: [StickyHostComponent] });
+    const fixture = TestBed.createComponent(StickyHostComponent);
+    fixture.detectChanges();
+
+    const th = fixture.debugElement.query(By.css('th')).nativeElement as HTMLElement;
+    expect(th.style.position).toBe('sticky');
   });
 });

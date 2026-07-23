@@ -35,10 +35,12 @@ export class ColumnResize implements AfterViewInit, OnDestroy {
   private readonly pointerCleanups: (() => void)[] = [];
 
   constructor() {
-    // Keep the separator's range attributes in sync with the inputs. If the
-    // bounds change at runtime, refresh aria-valuemin/max and re-clamp an
-    // already-resized column so the emitted width can't contradict the range.
+    // Keep the separator's label and range attributes in sync with the inputs.
+    // If the column or bounds change at runtime, refresh aria-label/valuemin/valuemax
+    // and re-clamp an already-resized column so the emitted width can't contradict
+    // the range.
     effect(() => {
+      const column = this.column();
       const min = this.minWidth();
       const max = this.maxWidth();
       const handle = this.handle;
@@ -47,6 +49,7 @@ export class ColumnResize implements AfterViewInit, OnDestroy {
         return;
       }
 
+      handle.setAttribute('aria-label', `Resize ${column} column`);
       handle.setAttribute('aria-valuemin', `${min}`);
       handle.setAttribute('aria-valuemax', `${max}`);
 
@@ -58,7 +61,11 @@ export class ColumnResize implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     const host = this.element.nativeElement;
-    this.renderer.setStyle(host, 'position', 'relative');
+    // Only establish a positioning context when the cell isn't already positioned,
+    // so we don't override Material's sticky header (position: sticky).
+    if (this.document.defaultView?.getComputedStyle(host).position === 'static') {
+      this.renderer.setStyle(host, 'position', 'relative');
+    }
 
     const handle = this.renderer.createElement('span') as HTMLElement;
     this.renderer.addClass(handle, 'column-resize-handle');
