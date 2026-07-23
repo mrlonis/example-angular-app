@@ -94,9 +94,17 @@
       <td mat-footer-cell *matFooterCellDef class="bg-primary"></td>
     </ng-container>
 
+    <!-- Spacer Column Definition - flexible column that absorbs slack so resizable
+         columns keep their exact widths under the fixed table layout -->
+    <ng-container [matColumnDef]="resizeSpacerColumn">
+      <th mat-header-cell *matHeaderCellDef aria-hidden="true" class="resize-spacer-cell"></th>
+      <td mat-cell *matCellDef="let element" aria-hidden="true" class="resize-spacer-cell"></td>
+      <td mat-footer-cell *matFooterCellDef class="bg-primary resize-spacer-cell"></td>
+    </ng-container>
+
     <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
     <ng-container matColumnDef="expandedDetail">
-      <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpand().length">
+      <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToRender().length">
         <div
           class="example-element-detail-wrapper"
           [class.example-element-detail-wrapper-expanded]="isExpanded(element)"
@@ -107,17 +115,17 @@
     </ng-container>
 
     <!-- Row Definitions -->
-    <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand(); sticky: true"></tr>
+    <tr mat-header-row *matHeaderRowDef="columnsToRender(); sticky: true"></tr>
     <tr
       mat-row
-      *matRowDef="let element; columns: columnsToDisplayWithExpand()"
+      *matRowDef="let element; columns: columnsToRender()"
       class="example-element-row"
       [class.example-expanded-row]="isExpanded(element)"
       (click)="toggleExpanded($event, element)"
       (keydown)="toggleExpanded($event, element)"
     ></tr>
     <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
-    <tr mat-footer-row *matFooterRowDef="columnsToDisplayWithExpand(); sticky: true"></tr>
+    <tr mat-footer-row *matFooterRowDef="columnsToRender(); sticky: true"></tr>
   </table>
 </div>
 <mat-paginator

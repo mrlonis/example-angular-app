@@ -25,6 +25,11 @@ table {
   position: relative;
 }
 
+.resizable-table .resize-spacer-cell {
+  padding: 0;
+  overflow: hidden;
+}
+
 tr.example-detail-row {
   height: 0;
 }

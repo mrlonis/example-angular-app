@@ -64,6 +64,7 @@ export const DEFAULT_COLUMNS = [
 
 export const DEFAULT_COLUMN_WIDTH = 150;
 export const EXPAND_COLUMN_WIDTH = 56;
+export const RESIZE_SPACER_COLUMN = 'resizeSpacer';
 
 @Component({
   selector: 'app-mat-table',
@@ -93,6 +94,14 @@ export class MatTable {
   readonly dataSource = new MatTableDataSource(ELEMENT_DATA.elements);
   readonly columnsToDisplay = signal<string[]>(DEFAULT_COLUMNS);
   readonly columnsToDisplayWithExpand = computed(() => [...this.columnsToDisplay(), 'expand']);
+  // A trailing flexible spacer column absorbs any slack so the resizable columns
+  // always render at their exact specified widths (never proportionally redistributed
+  // by the fixed table layout), which keeps drag resizing stable when the table has
+  // fewer columns than fill the viewport.
+  readonly columnsToRender = computed(() => [
+    ...this.columnsToDisplayWithExpand(),
+    RESIZE_SPACER_COLUMN,
+  ]);
   readonly tableWidth = computed(() => {
     const widths = this.columnWidths();
     const dataTotal = this.columnsToDisplay().reduce(
@@ -102,6 +111,7 @@ export class MatTable {
 
     return dataTotal + EXPAND_COLUMN_WIDTH;
   });
+  readonly resizeSpacerColumn = RESIZE_SPACER_COLUMN;
   readonly fullListOfColumns = FULL_LIST_OF_COLUMNS;
   readonly defaultColumns = DEFAULT_COLUMNS;
   readonly expandedElement = signal<PeriodicElement | null>(null);

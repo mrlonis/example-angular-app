@@ -58,6 +58,11 @@ describe('ColumnResize', () => {
     expect(th.style.position).toBe('relative');
   });
 
+  it('initializes required separator value attributes on the handle', () => {
+    expect(handle.getAttribute('aria-valuenow')).not.toBeNull();
+    expect(handle.getAttribute('aria-valuemin')).toBe('60');
+  });
+
   it('widens the column and emits width on ArrowRight', () => {
     setOffsetWidth(th, 200);
 

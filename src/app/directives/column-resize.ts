@@ -40,6 +40,8 @@ export class ColumnResize implements AfterViewInit, OnDestroy {
     this.renderer.setAttribute(handle, 'role', 'separator');
     this.renderer.setAttribute(handle, 'aria-orientation', 'vertical');
     this.renderer.setAttribute(handle, 'aria-label', `Resize ${this.column()} column`);
+    this.renderer.setAttribute(handle, 'aria-valuemin', `${this.minWidth()}`);
+    this.renderer.setAttribute(handle, 'aria-valuenow', `${Math.round(host.offsetWidth)}`);
     this.renderer.setAttribute(handle, 'tabindex', '0');
     this.renderer.appendChild(host, handle);
     this.handle = handle;

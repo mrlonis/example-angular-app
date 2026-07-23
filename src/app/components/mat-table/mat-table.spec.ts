@@ -10,6 +10,7 @@ import {
   EXPAND_COLUMN_WIDTH,
   FULL_LIST_OF_COLUMNS,
   MatTable,
+  RESIZE_SPACER_COLUMN,
 } from './mat-table';
 
 describe('MatTable', () => {
@@ -45,6 +46,14 @@ describe('MatTable', () => {
 
     it('creates columnsToDisplayWithExpand by appending expand column', () => {
       expect(component.columnsToDisplayWithExpand()).toEqual([...DEFAULT_COLUMNS, 'expand']);
+    });
+
+    it('creates columnsToRender by appending the expand and spacer columns', () => {
+      expect(component.columnsToRender()).toEqual([
+        ...DEFAULT_COLUMNS,
+        'expand',
+        RESIZE_SPACER_COLUMN,
+      ]);
     });
 
     it('exposes fullListOfColumns constant', () => {
@@ -144,6 +153,16 @@ describe('MatTable', () => {
 
     it('exposes the expand column width constant', () => {
       expect(component.expandColumnWidth).toBe(EXPAND_COLUMN_WIDTH);
+    });
+
+    it('renders a trailing spacer column after the expand column', () => {
+      expect(component.resizeSpacerColumn).toBe(RESIZE_SPACER_COLUMN);
+      expect(component.columnsToRender().at(-1)).toBe(RESIZE_SPACER_COLUMN);
+    });
+
+    it('keeps the spacer column present even with no displayed columns', () => {
+      component.columnsToDisplay.set([]);
+      expect(component.columnsToRender()).toEqual(['expand', RESIZE_SPACER_COLUMN]);
     });
   });
 
@@ -397,9 +416,9 @@ describe('MatTable', () => {
   });
 
   describe('Template Integration - Table Headers and Footers', () => {
-    it('renders table header for each column in columnsToDisplayWithExpand', () => {
+    it('renders table header for each column in columnsToRender', () => {
       const headers = fixture.debugElement.queryAll(By.css('th[mat-header-cell]'));
-      expect(headers.length).toBe(component.columnsToDisplayWithExpand().length);
+      expect(headers.length).toBe(component.columnsToRender().length);
     });
 
     it('renders table footer with total element count', () => {
@@ -598,7 +617,7 @@ describe('MatTable', () => {
 
       const updatedHeaders = fixture.debugElement.queryAll(By.css('th[mat-header-cell]'));
       expect(updatedHeaders.length).not.toBe(initialCount);
-      expect(updatedHeaders.length).toBe(3); // name, symbol, expand
+      expect(updatedHeaders.length).toBe(4); // name, symbol, expand, spacer
     });
 
     it('expandedDetail row maintains proper colspan after column change', () => {
@@ -612,7 +631,7 @@ describe('MatTable', () => {
       const colspan = (detailRow?.nativeElement as HTMLElement).parentElement?.getAttribute(
         'colspan',
       );
-      expect(colspan).toBe(component.columnsToDisplayWithExpand().length.toString());
+      expect(colspan).toBe(component.columnsToRender().length.toString());
     });
   });
 
