@@ -5,6 +5,7 @@ import {
   ElementRef,
   OnDestroy,
   Renderer2,
+  effect,
   inject,
   input,
   output,
@@ -32,6 +33,28 @@ export class ColumnResize implements AfterViewInit, OnDestroy {
   private lastEmittedWidth?: number;
   private readonly cleanups: (() => void)[] = [];
   private readonly pointerCleanups: (() => void)[] = [];
+
+  constructor() {
+    // Keep the separator's range attributes in sync with the inputs. If the
+    // bounds change at runtime, refresh aria-valuemin/max and re-clamp an
+    // already-resized column so the emitted width can't contradict the range.
+    effect(() => {
+      const min = this.minWidth();
+      const max = this.maxWidth();
+      const handle = this.handle;
+
+      if (!handle) {
+        return;
+      }
+
+      handle.setAttribute('aria-valuemin', `${min}`);
+      handle.setAttribute('aria-valuemax', `${max}`);
+
+      if (this.lastEmittedWidth !== undefined) {
+        this.applyWidth(this.lastEmittedWidth);
+      }
+    });
+  }
 
   ngAfterViewInit(): void {
     const host = this.element.nativeElement;
@@ -70,6 +93,12 @@ export class ColumnResize implements AfterViewInit, OnDestroy {
   }
 
   private onPointerDown(event: PointerEvent): void {
+    // Only the primary (left) button starts a resize; let secondary buttons
+    // (e.g. right-click) fall through so the context menu behaves normally.
+    if (event.button !== 0) {
+      return;
+    }
+
     event.preventDefault();
     event.stopPropagation();
 

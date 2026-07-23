@@ -66,6 +66,35 @@ describe('ColumnResize', () => {
     expect(handle.getAttribute('aria-valuemax')).toBe('1000');
   });
 
+  it('keeps aria-valuemin/aria-valuemax in sync when inputs change at runtime', () => {
+    host.minWidth.set(80);
+    host.maxWidth.set(500);
+    fixture.detectChanges();
+
+    expect(handle.getAttribute('aria-valuemin')).toBe('80');
+    expect(handle.getAttribute('aria-valuemax')).toBe('500');
+  });
+
+  it('re-clamps an already-resized column when maxWidth shrinks below it', () => {
+    setOffsetWidth(th, 200);
+    handle.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
+    expect(host.widths.at(-1)).toBe(216);
+
+    host.maxWidth.set(180);
+    fixture.detectChanges();
+
+    expect(host.widths.at(-1)).toBe(180);
+    expect(handle.getAttribute('aria-valuenow')).toBe('180');
+    expect(handle.getAttribute('aria-valuemax')).toBe('180');
+  });
+
+  it('does not emit on input change when the column has not been resized', () => {
+    host.maxWidth.set(400);
+    fixture.detectChanges();
+
+    expect(host.widths).toHaveLength(0);
+  });
+
   it('widens the column and emits width on ArrowRight', () => {
     setOffsetWidth(th, 200);
 
@@ -117,6 +146,22 @@ describe('ColumnResize', () => {
     document.dispatchEvent(new MouseEvent('pointermove', { clientX: 380, bubbles: true }));
 
     expect(host.widths.at(-1)).toBe(230);
+  });
+
+  it('ignores non-primary pointer buttons so secondary clicks behave normally', () => {
+    setOffsetWidth(th, 150);
+
+    const event = new MouseEvent('pointerdown', {
+      clientX: 300,
+      button: 2,
+      bubbles: true,
+      cancelable: true,
+    });
+    handle.dispatchEvent(event);
+    document.dispatchEvent(new MouseEvent('pointermove', { clientX: 380, bubbles: true }));
+
+    expect(host.widths).toHaveLength(0);
+    expect(event.defaultPrevented).toBe(false);
   });
 
   it('clamps drag resizing to the minimum width', () => {
