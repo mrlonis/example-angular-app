@@ -30,6 +30,17 @@ table {
   overflow: hidden;
 }
 
+.image-thumb {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+}
+
+.image-thumb img {
+  object-fit: cover;
+}
+
 tr.example-detail-row {
   height: 0;
 }

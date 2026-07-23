@@ -1,4 +1,5 @@
 import { OverlayModule } from '@angular/cdk/overlay';
+import { NgOptimizedImage } from '@angular/common';
 import { Component, computed, effect, signal, viewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -77,6 +78,7 @@ export const RESIZE_SPACER_COLUMN = 'resizeSpacer';
     MatPaginatorModule,
     MatTableModule,
     MatSortModule,
+    NgOptimizedImage,
     OverlayModule,
     PeriodicElementDetail,
   ],

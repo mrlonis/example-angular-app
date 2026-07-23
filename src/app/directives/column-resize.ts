@@ -22,6 +22,7 @@ export class ColumnResize implements AfterViewInit, OnDestroy {
 
   readonly column = input.required<string>({ alias: 'appColumnResize' });
   readonly minWidth = input(60);
+  readonly maxWidth = input(1000);
 
   readonly widthChange = output<number>();
 
@@ -41,7 +42,8 @@ export class ColumnResize implements AfterViewInit, OnDestroy {
     this.renderer.setAttribute(handle, 'aria-orientation', 'vertical');
     this.renderer.setAttribute(handle, 'aria-label', `Resize ${this.column()} column`);
     this.renderer.setAttribute(handle, 'aria-valuemin', `${this.minWidth()}`);
-    this.renderer.setAttribute(handle, 'aria-valuenow', `${Math.round(host.offsetWidth)}`);
+    this.renderer.setAttribute(handle, 'aria-valuemax', `${this.maxWidth()}`);
+    this.renderer.setAttribute(handle, 'aria-valuenow', `${this.clampWidth(host.offsetWidth)}`);
     this.renderer.setAttribute(handle, 'tabindex', '0');
     this.renderer.appendChild(host, handle);
     this.handle = handle;
@@ -86,8 +88,7 @@ export class ColumnResize implements AfterViewInit, OnDestroy {
   }
 
   private onPointerMove(event: PointerEvent): void {
-    const width = Math.max(this.minWidth(), this.startWidth + (event.clientX - this.startX));
-    this.applyWidth(width);
+    this.applyWidth(this.startWidth + (event.clientX - this.startX));
   }
 
   private releasePointer(): void {
@@ -106,13 +107,16 @@ export class ColumnResize implements AfterViewInit, OnDestroy {
     event.stopPropagation();
 
     const delta = event.key === 'ArrowRight' ? KEYBOARD_STEP : -KEYBOARD_STEP;
-    const width = Math.max(this.minWidth(), this.element.nativeElement.offsetWidth + delta);
-    this.applyWidth(width);
+    this.applyWidth(this.element.nativeElement.offsetWidth + delta);
+  }
+
+  private clampWidth(width: number): number {
+    return Math.round(Math.min(this.maxWidth(), Math.max(this.minWidth(), width)));
   }
 
   private applyWidth(width: number): void {
-    const rounded = Math.round(width);
-    this.handle?.setAttribute('aria-valuenow', `${rounded}`);
-    this.widthChange.emit(rounded);
+    const clamped = this.clampWidth(width);
+    this.handle?.setAttribute('aria-valuenow', `${clamped}`);
+    this.widthChange.emit(clamped);
   }
 }

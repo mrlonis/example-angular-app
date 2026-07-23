@@ -10,6 +10,7 @@ import { ColumnResize } from './column-resize';
   template: `<th
     [appColumnResize]="column()"
     [minWidth]="minWidth()"
+    [maxWidth]="maxWidth()"
     (widthChange)="onWidth($event)"
   >
     Header
@@ -18,6 +19,7 @@ import { ColumnResize } from './column-resize';
 class HostComponent {
   readonly column = signal('name');
   readonly minWidth = signal(60);
+  readonly maxWidth = signal(1000);
   readonly widths: number[] = [];
 
   onWidth(width: number): void {
@@ -61,6 +63,7 @@ describe('ColumnResize', () => {
   it('initializes required separator value attributes on the handle', () => {
     expect(handle.getAttribute('aria-valuenow')).not.toBeNull();
     expect(handle.getAttribute('aria-valuemin')).toBe('60');
+    expect(handle.getAttribute('aria-valuemax')).toBe('1000');
   });
 
   it('widens the column and emits width on ArrowRight', () => {
@@ -88,6 +91,17 @@ describe('ColumnResize', () => {
     expect(host.widths.at(-1)).toBe(60);
   });
 
+  it('clamps keyboard resizing to the maximum width', () => {
+    host.maxWidth.set(210);
+    fixture.detectChanges();
+    setOffsetWidth(th, 200);
+
+    handle.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
+
+    expect(host.widths.at(-1)).toBe(210);
+    expect(handle.getAttribute('aria-valuenow')).toBe('210');
+  });
+
   it('ignores non-arrow keys', () => {
     setOffsetWidth(th, 200);
 
@@ -112,6 +126,17 @@ describe('ColumnResize', () => {
     document.dispatchEvent(new MouseEvent('pointermove', { clientX: 0, bubbles: true }));
 
     expect(host.widths.at(-1)).toBe(60);
+  });
+
+  it('clamps drag resizing to the maximum width', () => {
+    host.maxWidth.set(400);
+    fixture.detectChanges();
+    setOffsetWidth(th, 150);
+
+    handle.dispatchEvent(new MouseEvent('pointerdown', { clientX: 300, bubbles: true }));
+    document.dispatchEvent(new MouseEvent('pointermove', { clientX: 900, bubbles: true }));
+
+    expect(host.widths.at(-1)).toBe(400);
   });
 
   it('stops tracking pointer movement after release', () => {
