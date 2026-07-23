@@ -11,6 +11,7 @@ table {
 
 .resizable-table {
   table-layout: fixed;
+  min-width: 100%;
 }
 
 .resizable-table th,
@@ -22,36 +23,6 @@ table {
 
 .resizable-table th.mat-mdc-header-cell {
   position: relative;
-}
-
-.column-resize-handle {
-  position: absolute;
-  inset-block: 0;
-  inset-inline-end: 0;
-  width: 8px;
-  cursor: col-resize;
-  touch-action: none;
-  user-select: none;
-  z-index: 1;
-}
-
-.column-resize-handle::after {
-  content: '';
-  position: absolute;
-  inset-block: 25%;
-  inset-inline-end: 3px;
-  width: 2px;
-  background: rgb(0 0 0 / 24%);
-}
-
-.column-resize-handle:hover::after,
-.column-resize-handle:focus-visible::after {
-  background: var(--mat-sys-primary, #3f51b5);
-}
-
-.column-resize-handle:focus-visible {
-  outline: 2px solid var(--mat-sys-primary, #3f51b5);
-  outline-offset: -2px;
 }
 
 tr.example-detail-row {
