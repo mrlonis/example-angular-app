@@ -101,7 +101,12 @@
     <ng-container [matColumnDef]="resizeSpacerColumn">
       <th mat-header-cell *matHeaderCellDef aria-hidden="true" class="resize-spacer-cell"></th>
       <td mat-cell *matCellDef="let element" aria-hidden="true" class="resize-spacer-cell"></td>
-      <td mat-footer-cell *matFooterCellDef class="bg-primary resize-spacer-cell"></td>
+      <td
+        mat-footer-cell
+        *matFooterCellDef
+        aria-hidden="true"
+        class="bg-primary resize-spacer-cell"
+      ></td>
     </ng-container>
 
     <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->

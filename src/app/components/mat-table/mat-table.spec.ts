@@ -164,6 +164,14 @@ describe('MatTable', () => {
       component.columnsToDisplay.set([]);
       expect(component.columnsToRender()).toEqual(['expand', RESIZE_SPACER_COLUMN]);
     });
+
+    it('hides all spacer cells from the accessibility tree', () => {
+      const host = fixture.nativeElement as HTMLElement;
+      const spacerCells = Array.from(host.querySelectorAll('.resize-spacer-cell'));
+
+      expect(spacerCells.length).toBeGreaterThan(0);
+      expect(spacerCells.every((cell) => cell.getAttribute('aria-hidden') === 'true')).toBe(true);
+    });
   });
 
   describe('Filtering', () => {

@@ -151,6 +151,50 @@ describe('ColumnResize', () => {
     expect(host.widths).toHaveLength(emitCount);
   });
 
+  it('stops tracking pointer movement after pointercancel', () => {
+    setOffsetWidth(th, 150);
+
+    handle.dispatchEvent(new MouseEvent('pointerdown', { clientX: 300, bubbles: true }));
+    document.dispatchEvent(new MouseEvent('pointercancel', { bubbles: true }));
+    const emitCount = host.widths.length;
+
+    document.dispatchEvent(new MouseEvent('pointermove', { clientX: 500, bubbles: true }));
+
+    expect(host.widths).toHaveLength(emitCount);
+  });
+
+  it('does not leak listeners when a new drag starts before release', () => {
+    setOffsetWidth(th, 150);
+
+    // First drag never receives pointerup, then a second drag begins.
+    handle.dispatchEvent(new MouseEvent('pointerdown', { clientX: 300, bubbles: true }));
+    handle.dispatchEvent(new MouseEvent('pointerdown', { clientX: 300, bubbles: true }));
+    document.dispatchEvent(new MouseEvent('pointermove', { clientX: 340, bubbles: true }));
+
+    // Only the second drag's listener should fire (one emit for the move), not two.
+    expect(host.widths).toEqual([190]);
+  });
+
+  it('does not emit again when the clamped width is unchanged', () => {
+    setOffsetWidth(th, 150);
+
+    handle.dispatchEvent(new MouseEvent('pointerdown', { clientX: 300, bubbles: true }));
+    document.dispatchEvent(new MouseEvent('pointermove', { clientX: 400, bubbles: true }));
+    document.dispatchEvent(new MouseEvent('pointermove', { clientX: 400, bubbles: true }));
+
+    expect(host.widths).toEqual([250]);
+  });
+
+  it('does not repeatedly emit while held against the minimum width', () => {
+    setOffsetWidth(th, 150);
+
+    handle.dispatchEvent(new MouseEvent('pointerdown', { clientX: 300, bubbles: true }));
+    document.dispatchEvent(new MouseEvent('pointermove', { clientX: 0, bubbles: true }));
+    document.dispatchEvent(new MouseEvent('pointermove', { clientX: -50, bubbles: true }));
+
+    expect(host.widths).toEqual([60]);
+  });
+
   it('does not let handle clicks bubble to the header (avoids sorting)', () => {
     const parentClick = vi.fn();
     th.addEventListener('click', parentClick);

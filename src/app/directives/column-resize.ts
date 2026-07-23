@@ -29,6 +29,7 @@ export class ColumnResize implements AfterViewInit, OnDestroy {
   private handle?: HTMLElement;
   private startX = 0;
   private startWidth = 0;
+  private lastEmittedWidth?: number;
   private readonly cleanups: (() => void)[] = [];
   private readonly pointerCleanups: (() => void)[] = [];
 
@@ -72,6 +73,10 @@ export class ColumnResize implements AfterViewInit, OnDestroy {
     event.preventDefault();
     event.stopPropagation();
 
+    // Clear any listeners from a prior drag that never received pointerup
+    // (e.g. a second pointerdown before release) to avoid leaks/duplicate emits.
+    this.releasePointer();
+
     this.startX = event.clientX;
     this.startWidth = this.element.nativeElement.offsetWidth;
 
@@ -80,6 +85,9 @@ export class ColumnResize implements AfterViewInit, OnDestroy {
         this.onPointerMove(moveEvent);
       }),
       this.renderer.listen(this.document, 'pointerup', () => {
+        this.releasePointer();
+      }),
+      this.renderer.listen(this.document, 'pointercancel', () => {
         this.releasePointer();
       }),
     );
@@ -116,6 +124,12 @@ export class ColumnResize implements AfterViewInit, OnDestroy {
 
   private applyWidth(width: number): void {
     const clamped = this.clampWidth(width);
+
+    if (clamped === this.lastEmittedWidth) {
+      return;
+    }
+
+    this.lastEmittedWidth = clamped;
     this.handle?.setAttribute('aria-valuenow', `${clamped}`);
     this.widthChange.emit(clamped);
   }
