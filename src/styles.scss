@@ -92,3 +92,36 @@ body {
 .bg-tertiary {
   background-color: mat.get-theme-color($light-theme, tertiary, 90) !important;
 }
+
+// Column resize handle is created dynamically by the ColumnResize directive via
+// Renderer2, so it never receives a component view-encapsulation attribute. These
+// styles must live in the global stylesheet to apply to it.
+.column-resize-handle {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-end: 0;
+  width: 12px;
+  cursor: col-resize;
+  touch-action: none;
+  user-select: none;
+  z-index: 2;
+}
+
+.column-resize-handle::after {
+  content: '';
+  position: absolute;
+  inset-block: 25%;
+  inset-inline-end: 4px;
+  width: 2px;
+  background: rgb(0 0 0 / 24%);
+}
+
+.column-resize-handle:hover::after,
+.column-resize-handle:focus-visible::after {
+  background: var(--mat-sys-primary, #3f51b5);
+}
+
+.column-resize-handle:focus-visible {
+  outline: 2px solid var(--mat-sys-primary, #3f51b5);
+  outline-offset: -2px;
+}

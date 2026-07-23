@@ -1,10 +1,12 @@
 import { OverlayModule } from '@angular/cdk/overlay';
+import { NgOptimizedImage } from '@angular/common';
 import { Component, computed, effect, signal, viewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { ColumnResize } from '../../directives/column-resize';
 import { ELEMENT_DATA } from '../../interfaces/data';
 import { FilterState } from '../../interfaces/filter-state';
 import { PeriodicElement } from '../../interfaces/periodic-element';
@@ -61,9 +63,14 @@ export const DEFAULT_COLUMNS = [
   'block',
 ];
 
+export const DEFAULT_COLUMN_WIDTH = 150;
+export const EXPAND_COLUMN_WIDTH = 56;
+export const RESIZE_SPACER_COLUMN = 'resizeSpacer';
+
 @Component({
   selector: 'app-mat-table',
   imports: [
+    ColumnResize,
     ColumnSelect,
     Filter,
     MatButtonModule,
@@ -71,6 +78,7 @@ export const DEFAULT_COLUMNS = [
     MatPaginatorModule,
     MatTableModule,
     MatSortModule,
+    NgOptimizedImage,
     OverlayModule,
     PeriodicElementDetail,
   ],
@@ -88,10 +96,30 @@ export class MatTable {
   readonly dataSource = new MatTableDataSource(ELEMENT_DATA.elements);
   readonly columnsToDisplay = signal<string[]>(DEFAULT_COLUMNS);
   readonly columnsToDisplayWithExpand = computed(() => [...this.columnsToDisplay(), 'expand']);
+  // A trailing flexible spacer column absorbs any slack so the resizable columns
+  // always render at their exact specified widths (never proportionally redistributed
+  // by the fixed table layout), which keeps drag resizing stable when the table has
+  // fewer columns than fill the viewport.
+  readonly columnsToRender = computed(() => [
+    ...this.columnsToDisplayWithExpand(),
+    RESIZE_SPACER_COLUMN,
+  ]);
+  readonly tableWidth = computed(() => {
+    const widths = this.columnWidths();
+    const dataTotal = this.columnsToDisplay().reduce(
+      (total, column) => total + (widths[column] ?? DEFAULT_COLUMN_WIDTH),
+      0,
+    );
+
+    return dataTotal + EXPAND_COLUMN_WIDTH;
+  });
+  readonly resizeSpacerColumn = RESIZE_SPACER_COLUMN;
   readonly fullListOfColumns = FULL_LIST_OF_COLUMNS;
   readonly defaultColumns = DEFAULT_COLUMNS;
   readonly expandedElement = signal<PeriodicElement | null>(null);
   readonly isOpen = signal(false);
+  readonly columnWidths = signal<Record<string, number>>({});
+  readonly expandColumnWidth = EXPAND_COLUMN_WIDTH;
 
   constructor() {
     this.dataSource.filterPredicate = (data: PeriodicElement, filter: string) => {
@@ -145,6 +173,14 @@ export class MatTable {
 
   isExpanded(element: PeriodicElement) {
     return this.expandedElement() === element;
+  }
+
+  columnWidth(column: string): number {
+    return this.columnWidths()[column] ?? DEFAULT_COLUMN_WIDTH;
+  }
+
+  setColumnWidth(column: string, width: number): void {
+    this.columnWidths.update((widths) => ({ ...widths, [column]: width }));
   }
 
   private getCachedFilterState(filter: string): FilterState {

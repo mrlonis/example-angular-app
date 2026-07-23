@@ -28,12 +28,44 @@
   </ng-template>
 </div>
 <div class="overflow-auto">
-  <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8" matSort>
+  <table
+    mat-table
+    [dataSource]="dataSource"
+    multiTemplateDataRows
+    class="mat-elevation-z8 resizable-table"
+    [style.width.px]="tableWidth()"
+    matSort
+  >
     <!-- Columns Definitions -->
     @for (column of columnsToDisplay(); track column) {
       <ng-container matColumnDef="{{ column }}">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ column }}</th>
-        <td mat-cell *matCellDef="let element">{{ element[column] }}</td>
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          [appColumnResize]="column"
+          [style.width.px]="columnWidth(column)"
+          (widthChange)="setColumnWidth(column, $event)"
+        >
+          {{ column }}
+        </th>
+        @if (column === 'source') {
+          <td mat-cell *matCellDef="let element">
+            <a [href]="element[column]" target="_blank" rel="noopener noreferrer">
+              {{ element[column] }}
+            </a>
+          </td>
+        } @else if (column === 'image') {
+          <td mat-cell *matCellDef="let element">
+            <span class="image-thumb">
+              <img [ngSrc]="element[column].url" [alt]="element[column].title" fill />
+            </span>
+          </td>
+        } @else {
+          <td mat-cell *matCellDef="let element">
+            {{ element[column] }}
+          </td>
+        }
         @if (column === 'name') {
           <td mat-footer-cell *matFooterCellDef class="bg-primary">Total # of elements:</td>
         } @else if (column === 'atomic_mass') {
@@ -46,7 +78,12 @@
 
     <!-- Expand Column Definition -->
     <ng-container matColumnDef="expand">
-      <th mat-header-cell *matHeaderCellDef aria-label="row actions"></th>
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        aria-label="row actions"
+        [style.width.px]="expandColumnWidth"
+      ></th>
       <td mat-cell *matCellDef="let element">
         <button mat-icon-button aria-label="expand row" (click)="toggleExpanded($event, element)">
           @if (isExpanded(element)) {
@@ -59,9 +96,22 @@
       <td mat-footer-cell *matFooterCellDef class="bg-primary"></td>
     </ng-container>
 
+    <!-- Spacer Column Definition - flexible column that absorbs slack so resizable
+         columns keep their exact widths under the fixed table layout -->
+    <ng-container [matColumnDef]="resizeSpacerColumn">
+      <th mat-header-cell *matHeaderCellDef aria-hidden="true" class="resize-spacer-cell"></th>
+      <td mat-cell *matCellDef="let element" aria-hidden="true" class="resize-spacer-cell"></td>
+      <td
+        mat-footer-cell
+        *matFooterCellDef
+        aria-hidden="true"
+        class="bg-primary resize-spacer-cell"
+      ></td>
+    </ng-container>
+
     <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
     <ng-container matColumnDef="expandedDetail">
-      <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpand().length">
+      <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToRender().length">
         <div
           class="example-element-detail-wrapper"
           [class.example-element-detail-wrapper-expanded]="isExpanded(element)"
@@ -72,17 +122,17 @@
     </ng-container>
 
     <!-- Row Definitions -->
-    <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand(); sticky: true"></tr>
+    <tr mat-header-row *matHeaderRowDef="columnsToRender(); sticky: true"></tr>
     <tr
       mat-row
-      *matRowDef="let element; columns: columnsToDisplayWithExpand()"
+      *matRowDef="let element; columns: columnsToRender()"
       class="example-element-row"
       [class.example-expanded-row]="isExpanded(element)"
       (click)="toggleExpanded($event, element)"
       (keydown)="toggleExpanded($event, element)"
     ></tr>
     <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
-    <tr mat-footer-row *matFooterRowDef="columnsToDisplayWithExpand(); sticky: true"></tr>
+    <tr mat-footer-row *matFooterRowDef="columnsToRender(); sticky: true"></tr>
   </table>
 </div>
 <mat-paginator

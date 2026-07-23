@@ -9,6 +9,38 @@ table {
   width: 100%;
 }
 
+.resizable-table {
+  table-layout: fixed;
+  min-width: 100%;
+}
+
+.resizable-table th,
+.resizable-table td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.resizable-table th.mat-mdc-header-cell {
+  position: relative;
+}
+
+.resizable-table .resize-spacer-cell {
+  padding: 0;
+  overflow: hidden;
+}
+
+.image-thumb {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+}
+
+.image-thumb img {
+  object-fit: cover;
+}
+
 tr.example-detail-row {
   height: 0;
 }
@@ -56,6 +88,6 @@ tr.example-element-row:not(.example-expanded-row):active {
 .column-chooser-container {
   display: flex;
   justify-content: flex-end;
-  padding: 0.25rem 0;
+  padding: 0.25rem 1rem;
   align-items: center;
 }
