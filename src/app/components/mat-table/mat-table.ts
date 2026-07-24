@@ -19,8 +19,9 @@ export const DEFAULT_COLUMN_WIDTH = 150;
 export const EXPAND_COLUMN_WIDTH = 56;
 export const RESIZE_SPACER_COLUMN = 'resizeSpacer';
 
-// Every column starts at DEFAULT_COLUMN_WIDTH for now; the explicit per-column
-// `width` makes it easy to tune each one to an appropriate value later.
+// Most columns use DEFAULT_COLUMN_WIDTH, with a few tuned to wider values where
+// their content warrants it. The explicit per-column `width` makes it easy to
+// adjust any column to an appropriate value.
 export const FULL_LIST_OF_COLUMNS: ColumnDefinition[] = [
   { name: 'name', displayName: 'Name', isSortable: true, width: DEFAULT_COLUMN_WIDTH },
   { name: 'appearance', displayName: 'Appearance', isSortable: true, width: DEFAULT_COLUMN_WIDTH },

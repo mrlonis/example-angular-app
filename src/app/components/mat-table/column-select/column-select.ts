@@ -80,22 +80,18 @@ export class ColumnSelect {
 
   private sortByFullListOrder(columns: ColumnDefinition[]): ColumnDefinition[] {
     const fullListOfColumns = this.fullListOfColumns();
+    const indexByName = new Map(fullListOfColumns.map((column, index) => [column.name, index]));
+    const orderOf = (name: string) => indexByName.get(name) ?? Number.POSITIVE_INFINITY;
 
     return [...columns].sort((a, b) => {
-      const columnAIndex = fullListOfColumns.findIndex((current) => current.name === a.name);
-      const columnBIndex = fullListOfColumns.findIndex((current) => current.name === b.name);
+      const orderA = orderOf(a.name);
+      const orderB = orderOf(b.name);
 
-      if (columnAIndex === -1 && columnBIndex === -1) {
+      if (orderA === orderB) {
         return 0;
       }
-      if (columnAIndex === -1) {
-        return 1;
-      }
-      if (columnBIndex === -1) {
-        return -1;
-      }
 
-      return columnAIndex - columnBIndex;
+      return orderA - orderB;
     });
   }
 }
