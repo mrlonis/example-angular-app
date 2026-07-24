@@ -1,12 +1,23 @@
 <mat-card class="example-card" appearance="outlined">
   <mat-card-content class="card-content">
-    @for (column of fullListOfColumns(); track column.name) {
-      <mat-checkbox
-        [checked]="isColumnDisplayed(column)"
-        (change)="setColumnsToDisplay($event, column)"
-      >
-        {{ column.displayName }}
-      </mat-checkbox>
-    }
+    <mat-checkbox
+      [checked]="allColumnsSelected()"
+      [indeterminate]="partiallyComplete()"
+      (change)="setAllColumnsToDisplay($event.checked)"
+    >
+      Select All
+    </mat-checkbox>
+    <ul>
+      @for (column of fullListOfColumns(); track column.name) {
+        <li>
+          <mat-checkbox
+            [checked]="isColumnDisplayed(column)"
+            (change)="setColumnsToDisplay($event, column)"
+          >
+            {{ column.displayName }}
+          </mat-checkbox>
+        </li>
+      }
+    </ul>
   </mat-card-content>
 </mat-card>

@@ -117,13 +117,13 @@ describe('ColumnSelect', () => {
     });
 
     it('renders one checkbox per available column', () => {
-      const checkboxes = fixture.debugElement.queryAll(By.css('mat-checkbox'));
+      const checkboxes = fixture.debugElement.queryAll(By.css('li mat-checkbox'));
       expect(checkboxes).toHaveLength(mockColumns.length);
     });
 
     it('renders the human-friendly display name for each column', () => {
       const labels = fixture.debugElement
-        .queryAll(By.css('mat-checkbox'))
+        .queryAll(By.css('li mat-checkbox'))
         .map((checkbox) => (checkbox.nativeElement as HTMLElement).textContent?.trim());
 
       expect(labels).toEqual(mockColumns.map((column) => column.displayName));
@@ -131,7 +131,7 @@ describe('ColumnSelect', () => {
 
     it('reflects selected columns in checkbox checked states', () => {
       const checkboxInstances = fixture.debugElement
-        .queryAll(By.css('mat-checkbox'))
+        .queryAll(By.css('li mat-checkbox'))
         .map((checkbox) => checkbox.componentInstance as MatCheckbox);
 
       expect(checkboxInstances.map((checkbox) => checkbox.checked)).toEqual([
@@ -143,7 +143,7 @@ describe('ColumnSelect', () => {
     });
 
     it('updates columnsToDisplay when a checkbox change event is emitted', () => {
-      const checkboxes = fixture.debugElement.queryAll(By.css('mat-checkbox'));
+      const checkboxes = fixture.debugElement.queryAll(By.css('li mat-checkbox'));
 
       checkboxes[2].triggerEventHandler('change', { checked: false });
       fixture.detectChanges();
@@ -152,6 +152,93 @@ describe('ColumnSelect', () => {
       checkboxes[1].triggerEventHandler('change', { checked: true });
       fixture.detectChanges();
       expect(component.columnsToDisplay()).toEqual([nameColumn, atomicMassColumn]);
+    });
+  });
+
+  describe('Select All Checkbox', () => {
+    function selectAllCheckbox() {
+      return fixture.debugElement.query(By.css('.card-content > mat-checkbox'));
+    }
+
+    beforeEach(() => {
+      TestBed.runInInjectionContext(() => {
+        fixture.componentRef.setInput('fullListOfColumns', mockColumns);
+        fixture.componentRef.setInput('columnsToDisplay', [nameColumn, symbolColumn]);
+      });
+      fixture.detectChanges();
+    });
+
+    it('is indeterminate when only some columns are displayed', () => {
+      expect(component.allColumnsSelected()).toBe(false);
+      expect(component.partiallyComplete()).toBe(true);
+
+      const selectAll = selectAllCheckbox().componentInstance as MatCheckbox;
+      expect(selectAll.checked).toBe(false);
+      expect(selectAll.indeterminate).toBe(true);
+    });
+
+    it('is checked and not indeterminate when every column is displayed', () => {
+      component.columnsToDisplay.set([...mockColumns]);
+      fixture.detectChanges();
+
+      expect(component.allColumnsSelected()).toBe(true);
+      expect(component.partiallyComplete()).toBe(false);
+
+      const selectAll = selectAllCheckbox().componentInstance as MatCheckbox;
+      expect(selectAll.checked).toBe(true);
+      expect(selectAll.indeterminate).toBe(false);
+    });
+
+    it('is unchecked and not indeterminate when no full-list column is displayed', () => {
+      component.columnsToDisplay.set([]);
+      fixture.detectChanges();
+
+      expect(component.allColumnsSelected()).toBe(false);
+      expect(component.partiallyComplete()).toBe(false);
+
+      const selectAll = selectAllCheckbox().componentInstance as MatCheckbox;
+      expect(selectAll.checked).toBe(false);
+      expect(selectAll.indeterminate).toBe(false);
+    });
+
+    it('selects every column in full-list order when checked', () => {
+      component.setAllColumnsToDisplay(true);
+
+      expect(component.columnsToDisplay()).toEqual(mockColumns);
+    });
+
+    it('deselects every full-list column when unchecked', () => {
+      component.setAllColumnsToDisplay(false);
+
+      expect(component.columnsToDisplay()).toEqual([]);
+    });
+
+    it('keeps columns that are not part of the full list when selecting all', () => {
+      component.columnsToDisplay.set([sourceColumn]);
+
+      component.setAllColumnsToDisplay(true);
+
+      expect(component.columnsToDisplay()).toEqual([...mockColumns, sourceColumn]);
+    });
+
+    it('keeps columns that are not part of the full list when deselecting all', () => {
+      component.columnsToDisplay.set([nameColumn, sourceColumn, symbolColumn]);
+
+      component.setAllColumnsToDisplay(false);
+
+      expect(component.columnsToDisplay()).toEqual([sourceColumn]);
+    });
+
+    it('toggles all columns through the checkbox change event', () => {
+      const selectAll = selectAllCheckbox();
+
+      selectAll.triggerEventHandler('change', { checked: true });
+      fixture.detectChanges();
+      expect(component.columnsToDisplay()).toEqual(mockColumns);
+
+      selectAll.triggerEventHandler('change', { checked: false });
+      fixture.detectChanges();
+      expect(component.columnsToDisplay()).toEqual([]);
     });
   });
 });

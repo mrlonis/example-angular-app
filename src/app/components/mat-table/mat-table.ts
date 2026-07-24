@@ -31,7 +31,7 @@ export const FULL_LIST_OF_COLUMNS: ColumnDefinition[] = [
     width: DEFAULT_COLUMN_WIDTH,
   },
   { name: 'boil', displayName: 'Boiling Point', isSortable: true, width: DEFAULT_COLUMN_WIDTH },
-  { name: 'category', displayName: 'Category', isSortable: true, width: DEFAULT_COLUMN_WIDTH },
+  { name: 'category', displayName: 'Category', isSortable: true, width: 200 },
   { name: 'density', displayName: 'Density', isSortable: true, width: DEFAULT_COLUMN_WIDTH },
   {
     name: 'discovered_by',
@@ -75,13 +75,13 @@ export const FULL_LIST_OF_COLUMNS: ColumnDefinition[] = [
     name: 'electron_configuration',
     displayName: 'Electron Configuration',
     isSortable: true,
-    width: DEFAULT_COLUMN_WIDTH,
+    width: 200,
   },
   {
     name: 'electron_configuration_semantic',
     displayName: 'Electron Configuration (Semantic)',
     isSortable: true,
-    width: DEFAULT_COLUMN_WIDTH,
+    width: 300,
   },
   {
     name: 'electron_affinity',
@@ -93,7 +93,7 @@ export const FULL_LIST_OF_COLUMNS: ColumnDefinition[] = [
     name: 'electronegativity_pauling',
     displayName: 'Electronegativity (Pauling)',
     isSortable: true,
-    width: DEFAULT_COLUMN_WIDTH,
+    width: 250,
   },
   {
     name: 'ionization_energies',
@@ -125,7 +125,7 @@ const SOURCE_COLUMN: ColumnDefinition = {
   name: 'source',
   displayName: 'Source',
   isSortable: false,
-  width: DEFAULT_COLUMN_WIDTH,
+  width: 300,
 };
 
 export const DEFAULT_COLUMNS: ColumnDefinition[] = [
