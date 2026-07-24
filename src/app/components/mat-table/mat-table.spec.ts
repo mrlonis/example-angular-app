@@ -164,7 +164,8 @@ describe('MatTable', () => {
     });
 
     it('computes tableWidth from default widths plus the expand column', () => {
-      const expected = DEFAULT_COLUMNS.length * DEFAULT_COLUMN_WIDTH + EXPAND_COLUMN_WIDTH;
+      const expected =
+        DEFAULT_COLUMNS.reduce((total, column) => total + column.width, 0) + EXPAND_COLUMN_WIDTH;
       expect(component.tableWidth()).toBe(expected);
     });
 
