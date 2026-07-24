@@ -22,7 +22,7 @@ export const ELEMENT_DATA: Elements = {
         'https://storage.googleapis.com/search-ar-edu/periodic-table/element_001_hydrogen/element_001_hydrogen_srp_th.png',
       bohr_model_3d:
         'https://storage.googleapis.com/search-ar-edu/periodic-table/element_001_hydrogen/element_001_hydrogen.glb',
-      spectral_img: 'https://en.wikipedia.org/wiki/File:Hydrogen_Spectra.jpg',
+      spectral_img: 'https://upload.wikimedia.org/wikipedia/commons/e/e4/Hydrogen_Spectra.jpg',
       summary:
         'Hydrogen is a chemical element with chemical symbol H and atomic number 1. With an atomic weight of 1.00794 u, hydrogen is the lightest element on the periodic table. Its monatomic form (H) is the most abundant chemical substance in the Universe, constituting roughly 75% of all baryonic mass.',
       symbol: 'H',
@@ -66,7 +66,7 @@ export const ELEMENT_DATA: Elements = {
         'https://storage.googleapis.com/search-ar-edu/periodic-table/element_002_helium/element_002_helium_srp_th.png',
       bohr_model_3d:
         'https://storage.googleapis.com/search-ar-edu/periodic-table/element_002_helium/element_002_helium.glb',
-      spectral_img: 'https://en.wikipedia.org/wiki/File:Helium_spectrum.jpg',
+      spectral_img: 'https://upload.wikimedia.org/wikipedia/commons/8/80/Helium_spectrum.jpg',
       summary:
         'Helium is a chemical element with symbol He and atomic number 2. It is a colorless, odorless, tasteless, non-toxic, inert, monatomic gas that heads the noble gas group in the periodic table. Its boiling and melting points are the lowest among all the elements.',
       symbol: 'He',
@@ -238,7 +238,7 @@ export const ELEMENT_DATA: Elements = {
         'https://storage.googleapis.com/search-ar-edu/periodic-table/element_006_carbon/element_006_carbon_srp_th.png',
       bohr_model_3d:
         'https://storage.googleapis.com/search-ar-edu/periodic-table/element_006_carbon/element_006_carbon.glb',
-      spectral_img: 'https://en.wikipedia.org/wiki/File:Carbon_Spectra.jpg',
+      spectral_img: 'https://upload.wikimedia.org/wikipedia/commons/8/8c/Carbon_Spectra.jpg',
       summary:
         'Carbon (from Latin:carbo "coal") is a chemical element with symbol C and atomic number 6. On the periodic table, it is the first (row 2) of six elements in column (group) 14, which have in common the composition of their outer electron shell. It is nonmetallic and tetravalent—making four electrons available to form covalent chemical bonds.',
       symbol: 'C',
@@ -281,7 +281,7 @@ export const ELEMENT_DATA: Elements = {
         'https://storage.googleapis.com/search-ar-edu/periodic-table/element_007_nitrogen/element_007_nitrogen_srp_th.png',
       bohr_model_3d:
         'https://storage.googleapis.com/search-ar-edu/periodic-table/element_007_nitrogen/element_007_nitrogen.glb',
-      spectral_img: 'https://en.wikipedia.org/wiki/File:Nitrogen_Spectra.jpg',
+      spectral_img: 'https://upload.wikimedia.org/wikipedia/commons/3/37/Nitrogen_Spectra.jpg',
       summary:
         'Nitrogen is a chemical element with symbol N and atomic number 7. It is the lightest pnictogen and at room temperature, it is a transparent, odorless diatomic gas. Nitrogen is a common element in the universe, estimated at about seventh in total abundance in the Milky Way and the Solar System.',
       symbol: 'N',
@@ -324,7 +324,7 @@ export const ELEMENT_DATA: Elements = {
         'https://storage.googleapis.com/search-ar-edu/periodic-table/element_008_oxygen/element_008_oxygen_srp_th.png',
       bohr_model_3d:
         'https://storage.googleapis.com/search-ar-edu/periodic-table/element_008_oxygen/element_008_oxygen.glb',
-      spectral_img: 'https://en.wikipedia.org/wiki/File:Oxygen_spectre.jpg',
+      spectral_img: 'https://upload.wikimedia.org/wikipedia/commons/a/a0/Oxygen_spectre.jpg',
       summary:
         'Oxygen is a chemical element with symbol O and atomic number 8. It is a member of the chalcogen group on the periodic table and is a highly reactive nonmetal and oxidizing agent that readily forms compounds (notably oxides) with most elements. By mass, oxygen is the third-most abundant element in the universe, after hydrogen and helium.',
       symbol: 'O',
@@ -412,7 +412,7 @@ export const ELEMENT_DATA: Elements = {
         'https://storage.googleapis.com/search-ar-edu/periodic-table/element_010_neon/element_010_neon_srp_th.png',
       bohr_model_3d:
         'https://storage.googleapis.com/search-ar-edu/periodic-table/element_010_neon/element_010_neon.glb',
-      spectral_img: 'https://en.wikipedia.org/wiki/File:Neon_spectra.jpg',
+      spectral_img: 'https://upload.wikimedia.org/wikipedia/commons/9/99/Neon_spectra.jpg',
       summary:
         'Neon is a chemical element with symbol Ne and atomic number 10. It is in group 18 (noble gases) of the periodic table. Neon is a colorless, odorless, inert monatomic gas under standard conditions, with about two-thirds the density of air.',
       symbol: 'Ne',
@@ -457,7 +457,7 @@ export const ELEMENT_DATA: Elements = {
         'https://storage.googleapis.com/search-ar-edu/periodic-table/element_011_sodium/element_011_sodium_srp_th.png',
       bohr_model_3d:
         'https://storage.googleapis.com/search-ar-edu/periodic-table/element_011_sodium/element_011_sodium.glb',
-      spectral_img: 'https://en.wikipedia.org/wiki/File:Sodium_Spectra.jpg',
+      spectral_img: 'https://upload.wikimedia.org/wikipedia/commons/0/0b/Sodium_Spectra.jpg',
       summary:
         'Sodium /ˈsoʊdiəm/ is a chemical element with symbol Na (from Ancient Greek Νάτριο) and atomic number 11. It is a soft, silver-white, highly reactive metal. In the Periodic table it is in column 1 (alkali metals), and shares with the other six elements in that column that it has a single electron in its outer shell, which it readily donates, creating a positively charged atom - a cation.',
       symbol: 'Na',
@@ -502,7 +502,7 @@ export const ELEMENT_DATA: Elements = {
         'https://storage.googleapis.com/search-ar-edu/periodic-table/element_012_magnesium/element_012_magnesium_srp_th.png',
       bohr_model_3d:
         'https://storage.googleapis.com/search-ar-edu/periodic-table/element_012_magnesium/element_012_magnesium.glb',
-      spectral_img: 'https://en.wikipedia.org/wiki/File:Magnesium_Spectra.jpg',
+      spectral_img: 'https://upload.wikimedia.org/wikipedia/commons/a/a0/Magnesium_Spectra.jpg',
       summary:
         'Magnesium is a chemical element with symbol Mg and atomic number 12. It is a shiny gray solid which bears a close physical resemblance to the other five elements in the second column (Group 2, or alkaline earth metals) of the periodic table:they each have the same electron configuration in their outer electron shell producing a similar crystal structure. Magnesium is the ninth most abundant element in the universe.',
       symbol: 'Mg',
@@ -593,7 +593,7 @@ export const ELEMENT_DATA: Elements = {
         'https://storage.googleapis.com/search-ar-edu/periodic-table/element_014_silicon/element_014_silicon_srp_th.png',
       bohr_model_3d:
         'https://storage.googleapis.com/search-ar-edu/periodic-table/element_014_silicon/element_014_silicon.glb',
-      spectral_img: 'https://en.wikipedia.org/wiki/File:Silicon_Spectra.jpg',
+      spectral_img: 'https://upload.wikimedia.org/wikipedia/commons/0/0b/Silicon_Spectra.jpg',
       summary:
         "Silicon is a chemical element with symbol Si and atomic number 14. It is a tetravalent metalloid, more reactive than germanium, the metalloid directly below it in the table. Controversy about silicon's character dates to its discovery.",
       symbol: 'Si',
@@ -685,7 +685,7 @@ export const ELEMENT_DATA: Elements = {
         'https://storage.googleapis.com/search-ar-edu/periodic-table/element_016_sulfur/element_016_sulfur_srp_th.png',
       bohr_model_3d:
         'https://storage.googleapis.com/search-ar-edu/periodic-table/element_016_sulfur/element_016_sulfur.glb',
-      spectral_img: 'https://en.wikipedia.org/wiki/File:Sulfur_Spectrum.jpg',
+      spectral_img: 'https://upload.wikimedia.org/wikipedia/commons/b/b4/Sulfur_Spectrum.jpg',
       summary:
         'Sulfur or sulphur (see spelling differences) is a chemical element with symbol S and atomic number 16. It is an abundant, multivalent non-metal. Under normal conditions, sulfur atoms form cyclic octatomic molecules with chemical formula S8.',
       symbol: 'S',
@@ -731,7 +731,8 @@ export const ELEMENT_DATA: Elements = {
         'https://storage.googleapis.com/search-ar-edu/periodic-table/element_017_chlorine/element_017_chlorine_srp_th.png',
       bohr_model_3d:
         'https://storage.googleapis.com/search-ar-edu/periodic-table/element_017_chlorine/element_017_chlorine.glb',
-      spectral_img: 'https://en.wikipedia.org/wiki/File:Chlorine_spectrum_visible.png',
+      spectral_img:
+        'https://upload.wikimedia.org/wikipedia/commons/6/61/Chlorine_spectrum_visible.png',
       summary:
         'Chlorine is a chemical element with symbol Cl and atomic number 17. It also has a relative atomic mass of 35.5. Chlorine is in the halogen group (17) and is the second lightest halogen following fluorine.',
       symbol: 'Cl',
@@ -777,7 +778,7 @@ export const ELEMENT_DATA: Elements = {
         'https://storage.googleapis.com/search-ar-edu/periodic-table/element_018_argon/element_018_argon_srp_th.png',
       bohr_model_3d:
         'https://storage.googleapis.com/search-ar-edu/periodic-table/element_018_argon/element_018_argon.glb',
-      spectral_img: 'https://en.wikipedia.org/wiki/File:Argon_Spectrum.png',
+      spectral_img: 'https://upload.wikimedia.org/wikipedia/commons/3/37/Argon_Spectrum.png',
       summary:
         "Argon is a chemical element with symbol Ar and atomic number 18. It is in group 18 of the periodic table and is a noble gas. Argon is the third most common gas in the Earth's atmosphere, at 0.934% (9,340 ppmv), making it over twice as abundant as the next most common atmospheric gas, water vapor (which averages about 4000 ppmv, but varies greatly), and 23 times as abundant as the next most common non-condensing atmospheric gas, carbon dioxide (400 ppmv), and more than 500 times as abundant as the next most common noble gas, neon (18 ppmv).",
       symbol: 'Ar',
@@ -823,7 +824,7 @@ export const ELEMENT_DATA: Elements = {
         'https://storage.googleapis.com/search-ar-edu/periodic-table/element_019_potassium/element_019_potassium_srp_th.png',
       bohr_model_3d:
         'https://storage.googleapis.com/search-ar-edu/periodic-table/element_019_potassium/element_019_potassium.glb',
-      spectral_img: 'https://en.wikipedia.org/wiki/File:Potassium_Spectrum.jpg',
+      spectral_img: 'https://upload.wikimedia.org/wikipedia/commons/d/d0/Potassium_Spectrum.jpg',
       summary:
         'Potassium is a chemical element with symbol K (derived from Neo-Latin, kalium) and atomic number 19. It was first isolated from potash, the ashes of plants, from which its name is derived. In the Periodic table, potassium is one of seven elements in column (group) 1 (alkali metals):they all have a single valence electron in their outer electron shell, which they readily give up to create an atom with a positive charge - a cation, and combine with anions to form salts.',
       symbol: 'K',
@@ -869,7 +870,7 @@ export const ELEMENT_DATA: Elements = {
         'https://storage.googleapis.com/search-ar-edu/periodic-table/element_020_calcium/element_020_calcium_srp_th.png',
       bohr_model_3d:
         'https://storage.googleapis.com/search-ar-edu/periodic-table/element_020_calcium/element_020_calcium.glb',
-      spectral_img: 'https://en.wikipedia.org/wiki/File:Calcium_Spectrum.png',
+      spectral_img: 'https://upload.wikimedia.org/wikipedia/commons/2/21/Calcium_Spectrum.png',
       summary:
         "Calcium is a chemical element with symbol Ca and atomic number 20. Calcium is a soft gray alkaline earth metal, fifth-most-abundant element by mass in the Earth's crust. The ion Ca2+ is also the fifth-most-abundant dissolved ion in seawater by both molarity and mass, after sodium, chloride, magnesium, and sulfate.",
       symbol: 'Ca',
@@ -1146,7 +1147,7 @@ export const ELEMENT_DATA: Elements = {
         'https://storage.googleapis.com/search-ar-edu/periodic-table/element_026_iron/element_026_iron_srp_th.png',
       bohr_model_3d:
         'https://storage.googleapis.com/search-ar-edu/periodic-table/element_026_iron/element_026_iron.glb',
-      spectral_img: 'https://en.wikipedia.org/wiki/File:Iron_Spectrum.jpg',
+      spectral_img: 'https://upload.wikimedia.org/wikipedia/commons/6/6a/Iron_Spectrum.jpg',
       summary:
         "Iron is a chemical element with symbol Fe (from Latin:ferrum) and atomic number 26. It is a metal in the first transition series. It is by mass the most common element on Earth, forming much of Earth's outer and inner core.",
       symbol: 'Fe',
@@ -1597,7 +1598,7 @@ export const ELEMENT_DATA: Elements = {
         'https://storage.googleapis.com/search-ar-edu/periodic-table/element_036_krypton/element_036_krypton_srp_th.png',
       bohr_model_3d:
         'https://storage.googleapis.com/search-ar-edu/periodic-table/element_036_krypton/element_036_krypton.glb',
-      spectral_img: 'https://en.wikipedia.org/wiki/File:Krypton_Spectrum.jpg',
+      spectral_img: 'https://upload.wikimedia.org/wikipedia/commons/a/a6/Krypton_Spectrum.jpg',
       summary:
         'Krypton (from Greek:κρυπτός kryptos "the hidden one") is a chemical element with symbol Kr and atomic number 36. It is a member of group 18 (noble gases) elements. A colorless, odorless, tasteless noble gas, krypton occurs in trace amounts in the atmosphere, is isolated by fractionally distilling liquefied air, and is often used with other rare gases in fluorescent lamps.',
       symbol: 'Kr',
@@ -2384,7 +2385,7 @@ export const ELEMENT_DATA: Elements = {
         'https://storage.googleapis.com/search-ar-edu/periodic-table/element_054_xenon/element_054_xenon_srp_th.png',
       bohr_model_3d:
         'https://storage.googleapis.com/search-ar-edu/periodic-table/element_054_xenon/element_054_xenon.glb',
-      spectral_img: 'https://en.wikipedia.org/wiki/File:Xenon_Spectrum.jpg',
+      spectral_img: 'https://upload.wikimedia.org/wikipedia/commons/6/67/Xenon_Spectrum.jpg',
       summary:
         "Xenon is a chemical element with symbol Xe and atomic number 54. It is a colorless, dense, odorless noble gas, that occurs in the Earth's atmosphere in trace amounts. Although generally unreactive, xenon can undergo a few chemical reactions such as the formation of xenon hexafluoroplatinate, the first noble gas compound to be synthesized.",
       symbol: 'Xe',
@@ -3162,7 +3163,8 @@ export const ELEMENT_DATA: Elements = {
         'https://storage.googleapis.com/search-ar-edu/periodic-table/element_072_hafnium/element_072_hafnium_srp_th.png',
       bohr_model_3d:
         'https://storage.googleapis.com/search-ar-edu/periodic-table/element_072_hafnium/element_072_hafnium.glb',
-      spectral_img: 'https://en.wikipedia.org/wiki/File:Hafnium_spectrum_visible.png',
+      spectral_img:
+        'https://upload.wikimedia.org/wikipedia/commons/a/ac/Hafnium_spectrum_visible.png',
       summary:
         'Hafnium is a chemical element with symbol Hf and atomic number 72. A lustrous, silvery gray, tetravalent transition metal, hafnium chemically resembles zirconium and is found in zirconium minerals. Its existence was predicted by Dmitri Mendeleev in 1869, though it was not identified until 1923, making it the penultimate stable element to be discovered (rhenium was identified two years later).',
       symbol: 'Hf',
@@ -3205,7 +3207,8 @@ export const ELEMENT_DATA: Elements = {
         'https://storage.googleapis.com/search-ar-edu/periodic-table/element_073_tantalum/element_073_tantalum_srp_th.png',
       bohr_model_3d:
         'https://storage.googleapis.com/search-ar-edu/periodic-table/element_073_tantalum/element_073_tantalum.glb',
-      spectral_img: 'https://en.wikipedia.org/wiki/File:Tantalum_spectrum_visible.png',
+      spectral_img:
+        'https://upload.wikimedia.org/wikipedia/commons/a/a6/Tantalum_spectrum_visible.png',
       summary:
         'Tantalum is a chemical element with symbol Ta and atomic number 73. Previously known as tantalium, its name comes from Tantalus, an antihero from Greek mythology. Tantalum is a rare, hard, blue-gray, lustrous transition metal that is highly corrosion-resistant.',
       symbol: 'Ta',
@@ -3767,7 +3770,7 @@ export const ELEMENT_DATA: Elements = {
         'https://storage.googleapis.com/search-ar-edu/periodic-table/element_086_radon/element_086_radon_srp_th.png',
       bohr_model_3d:
         'https://storage.googleapis.com/search-ar-edu/periodic-table/element_086_radon/element_086_radon.glb',
-      spectral_img: 'https://en.wikipedia.org/wiki/File:Radon_spectrum.png',
+      spectral_img: 'https://upload.wikimedia.org/wikipedia/commons/0/0d/Radon_spectrum.png',
       summary:
         'Radon is a chemical element with symbol Rn and atomic number 86. It is a radioactive, colorless, odorless, tasteless noble gas, occurring naturally as a decay product of radium. Its most stable isotope, 222Rn, has a half-life of 3.8 days.',
       symbol: 'Rn',
@@ -4160,7 +4163,8 @@ export const ELEMENT_DATA: Elements = {
         'https://storage.googleapis.com/search-ar-edu/periodic-table/element_095_americium/element_095_americium_srp_th.png',
       bohr_model_3d:
         'https://storage.googleapis.com/search-ar-edu/periodic-table/element_095_americium/element_095_americium.glb',
-      spectral_img: 'https://en.wikipedia.org/wiki/File:Americium_spectrum_visible.png',
+      spectral_img:
+        'https://upload.wikimedia.org/wikipedia/commons/3/37/Americium_spectrum_visible.png',
       summary:
         'Americium is a radioactive transuranic chemical element with symbol Am and atomic number 95. This member of the actinide series is located in the periodic table under the lanthanide element europium, and thus by analogy was named after the Americas. Americium was first produced in 1944 by the group of Glenn T.Seaborg from Berkeley, California, at the metallurgical laboratory of University of Chicago.',
       symbol: 'Am',

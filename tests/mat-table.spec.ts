@@ -22,9 +22,9 @@ test.describe('Mat table tab', () => {
   });
 
   test('renders expected default columns and footer summary', async ({ page }) => {
-    await expect(page.locator('th.mat-column-name')).toContainText('name');
-    await expect(page.locator('th.mat-column-atomic_mass')).toContainText('atomic_mass');
-    await expect(page.locator('th.mat-column-symbol')).toContainText('symbol');
+    await expect(page.locator('th.mat-column-name')).toContainText('Name');
+    await expect(page.locator('th.mat-column-atomic_mass')).toContainText('Atomic Mass');
+    await expect(page.locator('th.mat-column-symbol')).toContainText('Symbol');
     await expect(page.locator('th[aria-label="row actions"]')).toBeAttached();
 
     await expect(page.locator('td.mat-column-name.mat-mdc-footer-cell')).toContainText(
@@ -112,7 +112,7 @@ test.describe('Mat table tab', () => {
   test('supports selecting displayed columns from the column chooser', async ({ page }) => {
     await page.locator('[data-testid="column-chooser-trigger"]').click();
     const atomicMassCheckbox = page.locator('.cdk-overlay-container mat-checkbox', {
-      hasText: 'atomic_mass',
+      hasText: 'Atomic Mass',
     });
     await expect(atomicMassCheckbox).toBeVisible();
     await atomicMassCheckbox.click();
