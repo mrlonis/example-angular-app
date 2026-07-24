@@ -37,38 +37,50 @@
     matSort
   >
     <!-- Columns Definitions -->
-    @for (column of columnsToDisplay(); track column) {
-      <ng-container matColumnDef="{{ column }}">
-        <th
-          mat-header-cell
-          *matHeaderCellDef
-          mat-sort-header
-          [appColumnResize]="column"
-          [style.width.px]="columnWidth(column)"
-          (widthChange)="setColumnWidth(column, $event)"
-        >
-          {{ column }}
-        </th>
-        @if (column === 'source') {
+    @for (column of columnsToDisplay(); track column.name) {
+      <ng-container matColumnDef="{{ column.name }}">
+        @if (column.isSortable) {
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            [appColumnResize]="column.name"
+            [style.width.px]="columnWidth(column)"
+            (widthChange)="setColumnWidth(column.name, $event)"
+          >
+            {{ column.displayName }}
+          </th>
+        } @else {
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            [appColumnResize]="column.name"
+            [style.width.px]="columnWidth(column)"
+            (widthChange)="setColumnWidth(column.name, $event)"
+          >
+            {{ column.displayName }}
+          </th>
+        }
+        @if (column.name === 'source') {
           <td mat-cell *matCellDef="let element">
-            <a [href]="element[column]" target="_blank" rel="noopener noreferrer">
-              {{ element[column] }}
+            <a [href]="element[column.name]" target="_blank" rel="noopener noreferrer">
+              {{ element[column.name] }}
             </a>
           </td>
-        } @else if (column === 'image') {
+        } @else if (column.name === 'image') {
           <td mat-cell *matCellDef="let element">
             <span class="image-thumb">
-              <img [ngSrc]="element[column].url" [alt]="element[column].title" fill />
+              <img [ngSrc]="element[column.name].url" [alt]="element[column.name].title" fill />
             </span>
           </td>
         } @else {
           <td mat-cell *matCellDef="let element">
-            {{ element[column] }}
+            {{ element[column.name] }}
           </td>
         }
-        @if (column === 'name') {
+        @if (column.name === 'name') {
           <td mat-footer-cell *matFooterCellDef class="bg-primary">Total # of elements:</td>
-        } @else if (column === 'atomic_mass') {
+        } @else if (column.name === 'atomic_mass') {
           <td mat-footer-cell *matFooterCellDef class="bg-primary">{{ dataSource.data.length }}</td>
         } @else {
           <td mat-footer-cell *matFooterCellDef class="bg-primary"></td>

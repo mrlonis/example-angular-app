@@ -7,6 +7,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ColumnResize } from '../../directives/column-resize';
+import { ColumnDefinition } from '../../interfaces/column-definition';
 import { ELEMENT_DATA } from '../../interfaces/data';
 import { FilterState } from '../../interfaces/filter-state';
 import { PeriodicElement } from '../../interfaces/periodic-element';
@@ -14,58 +15,133 @@ import { ColumnSelect } from './column-select/column-select';
 import { Filter } from './filter/filter';
 import { PeriodicElementDetail } from './periodic-element-detail/periodic-element-detail';
 
-export const FULL_LIST_OF_COLUMNS = [
-  'name',
-  'appearance',
-  'atomic_mass',
-  'boil',
-  'category',
-  'density',
-  'discovered_by',
-  'melt',
-  'molar_heat',
-  'named_by',
-  'number',
-  'period',
-  'group',
-  'phase',
-  'bohr_model_image',
-  'bohr_model_3d',
-  'spectral_img',
-  'summary',
-  'symbol',
-  'xpos',
-  'ypos',
-  'wxpos',
-  'wypos',
-  'shells',
-  'electron_configuration',
-  'electron_configuration_semantic',
-  'electron_affinity',
-  'electronegativity_pauling',
-  'ionization_energies',
-  'image',
-  'block',
-];
-
-export const DEFAULT_COLUMNS = [
-  'name',
-  'atomic_mass',
-  'symbol',
-  'number',
-  'category',
-  'period',
-  'group',
-  'phase',
-  'source',
-  'electron_configuration',
-  'electron_configuration_semantic',
-  'block',
-];
-
 export const DEFAULT_COLUMN_WIDTH = 150;
 export const EXPAND_COLUMN_WIDTH = 56;
 export const RESIZE_SPACER_COLUMN = 'resizeSpacer';
+
+// Every column starts at DEFAULT_COLUMN_WIDTH for now; the explicit per-column
+// `width` makes it easy to tune each one to an appropriate value later.
+export const FULL_LIST_OF_COLUMNS: ColumnDefinition[] = [
+  { name: 'name', displayName: 'Name', isSortable: true, width: DEFAULT_COLUMN_WIDTH },
+  { name: 'appearance', displayName: 'Appearance', isSortable: true, width: DEFAULT_COLUMN_WIDTH },
+  {
+    name: 'atomic_mass',
+    displayName: 'Atomic Mass',
+    isSortable: true,
+    width: DEFAULT_COLUMN_WIDTH,
+  },
+  { name: 'boil', displayName: 'Boiling Point', isSortable: true, width: DEFAULT_COLUMN_WIDTH },
+  { name: 'category', displayName: 'Category', isSortable: true, width: DEFAULT_COLUMN_WIDTH },
+  { name: 'density', displayName: 'Density', isSortable: true, width: DEFAULT_COLUMN_WIDTH },
+  {
+    name: 'discovered_by',
+    displayName: 'Discovered By',
+    isSortable: true,
+    width: DEFAULT_COLUMN_WIDTH,
+  },
+  { name: 'melt', displayName: 'Melting Point', isSortable: true, width: DEFAULT_COLUMN_WIDTH },
+  { name: 'molar_heat', displayName: 'Molar Heat', isSortable: true, width: DEFAULT_COLUMN_WIDTH },
+  { name: 'named_by', displayName: 'Named By', isSortable: true, width: DEFAULT_COLUMN_WIDTH },
+  { name: 'number', displayName: 'Number', isSortable: true, width: DEFAULT_COLUMN_WIDTH },
+  { name: 'period', displayName: 'Period', isSortable: true, width: DEFAULT_COLUMN_WIDTH },
+  { name: 'group', displayName: 'Group', isSortable: true, width: DEFAULT_COLUMN_WIDTH },
+  { name: 'phase', displayName: 'Phase', isSortable: true, width: DEFAULT_COLUMN_WIDTH },
+  {
+    name: 'bohr_model_image',
+    displayName: 'Bohr Model Image',
+    isSortable: false,
+    width: DEFAULT_COLUMN_WIDTH,
+  },
+  {
+    name: 'bohr_model_3d',
+    displayName: 'Bohr Model 3D',
+    isSortable: false,
+    width: DEFAULT_COLUMN_WIDTH,
+  },
+  {
+    name: 'spectral_img',
+    displayName: 'Spectral Image',
+    isSortable: false,
+    width: DEFAULT_COLUMN_WIDTH,
+  },
+  { name: 'summary', displayName: 'Summary', isSortable: true, width: DEFAULT_COLUMN_WIDTH },
+  { name: 'symbol', displayName: 'Symbol', isSortable: true, width: DEFAULT_COLUMN_WIDTH },
+  { name: 'xpos', displayName: 'X Position', isSortable: true, width: DEFAULT_COLUMN_WIDTH },
+  { name: 'ypos', displayName: 'Y Position', isSortable: true, width: DEFAULT_COLUMN_WIDTH },
+  { name: 'wxpos', displayName: 'Wide X Position', isSortable: true, width: DEFAULT_COLUMN_WIDTH },
+  { name: 'wypos', displayName: 'Wide Y Position', isSortable: true, width: DEFAULT_COLUMN_WIDTH },
+  { name: 'shells', displayName: 'Shells', isSortable: true, width: DEFAULT_COLUMN_WIDTH },
+  {
+    name: 'electron_configuration',
+    displayName: 'Electron Configuration',
+    isSortable: true,
+    width: DEFAULT_COLUMN_WIDTH,
+  },
+  {
+    name: 'electron_configuration_semantic',
+    displayName: 'Electron Configuration (Semantic)',
+    isSortable: true,
+    width: DEFAULT_COLUMN_WIDTH,
+  },
+  {
+    name: 'electron_affinity',
+    displayName: 'Electron Affinity',
+    isSortable: true,
+    width: DEFAULT_COLUMN_WIDTH,
+  },
+  {
+    name: 'electronegativity_pauling',
+    displayName: 'Electronegativity (Pauling)',
+    isSortable: true,
+    width: DEFAULT_COLUMN_WIDTH,
+  },
+  {
+    name: 'ionization_energies',
+    displayName: 'Ionization Energies',
+    isSortable: true,
+    width: DEFAULT_COLUMN_WIDTH,
+  },
+  { name: 'image', displayName: 'Image', isSortable: false, width: DEFAULT_COLUMN_WIDTH },
+  { name: 'block', displayName: 'Block', isSortable: true, width: DEFAULT_COLUMN_WIDTH },
+];
+
+const COLUMN_DEFINITIONS_BY_NAME = new Map<string, ColumnDefinition>(
+  FULL_LIST_OF_COLUMNS.map((column) => [column.name, column]),
+);
+
+function requireColumn(name: string): ColumnDefinition {
+  const column = COLUMN_DEFINITIONS_BY_NAME.get(name);
+
+  if (!column) {
+    throw new Error(`Unknown column definition: ${name}`);
+  }
+
+  return column;
+}
+
+// `source` is shown by default but intentionally omitted from the column
+// chooser's full list, so it isn't part of FULL_LIST_OF_COLUMNS.
+const SOURCE_COLUMN: ColumnDefinition = {
+  name: 'source',
+  displayName: 'Source',
+  isSortable: false,
+  width: DEFAULT_COLUMN_WIDTH,
+};
+
+export const DEFAULT_COLUMNS: ColumnDefinition[] = [
+  requireColumn('name'),
+  requireColumn('atomic_mass'),
+  requireColumn('symbol'),
+  requireColumn('number'),
+  requireColumn('category'),
+  requireColumn('period'),
+  requireColumn('group'),
+  requireColumn('phase'),
+  SOURCE_COLUMN,
+  requireColumn('electron_configuration'),
+  requireColumn('electron_configuration_semantic'),
+  requireColumn('block'),
+];
 
 @Component({
   selector: 'app-mat-table',
@@ -94,8 +170,11 @@ export class MatTable {
   readonly sort = viewChild(MatSort);
 
   readonly dataSource = new MatTableDataSource(ELEMENT_DATA.elements);
-  readonly columnsToDisplay = signal<string[]>(DEFAULT_COLUMNS);
-  readonly columnsToDisplayWithExpand = computed(() => [...this.columnsToDisplay(), 'expand']);
+  readonly columnsToDisplay = signal<ColumnDefinition[]>(DEFAULT_COLUMNS);
+  readonly columnsToDisplayWithExpand = computed(() => [
+    ...this.columnsToDisplay().map((column) => column.name),
+    'expand',
+  ]);
   // A trailing flexible spacer column absorbs any slack so the resizable columns
   // always render at their exact specified widths (never proportionally redistributed
   // by the fixed table layout), which keeps drag resizing stable when the table has
@@ -107,7 +186,7 @@ export class MatTable {
   readonly tableWidth = computed(() => {
     const widths = this.columnWidths();
     const dataTotal = this.columnsToDisplay().reduce(
-      (total, column) => total + (widths[column] ?? DEFAULT_COLUMN_WIDTH),
+      (total, column) => total + (widths[column.name] ?? column.width),
       0,
     );
 
@@ -175,8 +254,8 @@ export class MatTable {
     return this.expandedElement() === element;
   }
 
-  columnWidth(column: string): number {
-    return this.columnWidths()[column] ?? DEFAULT_COLUMN_WIDTH;
+  columnWidth(column: ColumnDefinition): number {
+    return this.columnWidths()[column.name] ?? column.width;
   }
 
   setColumnWidth(column: string, width: number): void {

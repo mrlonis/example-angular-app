@@ -1,11 +1,11 @@
 <mat-card class="example-card" appearance="outlined">
   <mat-card-content class="card-content">
-    @for (column of fullListOfColumns(); track column) {
+    @for (column of fullListOfColumns(); track column.name) {
       <mat-checkbox
-        [checked]="columnsToDisplay().includes(column)"
+        [checked]="isColumnDisplayed(column)"
         (change)="setColumnsToDisplay($event, column)"
       >
-        {{ column }}
+        {{ column.displayName }}
       </mat-checkbox>
     }
   </mat-card-content>
