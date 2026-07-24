@@ -258,6 +258,10 @@ export class MatTable {
     return this.columnWidths()[column.name] ?? column.width;
   }
 
+  imageAlt(element: PeriodicElement, column: ColumnDefinition): string {
+    return `${element.name} ${column.displayName.toLowerCase()}`;
+  }
+
   setColumnWidth(column: string, width: number): void {
     this.columnWidths.update((widths) => ({ ...widths, [column]: width }));
   }

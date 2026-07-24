@@ -451,6 +451,65 @@ describe('MatTable', () => {
     });
   });
 
+  describe('Special Column Rendering', () => {
+    function visibleElements() {
+      const pageSize = component.paginator()?.pageSize ?? 25;
+      return component.dataSource.data.slice(0, pageSize);
+    }
+
+    beforeEach(() => {
+      component.columnsToDisplay.set(
+        columns('name', 'bohr_model_image', 'bohr_model_3d', 'spectral_img'),
+      );
+      fixture.detectChanges();
+    });
+
+    it('renders bohr_model_image values as optimized images', () => {
+      const images = fixture.debugElement.queryAll(By.css('td.mat-column-bohr_model_image img'));
+      const expected = visibleElements().filter((element) => element.bohr_model_image).length;
+
+      expect(expected).toBeGreaterThan(0);
+      expect(images.length).toBe(expected);
+    });
+
+    it('renders spectral_img values as optimized images and omits null ones', () => {
+      const visible = visibleElements();
+      const cells = fixture.debugElement.queryAll(
+        By.css('td.mat-mdc-cell.mat-column-spectral_img'),
+      );
+      const images = fixture.debugElement.queryAll(By.css('td.mat-column-spectral_img img'));
+      const nonNullCount = visible.filter((element) => element.spectral_img).length;
+
+      expect(cells.length).toBe(visible.length);
+      expect(images.length).toBe(nonNullCount);
+      // At least one visible element has a null spectral_img, proving the null guard.
+      expect(nonNullCount).toBeLessThan(cells.length);
+    });
+
+    it('renders bohr_model_3d values as external links', () => {
+      const links = fixture.debugElement.queryAll(By.css('td.mat-column-bohr_model_3d a'));
+      const expected = visibleElements().filter((element) => element.bohr_model_3d).length;
+
+      expect(expected).toBeGreaterThan(0);
+      expect(links.length).toBe(expected);
+      links.forEach((link) => {
+        const anchor = link.nativeElement as HTMLAnchorElement;
+        expect(anchor.getAttribute('target')).toBe('_blank');
+        expect(anchor.getAttribute('rel')).toBe('noopener noreferrer');
+      });
+    });
+
+    it('gives images a descriptive alt derived from the element and column', () => {
+      const firstImage = fixture.debugElement.query(By.css('td.mat-column-bohr_model_image img'));
+      const firstElement = visibleElements().find((element) => element.bohr_model_image);
+
+      expect(firstElement).toBeTruthy();
+      expect((firstImage.nativeElement as HTMLImageElement).getAttribute('alt')).toBe(
+        `${firstElement?.name} bohr model image`,
+      );
+    });
+  });
+
   describe('Template Integration - Table Headers and Footers', () => {
     it('renders table header for each column in columnsToRender', () => {
       const headers = fixture.debugElement.queryAll(By.css('th[mat-header-cell]'));
