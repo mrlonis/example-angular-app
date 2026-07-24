@@ -7,7 +7,6 @@ import { FilterState } from '../../interfaces/filter-state';
 import { ColumnSelect } from './column-select/column-select';
 import {
   DEFAULT_COLUMNS,
-  DEFAULT_COLUMN_WIDTH,
   EXPAND_COLUMN_WIDTH,
   FULL_LIST_OF_COLUMNS,
   MatTable,
@@ -143,9 +142,9 @@ describe('MatTable', () => {
   });
 
   describe('Column Resizing', () => {
-    it('returns the default width for columns without an override', () => {
+    it('returns the defined width for columns without an override', () => {
       const [nameColumn] = columns('name');
-      expect(component.columnWidth(nameColumn)).toBe(DEFAULT_COLUMN_WIDTH);
+      expect(component.columnWidth(nameColumn)).toBe(nameColumn.width);
     });
 
     it('stores and returns an explicit width for a column', () => {
@@ -170,14 +169,18 @@ describe('MatTable', () => {
     });
 
     it('reflects a resized column in tableWidth', () => {
+      const [nameColumn] = columns('name');
       const before = component.tableWidth();
-      component.setColumnWidth('name', DEFAULT_COLUMN_WIDTH + 100);
+      component.setColumnWidth('name', nameColumn.width + 100);
       expect(component.tableWidth()).toBe(before + 100);
     });
 
     it('recomputes tableWidth when displayed columns change', () => {
-      component.columnsToDisplay.set(columns('name', 'symbol'));
-      expect(component.tableWidth()).toBe(2 * DEFAULT_COLUMN_WIDTH + EXPAND_COLUMN_WIDTH);
+      const displayed = columns('name', 'symbol');
+      component.columnsToDisplay.set(displayed);
+      const expected =
+        displayed.reduce((total, column) => total + column.width, 0) + EXPAND_COLUMN_WIDTH;
+      expect(component.tableWidth()).toBe(expected);
     });
 
     it('exposes the expand column width constant', () => {
