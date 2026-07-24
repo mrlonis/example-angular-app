@@ -6,26 +6,18 @@ import { ColumnDefinition } from '../../interfaces/column-definition';
 import { FilterState } from '../../interfaces/filter-state';
 import { ColumnSelect } from './column-select/column-select';
 import {
+  ATOMIC_MASS_COLUMN,
+  BOHR_MODEL_3D_COLUMN,
+  BOHR_MODEL_IMAGE_COLUMN,
   DEFAULT_COLUMNS,
   EXPAND_COLUMN_WIDTH,
   FULL_LIST_OF_COLUMNS,
   MatTable,
+  NAME_COLUMN,
   RESIZE_SPACER_COLUMN,
+  SPECTRAL_IMG_COLUMN,
+  SYMBOL_COLUMN,
 } from './mat-table';
-
-const COLUMN_BY_NAME = new Map<string, ColumnDefinition>(
-  [...FULL_LIST_OF_COLUMNS, ...DEFAULT_COLUMNS].map((column) => [column.name, column]),
-);
-
-function columns(...names: string[]): ColumnDefinition[] {
-  return names.map((name) => {
-    const column = COLUMN_BY_NAME.get(name);
-    if (!column) {
-      throw new Error(`Unknown column in test helper: ${name}`);
-    }
-    return column;
-  });
-}
 
 function columnNames(definitions: ColumnDefinition[]): string[] {
   return definitions.map((column) => column.name);
@@ -107,13 +99,13 @@ describe('MatTable', () => {
 
   describe('Column Management', () => {
     it('updates columnsToDisplay signal', () => {
-      const newColumns = columns('name', 'symbol');
+      const newColumns = [NAME_COLUMN, SYMBOL_COLUMN];
       component.columnsToDisplay.set(newColumns);
       expect(component.columnsToDisplay()).toEqual(newColumns);
     });
 
     it('columnsToDisplayWithExpand updates when columnsToDisplay changes', () => {
-      const newColumns = columns('name', 'symbol', 'atomic_mass');
+      const newColumns = [NAME_COLUMN, SYMBOL_COLUMN, ATOMIC_MASS_COLUMN];
       component.columnsToDisplay.set(newColumns);
       expect(component.columnsToDisplayWithExpand()).toEqual([
         ...columnNames(newColumns),
@@ -133,7 +125,7 @@ describe('MatTable', () => {
     });
 
     it('can reset displayed columns to DEFAULT_COLUMNS', () => {
-      component.columnsToDisplay.set(columns('name', 'symbol'));
+      component.columnsToDisplay.set([NAME_COLUMN, SYMBOL_COLUMN]);
       expect(component.columnsToDisplay()).not.toEqual(DEFAULT_COLUMNS);
 
       component.columnsToDisplay.set(DEFAULT_COLUMNS);
@@ -143,23 +135,20 @@ describe('MatTable', () => {
 
   describe('Column Resizing', () => {
     it('returns the defined width for columns without an override', () => {
-      const [nameColumn] = columns('name');
-      expect(component.columnWidth(nameColumn)).toBe(nameColumn.width);
+      expect(component.columnWidth(NAME_COLUMN)).toBe(NAME_COLUMN.width);
     });
 
     it('stores and returns an explicit width for a column', () => {
-      const [nameColumn] = columns('name');
       component.setColumnWidth('name', 240);
-      expect(component.columnWidth(nameColumn)).toBe(240);
+      expect(component.columnWidth(NAME_COLUMN)).toBe(240);
     });
 
     it('preserves widths of other columns when one is resized', () => {
-      const [nameColumn, symbolColumn] = columns('name', 'symbol');
       component.setColumnWidth('name', 240);
       component.setColumnWidth('symbol', 90);
 
-      expect(component.columnWidth(nameColumn)).toBe(240);
-      expect(component.columnWidth(symbolColumn)).toBe(90);
+      expect(component.columnWidth(NAME_COLUMN)).toBe(240);
+      expect(component.columnWidth(SYMBOL_COLUMN)).toBe(90);
     });
 
     it('computes tableWidth from default widths plus the expand column', () => {
@@ -169,14 +158,13 @@ describe('MatTable', () => {
     });
 
     it('reflects a resized column in tableWidth', () => {
-      const [nameColumn] = columns('name');
       const before = component.tableWidth();
-      component.setColumnWidth('name', nameColumn.width + 100);
+      component.setColumnWidth('name', NAME_COLUMN.width + 100);
       expect(component.tableWidth()).toBe(before + 100);
     });
 
     it('recomputes tableWidth when displayed columns change', () => {
-      const displayed = columns('name', 'symbol');
+      const displayed = [NAME_COLUMN, SYMBOL_COLUMN];
       component.columnsToDisplay.set(displayed);
       const expected =
         displayed.reduce((total, column) => total + column.width, 0) + EXPAND_COLUMN_WIDTH;
@@ -446,7 +434,7 @@ describe('MatTable', () => {
 
       const columnSelect = fixture.debugElement.query(By.directive(ColumnSelect));
       expect(columnSelect).toBeTruthy();
-      const newColumns = columns('name', 'symbol', 'atomic_mass');
+      const newColumns = [NAME_COLUMN, SYMBOL_COLUMN, ATOMIC_MASS_COLUMN];
 
       columnSelect.triggerEventHandler('columnsToDisplayChange', newColumns);
       fixture.detectChanges();
@@ -462,9 +450,12 @@ describe('MatTable', () => {
     }
 
     beforeEach(() => {
-      component.columnsToDisplay.set(
-        columns('name', 'bohr_model_image', 'bohr_model_3d', 'spectral_img'),
-      );
+      component.columnsToDisplay.set([
+        NAME_COLUMN,
+        BOHR_MODEL_IMAGE_COLUMN,
+        BOHR_MODEL_3D_COLUMN,
+        SPECTRAL_IMG_COLUMN,
+      ]);
       fixture.detectChanges();
     });
 
@@ -725,7 +716,7 @@ describe('MatTable', () => {
       const initialHeaders = fixture.debugElement.queryAll(By.css('th[mat-header-cell]'));
       const initialCount = initialHeaders.length;
 
-      component.columnsToDisplay.set(columns('name', 'symbol'));
+      component.columnsToDisplay.set([NAME_COLUMN, SYMBOL_COLUMN]);
       fixture.detectChanges();
 
       const updatedHeaders = fixture.debugElement.queryAll(By.css('th[mat-header-cell]'));
@@ -734,7 +725,7 @@ describe('MatTable', () => {
     });
 
     it('expandedDetail row maintains proper colspan after column change', () => {
-      component.columnsToDisplay.set(columns('name', 'symbol'));
+      component.columnsToDisplay.set([NAME_COLUMN, SYMBOL_COLUMN]);
       fixture.detectChanges();
 
       // Find the detail row cell with the example-element-detail-wrapper
@@ -765,9 +756,9 @@ describe('MatTable', () => {
 
     it('handles rapid column changes', () => {
       expect(() => {
-        component.columnsToDisplay.set(columns('name'));
-        component.columnsToDisplay.set(columns('symbol'));
-        component.columnsToDisplay.set(columns('atomic_mass'));
+        component.columnsToDisplay.set([NAME_COLUMN]);
+        component.columnsToDisplay.set([SYMBOL_COLUMN]);
+        component.columnsToDisplay.set([ATOMIC_MASS_COLUMN]);
         component.columnsToDisplay.set(DEFAULT_COLUMNS);
       }).not.toThrow();
 

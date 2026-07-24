@@ -22,217 +22,217 @@ export const RESIZE_SPACER_COLUMN = 'resizeSpacer';
 // Most columns use DEFAULT_COLUMN_WIDTH, with a few tuned to wider values where
 // their content warrants it. The explicit per-column `width` makes it easy to
 // adjust any column to an appropriate value.
-const NAME_COLUMN: ColumnDefinition = {
+export const NAME_COLUMN: ColumnDefinition = {
   name: 'name',
   displayName: 'Name',
   isSortable: true,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
-const APPEARANCE_COLUMN: ColumnDefinition = {
+export const APPEARANCE_COLUMN: ColumnDefinition = {
   name: 'appearance',
   displayName: 'Appearance',
   isSortable: true,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
-const ATOMIC_MASS_COLUMN: ColumnDefinition = {
+export const ATOMIC_MASS_COLUMN: ColumnDefinition = {
   name: 'atomic_mass',
   displayName: 'Atomic Mass',
   isSortable: true,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
-const BOIL_COLUMN: ColumnDefinition = {
+export const BOIL_COLUMN: ColumnDefinition = {
   name: 'boil',
   displayName: 'Boiling Point',
   isSortable: true,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
-const CATEGORY_COLUMN: ColumnDefinition = {
+export const CATEGORY_COLUMN: ColumnDefinition = {
   name: 'category',
   displayName: 'Category',
   isSortable: true,
   width: 200,
 };
 
-const DENSITY_COLUMN: ColumnDefinition = {
+export const DENSITY_COLUMN: ColumnDefinition = {
   name: 'density',
   displayName: 'Density',
   isSortable: true,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
-const DISCOVERED_BY_COLUMN: ColumnDefinition = {
+export const DISCOVERED_BY_COLUMN: ColumnDefinition = {
   name: 'discovered_by',
   displayName: 'Discovered By',
   isSortable: true,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
-const MELT_COLUMN: ColumnDefinition = {
+export const MELT_COLUMN: ColumnDefinition = {
   name: 'melt',
   displayName: 'Melting Point',
   isSortable: true,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
-const MOLAR_HEAT_COLUMN: ColumnDefinition = {
+export const MOLAR_HEAT_COLUMN: ColumnDefinition = {
   name: 'molar_heat',
   displayName: 'Molar Heat',
   isSortable: true,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
-const NAMED_BY_COLUMN: ColumnDefinition = {
+export const NAMED_BY_COLUMN: ColumnDefinition = {
   name: 'named_by',
   displayName: 'Named By',
   isSortable: true,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
-const NUMBER_COLUMN: ColumnDefinition = {
+export const NUMBER_COLUMN: ColumnDefinition = {
   name: 'number',
   displayName: 'Number',
   isSortable: true,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
-const PERIOD_COLUMN: ColumnDefinition = {
+export const PERIOD_COLUMN: ColumnDefinition = {
   name: 'period',
   displayName: 'Period',
   isSortable: true,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
-const GROUP_COLUMN: ColumnDefinition = {
+export const GROUP_COLUMN: ColumnDefinition = {
   name: 'group',
   displayName: 'Group',
   isSortable: true,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
-const PHASE_COLUMN: ColumnDefinition = {
+export const PHASE_COLUMN: ColumnDefinition = {
   name: 'phase',
   displayName: 'Phase',
   isSortable: true,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
-const BOHR_MODEL_IMAGE_COLUMN: ColumnDefinition = {
+export const BOHR_MODEL_IMAGE_COLUMN: ColumnDefinition = {
   name: 'bohr_model_image',
   displayName: 'Bohr Model Image',
   isSortable: false,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
-const BOHR_MODEL_3D_COLUMN: ColumnDefinition = {
+export const BOHR_MODEL_3D_COLUMN: ColumnDefinition = {
   name: 'bohr_model_3d',
   displayName: 'Bohr Model 3D',
   isSortable: false,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
-const SPECTRAL_IMG_COLUMN: ColumnDefinition = {
+export const SPECTRAL_IMG_COLUMN: ColumnDefinition = {
   name: 'spectral_img',
   displayName: 'Spectral Image',
   isSortable: false,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
-const SUMMARY_COLUMN: ColumnDefinition = {
+export const SUMMARY_COLUMN: ColumnDefinition = {
   name: 'summary',
   displayName: 'Summary',
   isSortable: true,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
-const SYMBOL_COLUMN: ColumnDefinition = {
+export const SYMBOL_COLUMN: ColumnDefinition = {
   name: 'symbol',
   displayName: 'Symbol',
   isSortable: true,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
-const XPOS_COLUMN: ColumnDefinition = {
+export const XPOS_COLUMN: ColumnDefinition = {
   name: 'xpos',
   displayName: 'X Position',
   isSortable: true,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
-const YPOS_COLUMN: ColumnDefinition = {
+export const YPOS_COLUMN: ColumnDefinition = {
   name: 'ypos',
   displayName: 'Y Position',
   isSortable: true,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
-const WXPOS_COLUMN: ColumnDefinition = {
+export const WXPOS_COLUMN: ColumnDefinition = {
   name: 'wxpos',
   displayName: 'Wide X Position',
   isSortable: true,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
-const WYPOS_COLUMN: ColumnDefinition = {
+export const WYPOS_COLUMN: ColumnDefinition = {
   name: 'wypos',
   displayName: 'Wide Y Position',
   isSortable: true,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
-const SHELLS_COLUMN: ColumnDefinition = {
+export const SHELLS_COLUMN: ColumnDefinition = {
   name: 'shells',
   displayName: 'Shells',
   isSortable: true,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
-const ELECTRON_CONFIGURATION_COLUMN: ColumnDefinition = {
+export const ELECTRON_CONFIGURATION_COLUMN: ColumnDefinition = {
   name: 'electron_configuration',
   displayName: 'Electron Configuration',
   isSortable: true,
   width: 200,
 };
 
-const ELECTRON_CONFIGURATION_SEMANTIC_COLUMN: ColumnDefinition = {
+export const ELECTRON_CONFIGURATION_SEMANTIC_COLUMN: ColumnDefinition = {
   name: 'electron_configuration_semantic',
   displayName: 'Electron Configuration (Semantic)',
   isSortable: true,
   width: 300,
 };
 
-const ELECTRON_AFFINITY_COLUMN: ColumnDefinition = {
+export const ELECTRON_AFFINITY_COLUMN: ColumnDefinition = {
   name: 'electron_affinity',
   displayName: 'Electron Affinity',
   isSortable: true,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
-const ELECTRONEGATIVITY_PAULING_COLUMN: ColumnDefinition = {
+export const ELECTRONEGATIVITY_PAULING_COLUMN: ColumnDefinition = {
   name: 'electronegativity_pauling',
   displayName: 'Electronegativity (Pauling)',
   isSortable: true,
   width: 250,
 };
 
-const IONIZATION_ENERGIES_COLUMN: ColumnDefinition = {
+export const IONIZATION_ENERGIES_COLUMN: ColumnDefinition = {
   name: 'ionization_energies',
   displayName: 'Ionization Energies',
   isSortable: true,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
-const IMAGE_COLUMN: ColumnDefinition = {
+export const IMAGE_COLUMN: ColumnDefinition = {
   name: 'image',
   displayName: 'Image',
   isSortable: false,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
-const BLOCK_COLUMN: ColumnDefinition = {
+export const BLOCK_COLUMN: ColumnDefinition = {
   name: 'block',
   displayName: 'Block',
   isSortable: true,
@@ -241,7 +241,7 @@ const BLOCK_COLUMN: ColumnDefinition = {
 
 // `source` is shown by default but intentionally omitted from the column
 // chooser's full list, so it isn't part of FULL_LIST_OF_COLUMNS.
-const SOURCE_COLUMN: ColumnDefinition = {
+export const SOURCE_COLUMN: ColumnDefinition = {
   name: 'source',
   displayName: 'Source',
   isSortable: false,
