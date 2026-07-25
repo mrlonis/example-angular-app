@@ -97,9 +97,20 @@ describe('MatTable', () => {
       expect(component.columnsToDisplay()).toEqual(newColumns);
     });
 
+    it('columnsToRender updates when columnsToDisplay changes', () => {
+      const newColumns = [NAME_COLUMN, SYMBOL_COLUMN, ATOMIC_MASS_COLUMN];
+      component.columnsToDisplay.set(newColumns);
+      expect(component.columnsToRender()).toEqual([
+        ...columnNames(newColumns),
+        'expand',
+        RESIZE_SPACER_COLUMN,
+      ]);
+    });
+
     it('handles empty array of displayed columns', () => {
       component.columnsToDisplay.set([]);
       expect(component.columnsToDisplay()).toEqual([]);
+      expect(component.columnsToRender()).toEqual(['expand', RESIZE_SPACER_COLUMN]);
     });
 
     it('can set all columns from fullListOfColumns', () => {

@@ -36,6 +36,17 @@ test.describe('Mat table tab', () => {
     expect(total).toBeGreaterThan(100);
   });
 
+  test('does not expand a row when the row body is clicked', async ({ page }) => {
+    const hydrogenRow = getRow(page, 0);
+    await expect(hydrogenRow).toContainText('Hydrogen');
+    await expect(hydrogenRow).not.toHaveClass(/example-expanded-row/);
+
+    await getFirstRowNameCell(page).click();
+
+    await expect(hydrogenRow).not.toHaveClass(/example-expanded-row/);
+    await expect(page.locator('div.example-element-detail-wrapper-expanded')).toHaveCount(0);
+  });
+
   test('uses the expand icon button to toggle row details and icon state', async ({ page }) => {
     const expandButton = getRow(page, 0).locator('button[aria-label="expand row"]');
     await expect(expandButton).toContainText('keyboard_arrow_down');
