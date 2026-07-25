@@ -325,16 +325,13 @@ export class MatTable {
 
   readonly dataSource = new MatTableDataSource(ELEMENT_DATA.elements);
   readonly columnsToDisplay = signal<ColumnDefinition[]>(DEFAULT_COLUMNS);
-  readonly columnsToDisplayWithExpand = computed(() => [
-    ...this.columnsToDisplay().map((column) => column.name),
-    'expand',
-  ]);
   // A trailing flexible spacer column absorbs any slack so the resizable columns
   // always render at their exact specified widths (never proportionally redistributed
   // by the fixed table layout), which keeps drag resizing stable when the table has
   // fewer columns than fill the viewport.
   readonly columnsToRender = computed(() => [
-    ...this.columnsToDisplayWithExpand(),
+    ...this.columnsToDisplay().map((column) => column.name),
+    'expand',
     RESIZE_SPACER_COLUMN,
   ]);
   readonly tableWidth = computed(() => {

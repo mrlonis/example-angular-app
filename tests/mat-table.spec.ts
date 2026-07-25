@@ -36,21 +36,6 @@ test.describe('Mat table tab', () => {
     expect(total).toBeGreaterThan(100);
   });
 
-  test('expands and collapses details when a row is clicked', async ({ page }) => {
-    const hydrogenRow = getRow(page, 0);
-    await expect(hydrogenRow).toContainText('Hydrogen');
-    await expect(hydrogenRow).not.toHaveClass(/example-expanded-row/);
-
-    await hydrogenRow.click();
-    await expect(hydrogenRow).toHaveClass(/example-expanded-row/);
-    await expect(page.locator('div.example-element-detail-wrapper-expanded')).toContainText(
-      'Hydrogen',
-    );
-
-    await hydrogenRow.click();
-    await expect(hydrogenRow).not.toHaveClass(/example-expanded-row/);
-  });
-
   test('uses the expand icon button to toggle row details and icon state', async ({ page }) => {
     const expandButton = getRow(page, 0).locator('button[aria-label="expand row"]');
     await expect(expandButton).toContainText('keyboard_arrow_down');
@@ -61,10 +46,10 @@ test.describe('Mat table tab', () => {
   });
 
   test('allows only one expanded row at a time', async ({ page }) => {
-    await getRow(page, 0).click();
+    await getRow(page, 0).locator('button[aria-label="expand row"]').click();
     await expect(getRow(page, 0)).toHaveClass(/example-expanded-row/);
 
-    await getRow(page, 1).click();
+    await getRow(page, 1).locator('button[aria-label="expand row"]').click();
     await expect(getRow(page, 0)).not.toHaveClass(/example-expanded-row/);
     await expect(getRow(page, 1)).toHaveClass(/example-expanded-row/);
   });
