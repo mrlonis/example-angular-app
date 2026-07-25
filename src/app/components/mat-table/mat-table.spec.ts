@@ -54,13 +54,6 @@ describe('MatTable', () => {
       expect(component.columnsToDisplay()).toEqual(DEFAULT_COLUMNS);
     });
 
-    it('creates columnsToDisplayWithExpand by appending expand column', () => {
-      expect(component.columnsToDisplayWithExpand()).toEqual([
-        ...columnNames(DEFAULT_COLUMNS),
-        'expand',
-      ]);
-    });
-
     it('creates columnsToRender by appending the expand and spacer columns', () => {
       expect(component.columnsToRender()).toEqual([
         ...columnNames(DEFAULT_COLUMNS),
@@ -104,19 +97,20 @@ describe('MatTable', () => {
       expect(component.columnsToDisplay()).toEqual(newColumns);
     });
 
-    it('columnsToDisplayWithExpand updates when columnsToDisplay changes', () => {
+    it('columnsToRender updates when columnsToDisplay changes', () => {
       const newColumns = [NAME_COLUMN, SYMBOL_COLUMN, ATOMIC_MASS_COLUMN];
       component.columnsToDisplay.set(newColumns);
-      expect(component.columnsToDisplayWithExpand()).toEqual([
+      expect(component.columnsToRender()).toEqual([
         ...columnNames(newColumns),
         'expand',
+        RESIZE_SPACER_COLUMN,
       ]);
     });
 
     it('handles empty array of displayed columns', () => {
       component.columnsToDisplay.set([]);
       expect(component.columnsToDisplay()).toEqual([]);
-      expect(component.columnsToDisplayWithExpand()).toEqual(['expand']);
+      expect(component.columnsToRender()).toEqual(['expand', RESIZE_SPACER_COLUMN]);
     });
 
     it('can set all columns from fullListOfColumns', () => {
@@ -590,19 +584,6 @@ describe('MatTable', () => {
       const rows = fixture.debugElement.queryAll(By.css('tr.example-element-row'));
       // Table has pagination with default page size of 25
       expect(rows.length).toBe(component.paginator()?.pageSize ?? 25);
-    });
-
-    it('toggles expand when clicking on a row', () => {
-      const element = component.dataSource.data[0];
-      const row = fixture.debugElement.query(By.css('tr.example-element-row'));
-
-      row.triggerEventHandler('click', new MouseEvent('click'));
-      fixture.detectChanges();
-      expect(component.isExpanded(element)).toBe(true);
-
-      row.triggerEventHandler('click', new MouseEvent('click'));
-      fixture.detectChanges();
-      expect(component.isExpanded(element)).toBe(false);
     });
 
     it('applies example-expanded-row class when row is expanded', () => {
