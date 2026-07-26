@@ -39,7 +39,7 @@
     <!-- Columns Definitions -->
     @for (column of columnsToDisplay(); track column.name) {
       <ng-container matColumnDef="{{ column.name }}">
-        @if (column.isSortable) {
+        @if (column.isSortable && column.isFilterable) {
           <th
             mat-header-cell
             *matHeaderCellDef
@@ -49,6 +49,41 @@
             (widthChange)="setColumnWidth(column.name, $event)"
           >
             {{ column.displayName }}
+            <button
+              mat-icon-button
+              [attr.aria-label]="'Filter column ' + column.displayName"
+              type="button"
+            >
+              <mat-icon fontIcon="filter_alt" aria-hidden="true" />
+            </button>
+          </th>
+        } @else if (column.isSortable) {
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            [appColumnResize]="column.name"
+            [style.width.px]="column.width"
+            (widthChange)="setColumnWidth(column.name, $event)"
+          >
+            {{ column.displayName }}
+          </th>
+        } @else if (column.isFilterable) {
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            [appColumnResize]="column.name"
+            [style.width.px]="column.width"
+            (widthChange)="setColumnWidth(column.name, $event)"
+          >
+            {{ column.displayName }}
+            <button
+              mat-icon-button
+              [attr.aria-label]="'Filter column ' + column.displayName"
+              type="button"
+            >
+              <mat-icon fontIcon="filter_alt" aria-hidden="true" />
+            </button>
           </th>
         } @else {
           <th
