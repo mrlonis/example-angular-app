@@ -151,5 +151,17 @@ describe('LocalStorage', () => {
         service.write('user', { name: 'Ada' });
       }).not.toThrow();
     });
+
+    it('ignores values that cannot be serialized', () => {
+      const storage = createStorage();
+      const service = createService({ localStorage: storage });
+      const circularValue: Record<string, unknown> = {};
+      circularValue['self'] = circularValue;
+
+      expect(() => {
+        service.write('user', circularValue);
+      }).not.toThrow();
+      expect(storage.getItem('user')).toBeNull();
+    });
   });
 });

@@ -1,9 +1,16 @@
-import { Service, computed, effect, inject, signal } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { DestroyRef, Service, computed, effect, inject, signal } from '@angular/core';
 import { ColumnDefinition } from '../interfaces/column-definition';
 import { ALL_COLUMNS, DEFAULT_COLUMNS, FULL_LIST_OF_COLUMNS } from '../interfaces/columns';
 import { LocalStorage } from './local-storage';
 
 export const TABLE_STATE_STORAGE_KEY = 'example-angular-app.table-state';
+
+/**
+ * How long the state has to settle before it is written to local storage. Drag resizing emits a
+ * new width on every pointer move, so writes are coalesced instead of hitting storage per frame.
+ */
+export const PERSIST_DEBOUNCE_MS = 250;
 
 /** Shape written to local storage. Only user owned state is persisted. */
 export interface PersistedTableState {
@@ -31,7 +38,9 @@ function isValidWidth(width: unknown): width is number {
 @Service()
 export class AppState {
   private readonly localStorage = inject(LocalStorage);
+  private readonly document = inject(DOCUMENT);
   private readonly restoredState = this.restoreTableState();
+  private pendingState: PersistedTableState | null = null;
 
   private readonly columnCatalog = signal(
     this.createColumnCatalog(this.restoredState?.columnWidths ?? {}),
@@ -74,14 +83,37 @@ export class AppState {
   });
 
   constructor() {
-    effect(() => {
-      const state: PersistedTableState = {
+    effect((onCleanup) => {
+      this.pendingState = {
         displayedColumns: this.displayedColumnNames(),
         columnWidths: this.columnWidthOverrides(),
       };
 
-      this.localStorage.write(TABLE_STATE_STORAGE_KEY, state);
+      // Each new state cancels the pending write, so a burst of updates results in a single
+      // write once the state settles. The cleanup also runs when the service is destroyed.
+      const pendingWrite = setTimeout(() => {
+        this.persistPendingState();
+      }, PERSIST_DEBOUNCE_MS);
+
+      onCleanup(() => {
+        clearTimeout(pendingWrite);
+      });
     });
+
+    const view = this.document.defaultView;
+
+    if (view) {
+      // A reload, a tab close or a navigation can happen before the debounce elapses, so write
+      // whatever is still pending while the page is being torn down.
+      const flush = () => {
+        this.persistPendingState();
+      };
+
+      view.addEventListener('pagehide', flush);
+      inject(DestroyRef).onDestroy(() => {
+        view.removeEventListener('pagehide', flush);
+      });
+    }
   }
 
   /** Replaces the displayed columns, ignoring unknown and duplicated columns. */
@@ -116,6 +148,15 @@ export class AppState {
 
       return updatedCatalog;
     });
+  }
+
+  private persistPendingState(): void {
+    if (this.pendingState === null) {
+      return;
+    }
+
+    this.localStorage.write(TABLE_STATE_STORAGE_KEY, this.pendingState);
+    this.pendingState = null;
   }
 
   private createColumnCatalog(columnWidths: Record<string, number>): Map<string, ColumnDefinition> {

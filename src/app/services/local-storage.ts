@@ -38,10 +38,10 @@ export class LocalStorage {
 
   /** JSON serializes `value` and stores it under `key`. */
   write(key: string, value: unknown): void {
-    const serializedValue = JSON.stringify(value);
-
     this.withStorage((storage) => {
-      storage.setItem(key, serializedValue);
+      // Serialization happens inside the guard so a value that cannot be serialized (a circular
+      // reference, a bigint) degrades to a no-op instead of throwing at the caller.
+      storage.setItem(key, JSON.stringify(value));
 
       return true;
     });
@@ -62,8 +62,9 @@ export class LocalStorage {
 
       return storage ? operation(storage) : null;
     } catch {
-      // Storage can throw when it is disabled by the browser or when a write exceeds the
-      // available quota. Persistence is a convenience here, so failures are ignored.
+      // Storage can throw when it is disabled by the browser, when a write exceeds the available
+      // quota, or when a value cannot be serialized. Persistence is a convenience here, so
+      // failures are ignored.
       return null;
     }
   }

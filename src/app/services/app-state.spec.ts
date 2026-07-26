@@ -1,5 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { TestBed } from '@angular/core/testing';
+import { vi } from 'vitest';
 import { ColumnDefinition } from '../interfaces/column-definition';
 import {
   ATOMIC_MASS_COLUMN,
@@ -8,7 +9,12 @@ import {
   NAME_COLUMN,
   SYMBOL_COLUMN,
 } from '../interfaces/columns';
-import { AppState, PersistedTableState, TABLE_STATE_STORAGE_KEY } from './app-state';
+import {
+  AppState,
+  PERSIST_DEBOUNCE_MS,
+  PersistedTableState,
+  TABLE_STATE_STORAGE_KEY,
+} from './app-state';
 
 function createStorage(entries: Record<string, string> = {}): Storage {
   const values = new Map(Object.entries(entries));
@@ -35,9 +41,34 @@ function storedState(storage: Storage): PersistedTableState | null {
   return rawValue === null ? null : (JSON.parse(rawValue) as PersistedTableState);
 }
 
+let pageHideListeners: (() => void)[] = [];
+
+function createWindow(storage: Storage) {
+  return {
+    localStorage: storage,
+    addEventListener: (type: string, listener: () => void) => {
+      if (type === 'pagehide') {
+        pageHideListeners.push(listener);
+      }
+    },
+    removeEventListener: (type: string, listener: () => void) => {
+      if (type === 'pagehide') {
+        pageHideListeners = pageHideListeners.filter((current) => current !== listener);
+      }
+    },
+  };
+}
+
+/** Simulates the browser tearing the page down, for example on reload. */
+function hidePage(): void {
+  for (const listener of pageHideListeners) {
+    listener();
+  }
+}
+
 function createService(storage: Storage): AppState {
   TestBed.configureTestingModule({
-    providers: [{ provide: DOCUMENT, useValue: { defaultView: { localStorage: storage } } }],
+    providers: [{ provide: DOCUMENT, useValue: { defaultView: createWindow(storage) } }],
   });
 
   return TestBed.inject(AppState);
@@ -52,6 +83,10 @@ function columnNames(columns: ColumnDefinition[]): string[] {
 }
 
 describe('AppState', () => {
+  beforeEach(() => {
+    pageHideListeners = [];
+  });
+
   describe('with empty storage', () => {
     let storage: Storage;
     let service: AppState;
@@ -134,21 +169,32 @@ describe('AppState', () => {
     let storage: Storage;
     let service: AppState;
 
+    /** Flushes the state to storage the way a settled UI would. */
+    function settle(): void {
+      TestBed.tick();
+      vi.advanceTimersByTime(PERSIST_DEBOUNCE_MS);
+    }
+
     beforeEach(() => {
+      vi.useFakeTimers();
       storage = createStorage();
       service = createService(storage);
     });
 
+    afterEach(() => {
+      vi.useRealTimers();
+    });
+
     it('persists the displayed columns', () => {
       service.setColumnsToDisplay([NAME_COLUMN, SYMBOL_COLUMN]);
-      TestBed.tick();
+      settle();
 
       expect(storedState(storage)?.displayedColumns).toEqual(['name', 'symbol']);
     });
 
     it('persists only the widths that differ from the defaults', () => {
       service.setColumnWidth('name', 240);
-      TestBed.tick();
+      settle();
 
       expect(storedState(storage)?.columnWidths).toEqual({ name: 240 });
     });
@@ -156,16 +202,67 @@ describe('AppState', () => {
     it('persists widths of columns that are not displayed', () => {
       service.setColumnWidth('appearance', 240);
       service.setColumnsToDisplay([NAME_COLUMN]);
-      TestBed.tick();
+      settle();
 
       expect(storedState(storage)?.columnWidths).toEqual({ appearance: 240 });
     });
 
     it('persists an empty selection when every column is hidden', () => {
       service.setColumnsToDisplay([]);
-      TestBed.tick();
+      settle();
 
       expect(storedState(storage)?.displayedColumns).toEqual([]);
+    });
+
+    it('waits for the state to settle before writing', () => {
+      const setItem = vi.spyOn(storage, 'setItem');
+
+      service.setColumnWidth('name', 240);
+      TestBed.tick();
+      vi.advanceTimersByTime(PERSIST_DEBOUNCE_MS - 1);
+
+      expect(setItem).not.toHaveBeenCalled();
+
+      vi.advanceTimersByTime(1);
+
+      expect(setItem).toHaveBeenCalledTimes(1);
+    });
+
+    it('flushes a pending write when the page is being hidden', () => {
+      service.setColumnWidth('name', 240);
+      TestBed.tick();
+
+      hidePage();
+
+      expect(storedState(storage)?.columnWidths).toEqual({ name: 240 });
+    });
+
+    it('does not write again when nothing is pending', () => {
+      service.setColumnWidth('name', 240);
+      settle();
+      const setItem = vi.spyOn(storage, 'setItem');
+
+      hidePage();
+
+      expect(setItem).not.toHaveBeenCalled();
+    });
+
+    it('coalesces a burst of width updates into a single write', () => {
+      const setItem = vi.spyOn(storage, 'setItem');
+
+      // A drag resize emits a new width on every pointer move.
+      for (const width of [200, 220, 240, 260]) {
+        service.setColumnWidth('name', width);
+        TestBed.tick();
+        vi.advanceTimersByTime(16);
+      }
+
+      expect(setItem).not.toHaveBeenCalled();
+
+      vi.advanceTimersByTime(PERSIST_DEBOUNCE_MS);
+
+      expect(setItem).toHaveBeenCalledTimes(1);
+      expect(storedState(storage)?.columnWidths).toEqual({ name: 260 });
     });
   });
 
