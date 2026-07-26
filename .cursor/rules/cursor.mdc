@@ -10,16 +10,16 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 
 Single-page Angular v22 demo app. Angular Material + CDK v22, TypeScript 6 (strict), npm (Node version pinned in `.nvmrc`). Two lazy-loaded routes defined in `src/app/app.routes.ts`; providers in `src/app/app.config.ts`; root component `src/app/app.ts` renders `<router-outlet />`.
 
-- `''` → `MatTabs` (`pages/mat-tabs`): tabs hosting `MatTable` (periodic-elements Material table: sort, filter, paginate, expandable rows, column picker) and `ExampleIframe` (`iframe-resizer` demo).
+- `''` → `MatTabs` (`pages/mat-tabs`): tabs hosting `MatTable` (periodic-elements Material table: sort, filter, paginate, expandable rows, resizable columns, column picker) and `ExampleIframe` (`iframe-resizer` demo). The displayed columns and their widths live in the `AppState` service and are persisted to local storage through the `LocalStorage` service, so they survive a reload.
 - `'toolbar'` → `MatToolbar` (`pages/mat-toolbar`): toolbar with a `mat-drawer` sidenav.
 
 ## Repository Map
 
 - `src/app/pages/<name>/` — route-level ("page") components loaded lazily from `app.routes.ts`.
 - `src/app/components/<name>/` — reusable components used across pages. Components are standalone, laid out as `<name>.{ts,html,scss,spec.ts}`.
-- `src/app/services/` — signal-based singletons (`selected-page`, `url-cache`), `providedIn: 'root'`.
-- `src/app/directives/` — `iframe-resizer` attribute directive (`[appIframeResizer]`).
-- `src/app/interfaces/` — types and periodic-element data (`data.ts`).
+- `src/app/services/` — signal-based singletons (`app-state`, `local-storage`, `url-cache`), declared with `@Service()`.
+- `src/app/directives/` — `column-resize` and `iframe-resizer` attribute directives (`[appColumnResize]`, `[appIframeResizer]`).
+- `src/app/interfaces/` — types plus shared data such as the periodic-element data (`data.ts`) and the table column definitions (`columns.ts`).
 - `tests/` — Playwright end-to-end specs and config.
 - `scripts/sync-agent-instructions.ts` — syncs `AGENTS.md` to all other AI instruction files.
 

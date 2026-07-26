@@ -2,6 +2,8 @@ import { TestBed } from '@angular/core/testing';
 import { Router, provideRouter } from '@angular/router';
 import { App } from './app';
 import { routes } from './app.routes';
+import { MatTabs } from './pages/mat-tabs/mat-tabs';
+import { MatToolbar } from './pages/mat-toolbar/mat-toolbar';
 
 describe('App', () => {
   let router: Router;
@@ -11,6 +13,14 @@ describe('App', () => {
       imports: [App],
       providers: [provideRouter(routes)],
     });
+
+    /* These specs only assert which component each route resolves to. Rendering the real page
+       templates boots MatTable and a live iframe, which is by far the slowest work in the suite
+       and makes these tests flake against the default 5s timeout under parallel load. The page
+       templates are covered by mat-tabs.spec.ts and mat-toolbar.spec.ts. */
+    TestBed.overrideTemplate(MatTabs, '');
+    TestBed.overrideTemplate(MatToolbar, '');
+
     router = TestBed.inject(Router);
   });
 
