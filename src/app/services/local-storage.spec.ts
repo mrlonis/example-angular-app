@@ -163,5 +163,28 @@ describe('LocalStorage', () => {
       }).not.toThrow();
       expect(storage.getItem('user')).toBeNull();
     });
+
+    it.each([
+      ['undefined', undefined],
+      ['a function', vi.fn()],
+      ['a symbol', Symbol('token')],
+    ])('skips the write for %s, which has no JSON representation', (_label, value) => {
+      const storage = createStorage();
+      const service = createService({ localStorage: storage });
+
+      service.write('user', value);
+
+      expect(storage.getItem('user')).toBeNull();
+    });
+
+    it('leaves an existing value untouched when the new value cannot be serialized', () => {
+      const storage = createStorage();
+      const service = createService({ localStorage: storage });
+      service.write('user', { name: 'Ada' });
+
+      service.write('user', undefined);
+
+      expect(storage.getItem('user')).toBe('{"name":"Ada"}');
+    });
   });
 });

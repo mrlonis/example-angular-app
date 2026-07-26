@@ -41,7 +41,16 @@ export class LocalStorage {
     this.withStorage((storage) => {
       // Serialization happens inside the guard so a value that cannot be serialized (a circular
       // reference, a bigint) degrades to a no-op instead of throwing at the caller.
-      storage.setItem(key, JSON.stringify(value));
+      const serializedValue = JSON.stringify(value);
+
+      // `JSON.stringify` returns undefined, rather than throwing, for values without a JSON
+      // representation (undefined, functions, symbols). Writing that would store the literal
+      // string "undefined", so skip the write and leave any existing value untouched.
+      if (serializedValue === undefined) {
+        return null;
+      }
+
+      storage.setItem(key, serializedValue);
 
       return true;
     });
