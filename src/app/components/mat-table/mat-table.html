@@ -21,9 +21,9 @@
     (detach)="isOpen.set(false)"
   >
     <app-column-select
-      [fullListOfColumns]="fullListOfColumns"
+      [fullListOfColumns]="fullListOfColumns()"
       [columnsToDisplay]="columnsToDisplay()"
-      (columnsToDisplayChange)="columnsToDisplay.set($event)"
+      (columnsToDisplayChange)="setColumnsToDisplay($event)"
     />
   </ng-template>
 </div>
@@ -45,7 +45,7 @@
             *matHeaderCellDef
             mat-sort-header
             [appColumnResize]="column.name"
-            [style.width.px]="columnWidth(column)"
+            [style.width.px]="column.width"
             (widthChange)="setColumnWidth(column.name, $event)"
           >
             {{ column.displayName }}
@@ -55,7 +55,7 @@
             mat-header-cell
             *matHeaderCellDef
             [appColumnResize]="column.name"
-            [style.width.px]="columnWidth(column)"
+            [style.width.px]="column.width"
             (widthChange)="setColumnWidth(column.name, $event)"
           >
             {{ column.displayName }}

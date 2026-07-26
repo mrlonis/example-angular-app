@@ -117,4 +117,33 @@ test.describe('Mat table tab', () => {
     await expect(page.locator('td.mat-column-atomic_mass')).not.toBeAttached();
     await expect(page.locator('th.mat-column-name')).toBeAttached();
   });
+
+  test('restores the selected columns after a reload', async ({ page }) => {
+    await page.locator('[data-testid="column-chooser-trigger"]').click();
+    const appearanceCheckbox = page.locator('.cdk-overlay-container mat-checkbox', {
+      hasText: 'Appearance',
+    });
+    await expect(appearanceCheckbox).toBeVisible();
+    await appearanceCheckbox.click();
+    await expect(page.locator('th.mat-column-appearance')).toBeAttached();
+
+    await page.reload();
+
+    await expect(page.locator('th.mat-column-appearance')).toBeAttached();
+    await expect(page.locator('th.mat-column-name')).toBeAttached();
+  });
+
+  test('restores a resized column width after a reload', async ({ page }) => {
+    const nameHeader = page.locator('th.mat-column-name');
+    await expect(nameHeader).toHaveCSS('width', '150px');
+
+    // The resize handle is keyboard operable and moves in fixed 16px steps.
+    await nameHeader.locator('.column-resize-handle').focus();
+    await page.keyboard.press('ArrowRight');
+    await expect(nameHeader).toHaveCSS('width', '166px');
+
+    await page.reload();
+
+    await expect(page.locator('th.mat-column-name')).toHaveCSS('width', '166px');
+  });
 });
