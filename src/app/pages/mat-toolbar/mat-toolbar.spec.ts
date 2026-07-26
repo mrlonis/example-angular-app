@@ -33,6 +33,18 @@ describe('MatToolbar', () => {
     expect(toggleSpy).toHaveBeenCalledTimes(1);
   });
 
+  it('tracks drawer state changes that bypass the toolbar button', () => {
+    const drawer = component.drawer();
+
+    expect(component.drawerOpened()).toBe(false);
+
+    void drawer.open();
+    expect(component.drawerOpened()).toBe(true);
+
+    void drawer.close();
+    expect(component.drawerOpened()).toBe(false);
+  });
+
   it('describes the menu button by the current drawer state', () => {
     const host = fixture.nativeElement as HTMLElement;
     const menuButton = host.querySelector<HTMLButtonElement>('mat-toolbar button');

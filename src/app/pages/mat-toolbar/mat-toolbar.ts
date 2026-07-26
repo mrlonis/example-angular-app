@@ -25,6 +25,8 @@ export class MatToolbar {
   readonly matTable = signal(true);
   readonly iframeResizer = signal(false);
   readonly drawer = viewChild.required(MatDrawer);
+  // `MatDrawer.opened` is a getter over an internal signal, so this stays in sync
+  // with every open/close, including backdrop clicks and Escape.
   readonly drawerOpened = computed(() => this.drawer().opened);
 
   toggleDrawer() {
