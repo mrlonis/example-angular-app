@@ -1,26 +1,30 @@
 <div class="display-flex flex-auto flex-column max-height-100vh" style="height: 100%">
   <mat-toolbar>
     <button mat-icon-button (click)="toggleDrawer()">
-      <mat-icon>menu</mat-icon>
+      <mat-icon fontIcon="menu" aria-hidden="false" aria-label="Menu Icon" />
     </button>
     <span>My App</span>
     <span class="display-flex flex-auto"></span>
     <button mat-icon-button>
-      <mat-icon>favorite</mat-icon>
+      <mat-icon fontIcon="favorite" aria-hidden="false" aria-label="Favorite Icon" />
     </button>
     <button mat-icon-button>
-      <mat-icon>share</mat-icon>
+      <mat-icon fontIcon="share" aria-hidden="false" aria-label="Share Icon" />
     </button>
   </mat-toolbar>
   <mat-drawer-container class="display-flex flex-auto" style="height: 100%; min-height: 150px">
     <mat-drawer #drawer>
       <div>
         <button mat-button (click)="selectMatTable()">
-          <mat-icon>filter_1</mat-icon>Mat Table
+          <mat-icon fontIcon="filter_1" aria-hidden="false" aria-label="Filter 1 Icon" />Mat Table
         </button>
         <mat-divider />
         <button mat-button (click)="selectIframeResizer()">
-          <mat-icon>filter_2</mat-icon>iframe-resizer
+          <mat-icon
+            fontIcon="filter_2"
+            aria-hidden="false"
+            aria-label="Filter 2 Icon"
+          />iframe-resizer
         </button>
         <mat-divider />
       </div>

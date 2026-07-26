@@ -109,9 +109,9 @@
       <td mat-cell *matCellDef="let element">
         <button mat-icon-button aria-label="expand row" (click)="toggleExpanded($event, element)">
           @if (isExpanded(element)) {
-            <mat-icon>keyboard_arrow_up</mat-icon>
+            <mat-icon fontIcon="keyboard_arrow_up" aria-hidden="false" aria-label="Expand Icon" />
           } @else {
-            <mat-icon>keyboard_arrow_down</mat-icon>
+            <mat-icon fontIcon="keyboard_arrow_down" aria-hidden="false" aria-label="Expand Icon" />
           }
         </button>
       </td>
