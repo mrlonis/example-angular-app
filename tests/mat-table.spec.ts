@@ -93,6 +93,20 @@ test.describe('Mat table tab', () => {
     await expect(getRow(page, 1).locator('td.mat-column-name')).toContainText('Zinc');
   });
 
+  test('keeps the sort arrow visible without hovering the header', async ({ page }) => {
+    const nameArrow = page.locator('th.mat-column-name .mat-sort-header-arrow');
+    await expect(nameArrow).toHaveCSS('opacity', '0.54');
+
+    // Sorted headers show the arrow at full opacity...
+    await page.locator('th.mat-column-name').click();
+    await expect(nameArrow).toHaveCSS('opacity', '1');
+
+    // ...and clearing the sort returns it to the resting visible state.
+    await page.locator('th.mat-column-name').click();
+    await page.locator('th.mat-column-name').click();
+    await expect(nameArrow).toHaveCSS('opacity', '0.54');
+  });
+
   test('changes page size using paginator options', async ({ page }) => {
     await expect(getDataRows(page)).toHaveCount(25);
     await page.locator('mat-paginator .mat-mdc-paginator-touch-target').click();

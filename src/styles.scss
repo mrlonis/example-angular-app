@@ -125,3 +125,21 @@ body {
   outline: 2px solid var(--mat-sys-primary, #3f51b5);
   outline-offset: -2px;
 }
+
+// Angular Material hides the `mat-sort-header` arrow (opacity: 0) until the header
+// is hovered or focused, which makes sortable columns hard to discover. Keep the
+// arrow visible at rest using the same opacity Material applies on hover; sorted
+// headers keep their full-opacity arrow. MatSortHeader renders the arrow inside
+// its own view, so this override cannot live in an encapsulated component style.
+.mat-sort-header .mat-sort-header-container:not(.mat-sort-header-sorted) .mat-sort-header-arrow {
+  opacity: 0.54;
+}
+
+// Clearing a sort plays a fade-out animation that leaves the arrow invisible until
+// focus moves elsewhere. Skip it so the arrow returns straight to its resting state.
+.mat-sort-header .mat-sort-header-recently-cleared-ascending .mat-sort-header-arrow,
+.mat-sort-header .mat-sort-header-recently-cleared-descending .mat-sort-header-arrow {
+  animation: none;
+  transform: none;
+  opacity: 0.54;
+}
