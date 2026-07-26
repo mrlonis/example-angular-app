@@ -12,6 +12,12 @@ function getFirstRowNameCell(page: Page) {
   return getRow(page, 0).locator('td.mat-column-name');
 }
 
+function getExpandButton(page: Page, index: number) {
+  return getRow(page, index).locator(
+    'button[aria-label="expand row"], button[aria-label="collapse row"]',
+  );
+}
+
 test.describe('Mat table tab', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
@@ -48,19 +54,28 @@ test.describe('Mat table tab', () => {
   });
 
   test('uses the expand icon button to toggle row details and icon state', async ({ page }) => {
-    const expandButton = getRow(page, 0).locator('button[aria-label="expand row"]');
-    await expect(expandButton).toContainText('keyboard_arrow_down');
+    const expandButton = getExpandButton(page, 0);
+    await expect(expandButton.locator('mat-icon')).toHaveAttribute(
+      'fontIcon',
+      'keyboard_arrow_down',
+    );
+    await expect(expandButton).toHaveAttribute('aria-label', 'expand row');
     await expandButton.click();
-    await expect(expandButton).toContainText('keyboard_arrow_up');
+    await expect(expandButton.locator('mat-icon')).toHaveAttribute('fontIcon', 'keyboard_arrow_up');
+    await expect(expandButton).toHaveAttribute('aria-label', 'collapse row');
     await expandButton.click();
-    await expect(expandButton).toContainText('keyboard_arrow_down');
+    await expect(expandButton.locator('mat-icon')).toHaveAttribute(
+      'fontIcon',
+      'keyboard_arrow_down',
+    );
+    await expect(expandButton).toHaveAttribute('aria-label', 'expand row');
   });
 
   test('allows only one expanded row at a time', async ({ page }) => {
-    await getRow(page, 0).locator('button[aria-label="expand row"]').click();
+    await getExpandButton(page, 0).click();
     await expect(getRow(page, 0)).toHaveClass(/example-expanded-row/);
 
-    await getRow(page, 1).locator('button[aria-label="expand row"]').click();
+    await getExpandButton(page, 1).click();
     await expect(getRow(page, 0)).not.toHaveClass(/example-expanded-row/);
     await expect(getRow(page, 1)).toHaveClass(/example-expanded-row/);
   });

@@ -555,36 +555,61 @@ describe('MatTable', () => {
   });
 
   describe('Template Integration - Expand/Collapse Buttons', () => {
+    const collapsedButton = 'button[aria-label="expand row"]';
+    const expandedButton = 'button[aria-label="collapse row"]';
+    const expandButtonSelector = `${collapsedButton}, ${expandedButton}`;
+
     it('renders expand buttons for each paginated row', () => {
-      const expandButtons = fixture.debugElement.queryAll(
-        By.css('button[aria-label="expand row"]'),
-      );
+      const expandButtons = fixture.debugElement.queryAll(By.css(expandButtonSelector));
       // Table has pagination with default page size of 25
       expect(expandButtons.length).toBe(component.paginator()?.pageSize ?? 25);
     });
 
     it('displays keyboard_arrow_down icon when row is not expanded', () => {
-      const expandButton = fixture.debugElement.query(By.css('button[aria-label="expand row"]'));
-      expect((expandButton.nativeElement as HTMLElement).textContent).toContain(
-        'keyboard_arrow_down',
-      );
+      const icon = fixture.debugElement.query(By.css(`${collapsedButton} mat-icon`))
+        .nativeElement as HTMLElement;
+
+      expect(icon.getAttribute('fontIcon')).toBe('keyboard_arrow_down');
     });
 
     it('displays keyboard_arrow_up icon when row is expanded', () => {
       const element = component.dataSource.data[0];
-      const expandButton = fixture.debugElement.query(By.css('button[aria-label="expand row"]'));
 
       component.toggleExpanded(new MouseEvent('click'), element);
       fixture.detectChanges();
 
-      expect((expandButton.nativeElement as HTMLElement).textContent).toContain(
-        'keyboard_arrow_up',
-      );
+      const icon = fixture.debugElement.query(By.css(`${expandedButton} mat-icon`))
+        .nativeElement as HTMLElement;
+
+      expect(icon.getAttribute('fontIcon')).toBe('keyboard_arrow_up');
+    });
+
+    it('switches the button aria-label and aria-expanded when the row is expanded', () => {
+      const element = component.dataSource.data[0];
+      const expandButton = fixture.debugElement.query(By.css(expandButtonSelector))
+        .nativeElement as HTMLElement;
+
+      expect(expandButton.getAttribute('aria-label')).toBe('expand row');
+      expect(expandButton.getAttribute('aria-expanded')).toBe('false');
+
+      component.toggleExpanded(new MouseEvent('click'), element);
+      fixture.detectChanges();
+
+      expect(expandButton.getAttribute('aria-label')).toBe('collapse row');
+      expect(expandButton.getAttribute('aria-expanded')).toBe('true');
+    });
+
+    it('keeps the expand icons hidden from assistive technology', () => {
+      const icon = fixture.debugElement.query(By.css(`${collapsedButton} mat-icon`))
+        .nativeElement as HTMLElement;
+
+      expect(icon.getAttribute('aria-hidden')).toBe('true');
+      expect(icon.hasAttribute('aria-label')).toBe(false);
     });
 
     it('toggles expand state when expand button is clicked', () => {
       const element = component.dataSource.data[0];
-      const expandButton = fixture.debugElement.query(By.css('button[aria-label="expand row"]'));
+      const expandButton = fixture.debugElement.query(By.css(expandButtonSelector));
 
       expandButton.triggerEventHandler('click', new MouseEvent('click'));
       fixture.detectChanges();
@@ -596,7 +621,7 @@ describe('MatTable', () => {
     });
 
     it('button click stops event propagation', () => {
-      const expandButton = fixture.debugElement.query(By.css('button[aria-label="expand row"]'));
+      const expandButton = fixture.debugElement.query(By.css(expandButtonSelector));
       const mouseEvent = new MouseEvent('click');
       const stopPropagationSpy = vi.spyOn(mouseEvent, 'stopPropagation');
 
