@@ -33,6 +33,32 @@ describe('MatToolbar', () => {
     expect(toggleSpy).toHaveBeenCalledTimes(1);
   });
 
+  it('describes the menu button by the current drawer state', () => {
+    const host = fixture.nativeElement as HTMLElement;
+    const menuButton = host.querySelector<HTMLButtonElement>('mat-toolbar button');
+    if (!menuButton) {
+      throw new Error('Expected the menu button to be rendered');
+    }
+
+    expect(menuButton.getAttribute('aria-label')).toBe('Open menu');
+    expect(menuButton.getAttribute('aria-expanded')).toBe('false');
+    expect(menuButton.getAttribute('aria-controls')).toBe('app-drawer');
+
+    component.toggleDrawer();
+    fixture.detectChanges();
+
+    expect(component.drawerOpened()).toBe(true);
+    expect(menuButton.getAttribute('aria-label')).toBe('Close menu');
+    expect(menuButton.getAttribute('aria-expanded')).toBe('true');
+
+    component.toggleDrawer();
+    fixture.detectChanges();
+
+    expect(component.drawerOpened()).toBe(false);
+    expect(menuButton.getAttribute('aria-label')).toBe('Open menu');
+    expect(menuButton.getAttribute('aria-expanded')).toBe('false');
+  });
+
   it('can toggle drawer on a fresh component instance', () => {
     const freshFixture = TestBed.createComponent(MatToolbar);
     freshFixture.detectChanges();

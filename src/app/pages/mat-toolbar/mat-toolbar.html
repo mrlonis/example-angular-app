@@ -1,6 +1,12 @@
 <div class="display-flex flex-auto flex-column max-height-100vh" style="height: 100%">
   <mat-toolbar>
-    <button mat-icon-button aria-label="Open menu" (click)="toggleDrawer()">
+    <button
+      mat-icon-button
+      [attr.aria-label]="drawerOpened() ? 'Close menu' : 'Open menu'"
+      [attr.aria-expanded]="drawerOpened()"
+      aria-controls="app-drawer"
+      (click)="toggleDrawer()"
+    >
       <mat-icon fontIcon="menu" aria-hidden="true" />
     </button>
     <span>My App</span>
@@ -13,7 +19,7 @@
     </button>
   </mat-toolbar>
   <mat-drawer-container class="display-flex flex-auto" style="height: 100%; min-height: 150px">
-    <mat-drawer #drawer>
+    <mat-drawer #drawer id="app-drawer">
       <div>
         <button mat-button (click)="selectMatTable()">
           <mat-icon fontIcon="filter_1" aria-hidden="true" />

@@ -1,4 +1,4 @@
-import { Component, signal, viewChild } from '@angular/core';
+import { Component, computed, signal, viewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
@@ -25,6 +25,7 @@ export class MatToolbar {
   readonly matTable = signal(true);
   readonly iframeResizer = signal(false);
   readonly drawer = viewChild.required(MatDrawer);
+  readonly drawerOpened = computed(() => this.drawer().opened);
 
   toggleDrawer() {
     void this.drawer().toggle();

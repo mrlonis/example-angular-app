@@ -23,10 +23,34 @@ test.describe('Toolbar route', () => {
   });
 
   test('opens and closes the drawer from the menu button', async ({ page }) => {
+    const menuButton = page.locator('mat-toolbar button').first();
+
     await expect(page.locator('mat-drawer')).not.toHaveClass(/mat-drawer-opened/);
-    await page.locator('mat-toolbar button').first().click();
+    await expect(menuButton).toHaveAttribute('aria-label', 'Open menu');
+    await expect(menuButton).toHaveAttribute('aria-expanded', 'false');
+
+    await menuButton.click();
     await expect(page.locator('mat-drawer')).toHaveClass(/mat-drawer-opened/);
-    await page.locator('mat-toolbar button').first().click();
+    await expect(menuButton).toHaveAttribute('aria-label', 'Close menu');
+    await expect(menuButton).toHaveAttribute('aria-expanded', 'true');
+
+    await menuButton.click();
     await expect(page.locator('mat-drawer')).not.toHaveClass(/mat-drawer-opened/);
+    await expect(menuButton).toHaveAttribute('aria-label', 'Open menu');
+    await expect(menuButton).toHaveAttribute('aria-expanded', 'false');
+  });
+
+  test('updates the menu button label when the drawer closes itself', async ({ page }) => {
+    const menuButton = page.locator('mat-toolbar button').first();
+
+    await menuButton.click();
+    await expect(menuButton).toHaveAttribute('aria-label', 'Close menu');
+
+    // Selecting a drawer item closes the drawer without going through the menu button.
+    await page.locator('mat-drawer button', { hasText: 'iframe-resizer' }).click();
+
+    await expect(page.locator('mat-drawer')).not.toHaveClass(/mat-drawer-opened/);
+    await expect(menuButton).toHaveAttribute('aria-label', 'Open menu');
+    await expect(menuButton).toHaveAttribute('aria-expanded', 'false');
   });
 });
