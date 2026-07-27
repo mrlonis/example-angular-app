@@ -43,7 +43,7 @@ export const CATEGORY_COLUMN: ColumnDefinition = {
   name: 'category',
   displayName: 'Category',
   isSortable: true,
-  isFilterable: false,
+  isFilterable: true,
   width: 200,
 };
 
@@ -115,7 +115,7 @@ export const PHASE_COLUMN: ColumnDefinition = {
   name: 'phase',
   displayName: 'Phase',
   isSortable: true,
-  isFilterable: false,
+  isFilterable: true,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
@@ -251,7 +251,7 @@ export const BLOCK_COLUMN: ColumnDefinition = {
   name: 'block',
   displayName: 'Block',
   isSortable: true,
-  isFilterable: false,
+  isFilterable: true,
   width: DEFAULT_COLUMN_WIDTH,
 };
 

@@ -25,6 +25,23 @@ table {
   position: relative;
 }
 
+// The trigger is hoisted into the `th` by HeaderCellAction, so it is pinned to the trailing edge
+// of the cell instead of flowing after the header label. The offset clears the resize handle.
+.resizable-table th.mat-mdc-header-cell app-column-filter {
+  position: absolute;
+  inset-inline-end: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+// Sortable headers keep their label inside the sort container, which is capped in the global
+// stylesheet. A filterable header without sorting renders the label straight in the cell, so the
+// cell itself has to reserve the room the trigger occupies.
+.resizable-table th.filterable-header:not(.mat-sort-header) {
+  padding-inline-end: 44px;
+}
+
 .resizable-table .resize-spacer-cell {
   padding: 0;
   overflow: hidden;

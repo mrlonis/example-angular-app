@@ -1,4 +1,4 @@
-<app-filter (valueChange)="applyFilter($event)" />
+<app-filter (valueChange)="applyNameFilter($event)" />
 <div class="column-chooser-container">
   Edit Columns:
   <button
@@ -39,51 +39,26 @@
     <!-- Columns Definitions -->
     @for (column of columnsToDisplay(); track column.name) {
       <ng-container matColumnDef="{{ column.name }}">
-        @if (column.isSortable && column.isFilterable) {
+        @if (column.isSortable) {
           <th
             mat-header-cell
             *matHeaderCellDef
             mat-sort-header
             [appColumnResize]="column.name"
             [style.width.px]="column.width"
+            [class.filterable-header]="column.isFilterable"
             (widthChange)="setColumnWidth(column.name, $event)"
           >
             {{ column.displayName }}
-            <button
-              mat-icon-button
-              [attr.aria-label]="'Filter column ' + column.displayName"
-              type="button"
-            >
-              <mat-icon fontIcon="filter_alt" aria-hidden="true" />
-            </button>
-          </th>
-        } @else if (column.isSortable) {
-          <th
-            mat-header-cell
-            *matHeaderCellDef
-            mat-sort-header
-            [appColumnResize]="column.name"
-            [style.width.px]="column.width"
-            (widthChange)="setColumnWidth(column.name, $event)"
-          >
-            {{ column.displayName }}
-          </th>
-        } @else if (column.isFilterable) {
-          <th
-            mat-header-cell
-            *matHeaderCellDef
-            [appColumnResize]="column.name"
-            [style.width.px]="column.width"
-            (widthChange)="setColumnWidth(column.name, $event)"
-          >
-            {{ column.displayName }}
-            <button
-              mat-icon-button
-              [attr.aria-label]="'Filter column ' + column.displayName"
-              type="button"
-            >
-              <mat-icon fontIcon="filter_alt" aria-hidden="true" />
-            </button>
+            @if (column.isFilterable) {
+              <app-column-filter
+                appHeaderCellAction
+                [column]="column"
+                [options]="columnFilterOptions(column.name)"
+                [selectedValues]="columnFilterValues(column.name)"
+                (selectedValuesChange)="setColumnFilter(column.name, $event)"
+              />
+            }
           </th>
         } @else {
           <th
@@ -91,9 +66,19 @@
             *matHeaderCellDef
             [appColumnResize]="column.name"
             [style.width.px]="column.width"
+            [class.filterable-header]="column.isFilterable"
             (widthChange)="setColumnWidth(column.name, $event)"
           >
             {{ column.displayName }}
+            @if (column.isFilterable) {
+              <app-column-filter
+                appHeaderCellAction
+                [column]="column"
+                [options]="columnFilterOptions(column.name)"
+                [selectedValues]="columnFilterValues(column.name)"
+                (selectedValuesChange)="setColumnFilter(column.name, $event)"
+              />
+            }
           </th>
         }
         @if (column.name === 'source' || column.name === 'bohr_model_3d') {

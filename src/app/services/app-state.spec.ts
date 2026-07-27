@@ -119,6 +119,7 @@ describe('AppState', () => {
         name: 'unknown',
         displayName: 'Unknown',
         isSortable: false,
+        isFilterable: false,
         width: 100,
       };
 

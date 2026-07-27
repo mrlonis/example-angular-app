@@ -1,7 +1,7 @@
 import { Component, model } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { FilterState } from '../../../interfaces/filter-state';
+import { NameFilter } from '../../../interfaces/filter-state';
 
 @Component({
   selector: 'app-filter',
@@ -10,7 +10,7 @@ import { FilterState } from '../../../interfaces/filter-state';
   styleUrl: './filter.scss',
 })
 export class Filter {
-  readonly value = model<FilterState>({ name: '' });
+  readonly value = model<NameFilter>({ name: '' });
 
   setValue(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

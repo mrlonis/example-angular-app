@@ -9,16 +9,23 @@ describe('ColumnSelect', () => {
   let fixture: ComponentFixture<ColumnSelect>;
 
   const mockColumns: ColumnDefinition[] = [
-    { name: 'name', displayName: 'Name', isSortable: true, width: 150 },
-    { name: 'atomic_mass', displayName: 'Atomic Mass', isSortable: true, width: 150 },
-    { name: 'symbol', displayName: 'Symbol', isSortable: true, width: 150 },
-    { name: 'number', displayName: 'Number', isSortable: true, width: 150 },
+    { name: 'name', displayName: 'Name', isSortable: true, isFilterable: true, width: 150 },
+    {
+      name: 'atomic_mass',
+      displayName: 'Atomic Mass',
+      isSortable: true,
+      isFilterable: false,
+      width: 150,
+    },
+    { name: 'symbol', displayName: 'Symbol', isSortable: true, isFilterable: false, width: 150 },
+    { name: 'number', displayName: 'Number', isSortable: true, isFilterable: false, width: 150 },
   ];
   const [nameColumn, atomicMassColumn, symbolColumn, numberColumn] = mockColumns;
   const sourceColumn: ColumnDefinition = {
     name: 'source',
     displayName: 'Source',
     isSortable: false,
+    isFilterable: false,
     width: 150,
   };
 

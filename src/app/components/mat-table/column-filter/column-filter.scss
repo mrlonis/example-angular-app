@@ -1,0 +1,22 @@
+.column-filter-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 260px;
+  padding: 10px;
+  margin: 0;
+}
+
+.column-filter-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-bottom: 0;
+}
+
+.column-filter-field {
+  width: 100%;
+}
+
+.column-filter-trigger-active {
+  color: var(--mat-sys-primary, #3f51b5);
+}

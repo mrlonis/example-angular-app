@@ -15,8 +15,9 @@ import {
   SPECTRAL_IMG_COLUMN,
   SYMBOL_COLUMN,
 } from '../../interfaces/columns';
-import { FilterState } from '../../interfaces/filter-state';
+import { FilterState, EMPTY_FILTER_STATE, NameFilter } from '../../interfaces/filter-state';
 import { LocalStorage } from '../../services/local-storage';
+import { ColumnFilter } from './column-filter/column-filter';
 import { ColumnSelect } from './column-select/column-select';
 import { MatTable } from './mat-table';
 
@@ -218,18 +219,18 @@ describe('MatTable', () => {
 
   describe('Filtering', () => {
     it('initializes dataSource filter to an empty serialized filter state', () => {
-      expect(component.dataSource.filter).toBe(JSON.stringify({ name: '' }));
+      expect(component.dataSource.filter).toBe(JSON.stringify(EMPTY_FILTER_STATE));
     });
 
     it('applies serialized filter state to dataSource', () => {
-      const filterState: FilterState = { name: 'helium' };
+      const filterState: FilterState = { name: 'helium', columnValues: {} };
       component.applyFilter(filterState);
       expect(component.dataSource.filter).toBe(JSON.stringify(filterState));
     });
 
     it('applies filter without pagination if paginator is absent', () => {
       component.dataSource.paginator = null;
-      const filterState: FilterState = { name: 'hydrogen' };
+      const filterState: FilterState = { name: 'hydrogen', columnValues: {} };
       component.applyFilter(filterState);
       expect(component.dataSource.filter).toBe(JSON.stringify(filterState));
     });
@@ -242,32 +243,44 @@ describe('MatTable', () => {
       }
       const firstPageSpy = vi.spyOn(paginator, 'firstPage');
 
-      component.applyFilter({ name: 'h' });
+      component.applyFilter({ name: 'h', columnValues: {} });
 
       expect(firstPageSpy).toHaveBeenCalledTimes(1);
     });
 
     it('handles empty filter string', () => {
-      component.applyFilter({ name: '' });
-      expect(component.dataSource.filter).toBe(JSON.stringify({ name: '' }));
+      component.applyFilter(EMPTY_FILTER_STATE);
+      expect(component.dataSource.filter).toBe(JSON.stringify(EMPTY_FILTER_STATE));
     });
 
     it('handles filter with special characters', () => {
-      component.applyFilter({ name: 'au*' });
-      expect(component.dataSource.filter).toBe(JSON.stringify({ name: 'au*' }));
+      component.applyFilter({ name: 'au*', columnValues: {} });
+      expect(component.dataSource.filter).toBe(
+        JSON.stringify({ name: 'au*', columnValues: {} } satisfies FilterState),
+      );
     });
 
     it('handles filter with numbers', () => {
-      component.applyFilter({ name: '79' });
-      expect(component.dataSource.filter).toBe(JSON.stringify({ name: '79' }));
+      component.applyFilter({ name: '79', columnValues: {} });
+      expect(component.dataSource.filter).toBe(
+        JSON.stringify({ name: '79', columnValues: {} } satisfies FilterState),
+      );
     });
 
     it('filters names using case-insensitive startsWith predicate', () => {
-      component.applyFilter({ name: 'heL' });
+      component.applyFilter({ name: 'heL', columnValues: {} });
       const filteredNames = component.dataSource.filteredData.map(({ name }) => name);
 
       expect(filteredNames.length).toBeGreaterThan(0);
       expect(filteredNames.every((name) => name.toLowerCase().startsWith('hel'))).toBeTruthy();
+    });
+
+    it('keeps the column filters when the search box reports a new name', () => {
+      component.setColumnFilter('phase', ['Gas']);
+
+      component.applyNameFilter({ name: 'he' });
+
+      expect(component.filterState()).toEqual({ name: 'he', columnValues: { phase: ['Gas'] } });
     });
 
     it('falls back to empty filter state when filter string is empty', () => {
@@ -285,7 +298,7 @@ describe('MatTable', () => {
     it('caches parsed filter state for repeated predicate evaluations with same filter', () => {
       const parseSpy = vi.spyOn(JSON, 'parse');
       const element = component.dataSource.data[0];
-      const filter = JSON.stringify({ name: 'he' });
+      const filter = JSON.stringify({ name: 'he', columnValues: {} } satisfies FilterState);
 
       component.dataSource.filterPredicate(element, filter);
       component.dataSource.filterPredicate(element, filter);
@@ -293,6 +306,115 @@ describe('MatTable', () => {
 
       expect(parseSpy).toHaveBeenCalledTimes(1);
       parseSpy.mockRestore();
+    });
+  });
+
+  describe('Column Value Filtering', () => {
+    it('offers every distinct value of a column in alphabetical order', () => {
+      const options = component.columnFilterOptions('phase');
+
+      expect(options).toEqual([...new Set(options)]);
+      expect(options).toEqual([...options].sort((a, b) => a.localeCompare(b)));
+      expect(options).toContain('Gas');
+      expect(options).toContain('Solid');
+    });
+
+    it('reuses the same option array for repeated reads of a column', () => {
+      expect(component.columnFilterOptions('phase')).toBe(component.columnFilterOptions('phase'));
+    });
+
+    it('leaves out blank values from the offered options', () => {
+      expect(component.columnFilterOptions('appearance')).not.toContain('');
+    });
+
+    it('reports no selected values for a column that is not filtered', () => {
+      expect(component.columnFilterValues('phase')).toEqual([]);
+    });
+
+    it('reuses the same empty array for every unfiltered column', () => {
+      expect(component.columnFilterValues('phase')).toBe(component.columnFilterValues('category'));
+    });
+
+    it('keeps only the rows matching the selected values of a column', () => {
+      component.setColumnFilter('phase', ['Gas']);
+
+      const phases = new Set(component.dataSource.filteredData.map((element) => element.phase));
+      expect(component.dataSource.filteredData.length).toBeGreaterThan(0);
+      expect([...phases]).toEqual(['Gas']);
+    });
+
+    it('keeps the rows matching any of the selected values of a column', () => {
+      component.setColumnFilter('phase', ['Gas', 'Liquid']);
+
+      const phases = new Set(component.dataSource.filteredData.map((element) => element.phase));
+      expect([...phases].sort()).toEqual(['Gas', 'Liquid']);
+    });
+
+    it('combines filters on different columns', () => {
+      component.setColumnFilter('phase', ['Solid']);
+      component.setColumnFilter('block', ['s']);
+
+      expect(component.dataSource.filteredData.length).toBeGreaterThan(0);
+      expect(
+        component.dataSource.filteredData.every(
+          (element) => element.phase === 'Solid' && element.block === 's',
+        ),
+      ).toBeTruthy();
+    });
+
+    it('combines a column filter with the free text search', () => {
+      component.applyNameFilter({ name: 'he' });
+      component.setColumnFilter('phase', ['Gas']);
+
+      expect(
+        component.dataSource.filteredData.every(
+          (element) => element.name.toLowerCase().startsWith('he') && element.phase === 'Gas',
+        ),
+      ).toBeTruthy();
+    });
+
+    it('drops the column from the filter state when the selection is emptied', () => {
+      component.setColumnFilter('phase', ['Gas']);
+      expect(component.filterState().columnValues).toEqual({ phase: ['Gas'] });
+
+      component.setColumnFilter('phase', []);
+
+      expect(component.filterState().columnValues).toEqual({});
+      expect(component.dataSource.filteredData).toHaveLength(component.dataSource.data.length);
+    });
+
+    it('resets to the first page when a column filter changes', () => {
+      const paginator = component.paginator();
+      if (!paginator) {
+        throw new Error('Expected paginator to be available');
+      }
+      const firstPageSpy = vi.spyOn(paginator, 'firstPage');
+
+      component.setColumnFilter('phase', ['Gas']);
+
+      expect(firstPageSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it('ignores column selections that are not string arrays when parsing the filter', () => {
+      component.dataSource.filter = JSON.stringify({ name: '', columnValues: { phase: 'Gas' } });
+
+      expect(component.dataSource.filteredData).toHaveLength(component.dataSource.data.length);
+    });
+
+    it('ignores non-string entries inside a column selection', () => {
+      component.dataSource.filter = JSON.stringify({
+        name: '',
+        columnValues: { phase: ['Gas', 7, null] },
+      });
+
+      const phases = new Set(component.dataSource.filteredData.map((element) => element.phase));
+      expect([...phases]).toEqual(['Gas']);
+    });
+
+    it('falls back to an empty filter state when columnValues is not an object', () => {
+      component.dataSource.filter = JSON.stringify({ name: '', columnValues: 'nope' });
+
+      expect(component.dataSource.filteredData).toHaveLength(component.dataSource.data.length);
     });
   });
 
@@ -462,6 +584,81 @@ describe('MatTable', () => {
       fixture.detectChanges();
 
       expect(component.columnsToDisplay()).toEqual(newColumns);
+    });
+  });
+
+  describe('Template Integration - Column Filter', () => {
+    function columnFilterFor(column: string) {
+      return fixture.debugElement
+        .queryAll(By.directive(ColumnFilter))
+        .find((filter) => (filter.componentInstance as ColumnFilter).column().name === column);
+    }
+
+    it('renders a filter control only in headers of filterable columns', () => {
+      const filteredColumns = fixture.debugElement
+        .queryAll(By.directive(ColumnFilter))
+        .map((filter) => (filter.componentInstance as ColumnFilter).column().name);
+
+      expect(filteredColumns).toEqual(
+        DEFAULT_COLUMNS.filter((column) => column.isFilterable).map((column) => column.name),
+      );
+    });
+
+    it('marks filterable headers so their layout reserves room for the control', () => {
+      const filterableHeader = fixture.debugElement.query(By.css('th.mat-column-phase'));
+      const plainHeader = fixture.debugElement.query(By.css('th.mat-column-symbol'));
+
+      expect((filterableHeader.nativeElement as HTMLElement).classList).toContain(
+        'filterable-header',
+      );
+      expect((plainHeader.nativeElement as HTMLElement).classList).not.toContain(
+        'filterable-header',
+      );
+    });
+
+    it('places the control in the header cell rather than inside the sort button', () => {
+      const phaseFilter = columnFilterFor('phase');
+      expect(phaseFilter).toBeTruthy();
+
+      const element = phaseFilter?.nativeElement as HTMLElement;
+      expect(element.parentElement?.tagName).toBe('TH');
+      expect(element.closest('[role="button"]')).toBeNull();
+    });
+
+    it('passes the distinct column values to the control', () => {
+      const phaseFilter = columnFilterFor('phase');
+      const options = (phaseFilter?.componentInstance as ColumnFilter).options();
+
+      expect(options).toEqual(component.columnFilterOptions('phase'));
+      expect(options).toContain('Gas');
+    });
+
+    it('filters the table when the control emits a new selection', () => {
+      const phaseFilter = columnFilterFor('phase');
+
+      phaseFilter?.triggerEventHandler('selectedValuesChange', ['Gas']);
+      fixture.detectChanges();
+
+      expect(component.filterState().columnValues).toEqual({ phase: ['Gas'] });
+      expect(
+        component.dataSource.filteredData.every((element) => element.phase === 'Gas'),
+      ).toBeTruthy();
+    });
+
+    it('feeds the current selection back into the control', () => {
+      component.setColumnFilter('phase', ['Liquid']);
+      fixture.detectChanges();
+
+      expect(
+        (columnFilterFor('phase')?.componentInstance as ColumnFilter).selectedValues(),
+      ).toEqual(['Liquid']);
+    });
+
+    it('drops the control when its column stops being displayed', () => {
+      component.setColumnsToDisplay([SYMBOL_COLUMN]);
+      fixture.detectChanges();
+
+      expect(fixture.debugElement.queryAll(By.directive(ColumnFilter))).toHaveLength(0);
     });
   });
 
@@ -677,13 +874,13 @@ describe('MatTable', () => {
       expect(filter).toBeTruthy();
     });
 
-    it('calls applyFilter when app-filter emits valueChange', () => {
+    it('calls applyNameFilter when app-filter emits valueChange', () => {
       const filter = fixture.debugElement.query(By.css('app-filter'));
-      const spy = vi.spyOn(component, 'applyFilter');
-      const filterState: FilterState = { name: 'test' };
+      const spy = vi.spyOn(component, 'applyNameFilter');
+      const nameFilter: NameFilter = { name: 'test' };
 
-      filter.triggerEventHandler('valueChange', filterState);
-      expect(spy).toHaveBeenCalledWith(filterState);
+      filter.triggerEventHandler('valueChange', nameFilter);
+      expect(spy).toHaveBeenCalledWith(nameFilter);
     });
   });
 
@@ -784,7 +981,7 @@ describe('MatTable', () => {
 
     it('handles filtering with special characters in search', () => {
       expect(() => {
-        component.applyFilter({ name: '!@#$%' });
+        component.applyFilter({ name: '!@#$%', columnValues: {} });
       }).not.toThrow();
     });
 
