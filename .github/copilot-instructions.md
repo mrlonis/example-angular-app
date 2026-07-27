@@ -2,24 +2,36 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 
 ## Project Overview
 
-Single-page Angular v22 demo app. Angular Material + CDK v22, TypeScript 6 (strict), npm (Node version pinned in `.nvmrc`). Two lazy-loaded routes defined in `src/app/app.routes.ts`; providers in `src/app/app.config.ts`; root component `src/app/app.ts` renders `<router-outlet />`.
+Single-page Angular v22 demo app. Angular Material + CDK v22, TypeScript 6 (strict), npm (Node version pinned in `.nvmrc`). Routes are defined in `src/app/app.routes.ts`; providers in `src/app/app.config.ts`; root component `src/app/app.ts` renders `<router-outlet />`.
 
-- `''` → `MatTabs` (`pages/mat-tabs`): tabs hosting `MatTable` (periodic-elements Material table: sort, filter, paginate, expandable rows, resizable columns, column picker) and `ExampleIframe` (`iframe-resizer` demo). The displayed columns and their widths live in the `AppState` service and are persisted to local storage through the `LocalStorage` service, so they survive a reload.
-- `'toolbar'` → `MatToolbar` (`pages/mat-toolbar`): toolbar with a `mat-drawer` sidenav.
+`Shell` (`layouts/shell`) is the parent route. It owns the app bar — including the settings menu that picks the navigation layout — and renders the chosen layout around a nested `<router-outlet />`:
+
+- `TabsLayout` (`layouts/tabs-layout`): `mat-tab-nav-bar` links above a `mat-tab-nav-panel`.
+- `ToolbarLayout` (`layouts/toolbar-layout`): `mat-drawer` sidenav beside the page.
+
+The navigation layout is a user setting, not a route. It lives in the `Settings` service and is persisted to local storage, so a reload keeps the chrome the user picked.
+
+Child routes (the actual pages):
+
+- `'mat-table'` → `MatTable` (`pages/mat-table`): periodic-elements Material table with sort, filter, paginate, expandable rows, resizable columns and a column picker. The displayed columns and their widths live in the `AppState` service and are persisted to local storage through the `LocalStorage` service, so they survive a reload.
+- `'iframe-resizer'` → `IframeResizer` (`pages/iframe-resizer`): `iframe-resizer` demo.
+- `''` redirects to `'mat-table'`, and unknown paths fall back to it.
 
 ## Repository Map
 
+- `src/app/layouts/<name>/` — the app shell and the navigation layouts it can render.
 - `src/app/pages/<name>/` — route-level ("page") components loaded lazily from `app.routes.ts`.
 - `src/app/components/<name>/` — reusable components used across pages. Components are standalone, laid out as `<name>.{ts,html,scss,spec.ts}`.
-- `src/app/services/` — signal-based singletons (`app-state`, `local-storage`, `url-cache`), declared with `@Service()`.
-- `src/app/directives/` — `column-resize` and `iframe-resizer` attribute directives (`[appColumnResize]`, `[appIframeResizer]`).
-- `src/app/interfaces/` — types plus shared data such as the periodic-element data (`data.ts`) and the table column definitions (`columns.ts`).
+- `src/app/services/` — signal-based singletons (`app-state`, `local-storage`, `settings`, `url-cache`), declared with `@Service()`.
+- `src/app/directives/` — `column-resize`, `header-cell-action` and `iframe-resizer` attribute directives (`[appColumnResize]`, `[appHeaderCellAction]`, `[appIframeResizer]`).
+- `src/app/interfaces/` — types plus shared data such as the periodic-element data (`data.ts`), the table column definitions (`columns.ts`) and the navigation links and layouts (`navigation.ts`).
 - `tests/` — Playwright end-to-end specs and config.
 - `scripts/sync-agent-instructions.ts` — syncs `AGENTS.md` to all other AI instruction files.
 
 ## Conventions
 
-- Put route-level components (one per route) in `src/app/pages/`; put components reused across pages in `src/app/components/`.
+- Put route-level components (one per route) in `src/app/pages/`; put components reused across pages in `src/app/components/`; put the shell and navigation layouts in `src/app/layouts/`.
+- Add a page by extending `NAVIGATION_LINKS` in `src/app/interfaces/navigation.ts` and adding the matching child route — both layouts render their links from that list.
 - File names have no `.component`/`.service`/`.directive` suffix (Angular v20+ style): e.g. `mat-table.ts`, `url-cache.ts`.
 - New components default to SCSS and external templates/styles.
 - The generated instruction files (`.claude/CLAUDE.md`, `.gemini/GEMINI.md`, etc.) are copies of `AGENTS.md` — to change guidance, edit `AGENTS.md` and re-sync (see below), never edit the copies.

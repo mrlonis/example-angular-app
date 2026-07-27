@@ -1,0 +1,55 @@
+<mat-toolbar>
+  @if (navigationLayout() === 'toolbar') {
+    <button
+      mat-icon-button
+      [attr.aria-label]="drawerOpened() ? 'Close menu' : 'Open menu'"
+      [attr.aria-expanded]="drawerOpened()"
+      aria-controls="app-drawer"
+      (click)="toggleDrawer()"
+    >
+      <mat-icon fontIcon="menu" aria-hidden="true" />
+    </button>
+  }
+  <span>My App</span>
+  <span class="display-flex flex-auto"></span>
+  <button mat-icon-button aria-label="Favorite">
+    <mat-icon fontIcon="favorite" aria-hidden="true" />
+  </button>
+  <button mat-icon-button aria-label="Share">
+    <mat-icon fontIcon="share" aria-hidden="true" />
+  </button>
+  <button
+    mat-icon-button
+    aria-label="Settings"
+    data-testid="settings-trigger"
+    [matMenuTriggerFor]="settingsMenu"
+  >
+    <mat-icon fontIcon="settings" aria-hidden="true" />
+  </button>
+</mat-toolbar>
+
+<mat-menu #settingsMenu="matMenu" aria-label="Navigation layout">
+  @for (option of layoutOptions; track option.layout) {
+    <button
+      mat-menu-item
+      role="menuitemradio"
+      [attr.aria-checked]="navigationLayout() === option.layout"
+      [attr.data-testid]="'navigation-layout-' + option.layout"
+      (click)="selectNavigationLayout(option.layout)"
+    >
+      <mat-icon [fontIcon]="option.icon" aria-hidden="true" />
+      <span class="settings-menu-option">
+        <span>{{ option.label }}</span>
+        @if (navigationLayout() === option.layout) {
+          <mat-icon fontIcon="check" aria-hidden="true" />
+        }
+      </span>
+    </button>
+  }
+</mat-menu>
+
+@if (navigationLayout() === 'tabs') {
+  <app-tabs-layout />
+} @else {
+  <app-toolbar-layout />
+}

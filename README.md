@@ -26,12 +26,19 @@ A reference Angular v22 application that demonstrates modern Angular patterns �
 
 ## Features
 
-The app exposes two lazy-loaded routes:
+The app exposes two lazy-loaded pages behind a shared shell:
 
-- **`/` — Tabbed layout** ([`MatTabs`](src/app/pages/mat-tabs/mat-tabs.ts))
-  - **Mat Table** ([`MatTable`](src/app/components/mat-table/mat-table.ts)): an Angular Material data table of the periodic elements with client-side sorting, text filtering, pagination, expandable rows, and a multi-select control to choose which columns are displayed.
-  - **iframe-resizer** ([`ExampleIframe`](src/app/components/example-iframe/example-iframe.ts)): demonstrates the [`IFrameResizer`](src/app/directives/iframe-resizer.ts) directive, which auto-sizes an embedded `<iframe>` to its content using the [`iframe-resizer`](https://github.com/davidjbradshaw/iframe-resizer) library. URLs are sanitized and memoized through the [`UrlCache`](src/app/services/url-cache.ts) service.
-- **`/toolbar` — Toolbar + side drawer** ([`MatToolbar`](src/app/pages/mat-toolbar/mat-toolbar.ts)): a Material toolbar with a collapsible `mat-drawer` navigation, backed by the [`SelectedPage`](src/app/services/selected-page.ts) signal service.
+- **`/mat-table`** ([`MatTable`](src/app/pages/mat-table/mat-table.ts)): an Angular Material data table of the periodic elements with client-side sorting, text filtering, per-column filters, pagination, expandable rows, resizable columns, and a multi-select control to choose which columns are displayed. The chosen columns and their widths are persisted through the [`AppState`](src/app/services/app-state.ts) service.
+- **`/iframe-resizer`** ([`IframeResizer`](src/app/pages/iframe-resizer/iframe-resizer.ts)): demonstrates the [`IFrameResizer`](src/app/directives/iframe-resizer.ts) directive, which auto-sizes an embedded `<iframe>` to its content using the [`iframe-resizer`](https://github.com/davidjbradshaw/iframe-resizer) library. URLs are sanitized and memoized through the [`UrlCache`](src/app/services/url-cache.ts) service.
+
+`/` redirects to `/mat-table`, and unknown paths fall back to it.
+
+### Switchable navigation
+
+How you move between those pages is a **user setting rather than a route**. [`Shell`](src/app/layouts/shell/shell.ts) renders a persistent app bar whose settings menu picks the navigation layout, and the choice is saved to local storage by the [`Settings`](src/app/services/settings.ts) service, so it survives a reload:
+
+- **Tabs** ([`TabsLayout`](src/app/layouts/tabs-layout/tabs-layout.ts)): a `mat-tab-nav-bar` of routed tab links above a `mat-tab-nav-panel`.
+- **Side navigation** ([`ToolbarLayout`](src/app/layouts/toolbar-layout/toolbar-layout.ts)): a collapsible `mat-drawer` of routed links beside the page, toggled from the app bar.
 
 ## Tech Stack
 
@@ -50,11 +57,12 @@ The app exposes two lazy-loaded routes:
 ```text
 src/
 ├── app/
-│   ├── pages/               # Route-level components (mat-tabs, mat-toolbar)
-│   ├── components/          # Reusable components (mat-table, example-iframe)
-│   ├── directives/          # iframe-resizer attribute directive
-│   ├── interfaces/          # Type definitions and periodic element data
-│   ├── services/            # Signal-based singleton services (selected-page, url-cache)
+│   ├── layouts/             # App shell and the navigation layouts it can render
+│   ├── pages/               # Route-level components (mat-table, iframe-resizer)
+│   ├── components/          # Reusable components (column-filter, column-select, filter, ...)
+│   ├── directives/          # column-resize, header-cell-action, iframe-resizer directives
+│   ├── interfaces/          # Type definitions, navigation links, periodic element data
+│   ├── services/            # Signal-based singleton services (app-state, settings, url-cache)
 │   ├── app.config.ts        # Application providers (router, error listeners)
 │   ├── app.routes.ts        # Lazy-loaded route definitions
 │   └── app.ts               # Root component (<router-outlet />)

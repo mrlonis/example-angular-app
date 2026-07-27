@@ -1,0 +1,30 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-height: 100vh;
+}
+
+mat-toolbar {
+  flex: none;
+}
+
+// `mat-menu-item` lays its text out as a single block, so the label and the checkmark that marks
+// the active layout need their own flex row to sit at opposite ends of the item.
+.settings-menu-option {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+// Both layouts fill whatever is left below the app bar. `min-height: 0` keeps a long table from
+// pushing the shell past the viewport instead of scrolling inside its own pane.
+app-tabs-layout,
+app-toolbar-layout {
+  display: flex;
+  flex: auto;
+  flex-direction: column;
+  min-height: 0;
+}

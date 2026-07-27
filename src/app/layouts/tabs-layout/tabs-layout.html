@@ -1,0 +1,18 @@
+<nav mat-tab-nav-bar [tabPanel]="tabPanel" aria-label="Pages">
+  @for (link of links; track link.path) {
+    <a
+      mat-tab-link
+      routerLinkActive
+      #linkActive="routerLinkActive"
+      [routerLink]="link.path"
+      [active]="linkActive.isActive"
+    >
+      {{ link.label }}
+    </a>
+  }
+</nav>
+<mat-tab-nav-panel #tabPanel>
+  <main>
+    <router-outlet />
+  </main>
+</mat-tab-nav-panel>

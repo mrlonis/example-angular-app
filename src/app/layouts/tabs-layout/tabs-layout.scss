@@ -1,0 +1,27 @@
+:host {
+  display: flex;
+  flex: auto;
+  flex-direction: column;
+  min-height: 0;
+}
+
+nav {
+  flex: none;
+}
+
+// The panel is the scroll container for the routed page, so the tab bar stays put while a long
+// table scrolls underneath it.
+mat-tab-nav-panel {
+  display: flex;
+  flex: auto;
+  flex-direction: column;
+  min-height: 0;
+  overflow: auto;
+}
+
+main {
+  display: flex;
+  flex: auto;
+  flex-direction: column;
+  min-height: 0;
+}

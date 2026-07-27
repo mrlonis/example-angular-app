@@ -1,0 +1,32 @@
+:host {
+  display: flex;
+  flex: auto;
+  flex-direction: column;
+  min-height: 0;
+}
+
+mat-drawer-container {
+  display: flex;
+  flex: auto;
+  min-height: 150px;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+nav a {
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+}
+
+// The tab layout marks the current page with an ink bar, so the drawer needs an equivalent that
+// does not rely on colour alone being noticed: the link also carries `aria-current="page"`.
+nav a.active-link {
+  background-color: var(--mat-sys-secondary-container, #dbe2f9);
+  color: var(--mat-sys-on-secondary-container, #131c2b);
+  font-weight: 500;
+}

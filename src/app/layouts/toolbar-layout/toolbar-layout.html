@@ -1,0 +1,24 @@
+<mat-drawer-container>
+  <mat-drawer #drawer id="app-drawer">
+    <nav aria-label="Pages">
+      @for (link of links; track link.path) {
+        <a
+          mat-button
+          routerLinkActive
+          #linkActive="routerLinkActive"
+          [routerLink]="link.path"
+          [class.active-link]="linkActive.isActive"
+          [attr.aria-current]="linkActive.isActive ? 'page' : null"
+          (click)="closeDrawer()"
+        >
+          <mat-icon [fontIcon]="link.icon" aria-hidden="true" />
+          {{ link.label }}
+        </a>
+        <mat-divider />
+      }
+    </nav>
+  </mat-drawer>
+  <main>
+    <router-outlet />
+  </main>
+</mat-drawer-container>

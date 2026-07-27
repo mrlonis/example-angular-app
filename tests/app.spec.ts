@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { useNavigationLayout } from './navigation-layout';
 
 test.describe('App', () => {
   test('shows the application title in the document title', async ({ page }) => {
@@ -9,32 +10,43 @@ test.describe('App', () => {
 });
 
 test.describe('App shell and routing', () => {
-  test.beforeEach(async ({ page }) => {
+  test('redirects the default route to the mat table page', async ({ page }) => {
     await page.goto('/');
-  });
 
-  test('loads the tab layout and mat table content on the default route', async ({ page }) => {
-    await expect(page.locator('[role="tab"]', { hasText: 'Mat Table' })).toBeVisible();
-    await expect(page.locator('[role="tab"]', { hasText: 'iframe-resizer' })).toBeVisible();
+    await expect(page).toHaveURL(/\/mat-table$/);
     await expect(
       page.locator('tr.mat-mdc-row.example-element-row').first().locator('td.mat-column-name'),
     ).toContainText('Hydrogen');
   });
 
-  test('loads the toolbar route directly', async ({ page }) => {
-    await page.goto('/toolbar');
+  test('keeps the app bar above every layout', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.locator('mat-toolbar')).toContainText('My App');
 
-    await expect(page.locator('app-mat-toolbar')).toBeAttached();
+    await page.goto('/iframe-resizer');
     await expect(page.locator('mat-toolbar')).toContainText('My App');
   });
 
-  test('opens the side drawer from the toolbar menu button', async ({ page }) => {
+  test('loads the iframe resizer page directly', async ({ page }) => {
+    await page.goto('/iframe-resizer');
+
+    await expect(page.locator('app-iframe-resizer')).toBeAttached();
+    await expect(page.locator('iframe[appiframeresizer]')).toBeVisible();
+  });
+
+  test('sends the retired toolbar route to the mat table page', async ({ page }) => {
     await page.goto('/toolbar');
 
-    await expect(page.locator('mat-drawer')).not.toHaveClass(/mat-drawer-opened/);
-    await page.locator('mat-toolbar button').first().click();
-    await expect(page.locator('mat-drawer')).toHaveClass(/mat-drawer-opened/);
-    await expect(page.locator('mat-drawer')).toContainText('Mat Table');
-    await expect(page.locator('mat-drawer')).toContainText('iframe-resizer');
+    await expect(page).toHaveURL(/\/mat-table$/);
+    await expect(page.locator('app-mat-table')).toBeAttached();
+  });
+
+  test('serves the same pages through the drawer layout', async ({ page }) => {
+    await useNavigationLayout(page, 'toolbar');
+    await page.goto('/');
+
+    await expect(page).toHaveURL(/\/mat-table$/);
+    await expect(page.locator('app-toolbar-layout')).toBeAttached();
+    await expect(page.locator('app-mat-table')).toBeAttached();
   });
 });
