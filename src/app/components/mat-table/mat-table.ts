@@ -260,8 +260,10 @@ export class MatTable {
 
     for (const [column, values] of Object.entries(value)) {
       if (Array.isArray(values)) {
+        // Blank values are never offered as filter options, so accepting them here would build a
+        // filter state the UI cannot reproduce and that hides every row with a populated cell.
         const stringValues = (values as unknown[]).filter(
-          (entry): entry is string => typeof entry === 'string',
+          (entry): entry is string => typeof entry === 'string' && entry !== '',
         );
 
         if (stringValues.length > 0) {

@@ -90,6 +90,10 @@ describe('ColumnFilter', () => {
       expect(trigger().getAttribute('data-testid')).toBe('column-filter-trigger-phase');
     });
 
+    it('announces that the trigger opens a dialog', () => {
+      expect(trigger().getAttribute('aria-haspopup')).toBe('dialog');
+    });
+
     it('reports the number of selected values in the trigger label', () => {
       fixture.componentRef.setInput('selectedValues', ['Gas', 'Solid']);
       fixture.detectChanges();
@@ -138,6 +142,24 @@ describe('ColumnFilter', () => {
       openOverlay();
 
       expect(overlayContainerElement.querySelector('mat-label')?.textContent?.trim()).toBe('Phase');
+    });
+
+    it('exposes the card as a labelled modal dialog', () => {
+      openOverlay();
+
+      const card = overlayContainerElement.querySelector('mat-card.column-filter-card');
+
+      expect(card?.getAttribute('role')).toBe('dialog');
+      expect(card?.getAttribute('aria-modal')).toBe('true');
+      expect(card?.getAttribute('aria-label')).toBe('Filter Phase column');
+    });
+
+    it('keeps the dialog label free of the selection count carried by the trigger', () => {
+      fixture.componentRef.setInput('selectedValues', ['Gas']);
+      openOverlay();
+
+      expect(component.dialogLabel()).toBe('Filter Phase column');
+      expect(component.triggerLabel()).toBe('Filter Phase column, 1 selected');
     });
 
     it('shows the current selection in the select', () => {

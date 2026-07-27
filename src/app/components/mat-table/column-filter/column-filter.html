@@ -6,7 +6,7 @@
   [attr.aria-label]="triggerLabel()"
   [attr.aria-expanded]="isOpen()"
   [attr.data-testid]="'column-filter-trigger-' + column().name"
-  aria-haspopup="true"
+  aria-haspopup="dialog"
   (click)="toggle()"
   cdkOverlayOrigin
   #origin="cdkOverlayOrigin"
@@ -24,6 +24,9 @@
   <mat-card
     class="column-filter-card"
     appearance="outlined"
+    role="dialog"
+    aria-modal="true"
+    [attr.aria-label]="dialogLabel()"
     cdkTrapFocus
     [cdkTrapFocusAutoCapture]="true"
     (keydown.escape)="close()"

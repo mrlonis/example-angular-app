@@ -33,13 +33,13 @@ export class ColumnFilter {
 
   readonly isOpen = signal(false);
   readonly hasSelection = computed(() => this.selectedValues().length > 0);
+  readonly dialogLabel = computed(() => `Filter ${this.column().displayName} column`);
   readonly triggerLabel = computed(() => {
-    const displayName = this.column().displayName;
     const selectedCount = this.selectedValues().length;
 
     return selectedCount === 0
-      ? `Filter ${displayName} column`
-      : `Filter ${displayName} column, ${selectedCount} selected`;
+      ? this.dialogLabel()
+      : `${this.dialogLabel()}, ${selectedCount} selected`;
   });
 
   toggle(): void {

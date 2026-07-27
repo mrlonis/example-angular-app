@@ -292,4 +292,22 @@ test.describe('Mat table tab', () => {
     await expect(phaseHeader).toHaveAttribute('aria-sort', 'ascending');
     await expect(getColumnFilterTrigger(page, 'phase')).toBeVisible();
   });
+
+  test('exposes the column filter as a labelled modal dialog', async ({ page }) => {
+    const trigger = getColumnFilterTrigger(page, 'phase');
+    await expect(trigger).toHaveAttribute('aria-haspopup', 'dialog');
+    await expect(trigger).toHaveAttribute('aria-expanded', 'false');
+
+    await trigger.click();
+
+    const dialog = page.getByRole('dialog', { name: 'Filter Phase column' });
+    await expect(dialog).toBeVisible();
+    await expect(dialog).toHaveAttribute('aria-modal', 'true');
+    await expect(trigger).toHaveAttribute('aria-expanded', 'true');
+
+    // `aria-modal` marks everything outside the dialog inert for assistive tech, so the select
+    // options have to stay within the dialog subtree to remain reachable.
+    await page.locator('.column-filter-card mat-select').click();
+    await expect(dialog.getByRole('option')).toHaveText(['Gas', 'Liquid', 'Solid']);
+  });
 });

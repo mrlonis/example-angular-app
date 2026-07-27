@@ -411,6 +411,22 @@ describe('MatTable', () => {
       expect([...phases]).toEqual(['Gas']);
     });
 
+    it('ignores blank entries inside a column selection', () => {
+      component.dataSource.filter = JSON.stringify({
+        name: '',
+        columnValues: { phase: ['Gas', ''] },
+      });
+
+      const phases = new Set(component.dataSource.filteredData.map((element) => element.phase));
+      expect([...phases]).toEqual(['Gas']);
+    });
+
+    it('drops a column whose selection holds nothing but blank entries', () => {
+      component.dataSource.filter = JSON.stringify({ name: '', columnValues: { phase: ['', ''] } });
+
+      expect(component.dataSource.filteredData).toHaveLength(component.dataSource.data.length);
+    });
+
     it('falls back to an empty filter state when columnValues is not an object', () => {
       component.dataSource.filter = JSON.stringify({ name: '', columnValues: 'nope' });
 
