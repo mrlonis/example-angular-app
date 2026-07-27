@@ -16,13 +16,15 @@ module.exports = defineConfig([
     '.angular/',
     '.codacy/',
     '.github/instructions/',
+    '.husky/',
+    '.idea/',
     'coverage/',
     'dist/',
+    'node_modules/',
     'playwright-report/',
     'test-results/',
     'package-lock.json',
-    // Generated agent instruction files (source of truth: agent-instructions/source.md)
-    'AGENTS.md',
+    // Generated agent instruction files (source of truth: AGENTS.md)
     '.claude/CLAUDE.md',
     '.gemini/GEMINI.md',
     '.github/copilot-instructions.md',

@@ -1,0 +1,53 @@
+<button
+  mat-icon-button
+  type="button"
+  class="column-filter-trigger"
+  [class.column-filter-trigger-active]="hasSelection()"
+  [attr.aria-label]="triggerLabel()"
+  [attr.aria-expanded]="isOpen()"
+  [attr.data-testid]="'column-filter-trigger-' + column().name"
+  aria-haspopup="dialog"
+  (click)="toggle()"
+  cdkOverlayOrigin
+  #origin="cdkOverlayOrigin"
+>
+  <mat-icon fontIcon="filter_alt" aria-hidden="true" />
+</button>
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="origin"
+  [cdkConnectedOverlayOpen]="isOpen()"
+  [cdkConnectedOverlayHasBackdrop]="true"
+  (backdropClick)="close()"
+  (detach)="close()"
+>
+  <mat-card
+    class="column-filter-card"
+    appearance="outlined"
+    role="dialog"
+    aria-modal="true"
+    [attr.aria-label]="dialogLabel()"
+    cdkTrapFocus
+    [cdkTrapFocusAutoCapture]="true"
+    (keydown.escape)="close()"
+  >
+    <mat-card-content class="column-filter-content">
+      <mat-form-field class="column-filter-field">
+        <mat-label>{{ column().displayName }}</mat-label>
+        <mat-select
+          multiple
+          [value]="selectedValues()"
+          [attr.data-testid]="'column-filter-select-' + column().name"
+          (valueChange)="selectedValues.set($event)"
+        >
+          @for (option of options(); track option) {
+            <mat-option [value]="option">{{ option }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <button mat-button type="button" [disabled]="!hasSelection()" (click)="clear()">
+        Clear filter
+      </button>
+    </mat-card-content>
+  </mat-card>
+</ng-template>

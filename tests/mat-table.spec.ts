@@ -18,6 +18,28 @@ function getExpandButton(page: Page, index: number) {
   );
 }
 
+function getColumnFilterTrigger(page: Page, column: string) {
+  return page.locator(`th.mat-column-${column} [data-testid="column-filter-trigger-${column}"]`);
+}
+
+/** Ticks an option in the open column filter's multiple select. */
+async function selectFilterOption(page: Page, option: string) {
+  const select = page.locator('.column-filter-card mat-select');
+
+  if ((await select.getAttribute('aria-expanded')) !== 'true') {
+    await select.click();
+  }
+
+  await page.getByRole('option', { name: option, exact: true }).click();
+}
+
+/** Escape closes the select panel first, so the overlay needs a second press to go away. */
+async function closeOverlays(page: Page) {
+  await page.keyboard.press('Escape');
+  await page.keyboard.press('Escape');
+  await expect(page.locator('.column-filter-card')).not.toBeAttached();
+}
+
 test.describe('Mat table tab', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
@@ -174,5 +196,118 @@ test.describe('Mat table tab', () => {
     await page.reload();
 
     await expect(page.locator('th.mat-column-name')).toHaveCSS('width', '166px');
+  });
+
+  test('shows a filter trigger only on filterable headers', async ({ page }) => {
+    await expect(getColumnFilterTrigger(page, 'phase')).toBeVisible();
+    await expect(getColumnFilterTrigger(page, 'category')).toBeVisible();
+    await expect(getColumnFilterTrigger(page, 'symbol')).not.toBeAttached();
+  });
+
+  test('keeps only the rows holding the values picked in a column filter', async ({ page }) => {
+    await getColumnFilterTrigger(page, 'phase').click();
+    await selectFilterOption(page, 'Gas');
+    await selectFilterOption(page, 'Liquid');
+    await closeOverlays(page);
+
+    const phases = await getDataRows(page).locator('td.mat-column-phase').allTextContents();
+    expect(phases.length).toBeGreaterThan(0);
+    expect([...new Set(phases.map((phase) => phase.trim()))].sort()).toEqual(['Gas', 'Liquid']);
+  });
+
+  test('narrows the rows further when a second column is filtered', async ({ page }) => {
+    await getColumnFilterTrigger(page, 'phase').click();
+    await selectFilterOption(page, 'Solid');
+    await closeOverlays(page);
+    const solidCount = await getDataRows(page).count();
+
+    await getColumnFilterTrigger(page, 'category').click();
+    await selectFilterOption(page, 'alkali metal');
+    await closeOverlays(page);
+
+    await expect(getDataRows(page)).not.toHaveCount(solidCount);
+    const categories = await getDataRows(page).locator('td.mat-column-category').allTextContents();
+    expect(categories.length).toBeGreaterThan(0);
+    expect(categories.every((category) => category.trim() === 'alkali metal')).toBeTruthy();
+  });
+
+  test('combines a column filter with the name search', async ({ page }) => {
+    await getColumnFilterTrigger(page, 'phase').click();
+    await selectFilterOption(page, 'Gas');
+    await closeOverlays(page);
+
+    await page.locator('input[matinput]').fill('he');
+
+    await expect(getDataRows(page)).toHaveCount(1);
+    await expect(getFirstRowNameCell(page)).toContainText('Helium');
+  });
+
+  test('restores every row when the column filter is cleared', async ({ page }) => {
+    await getColumnFilterTrigger(page, 'phase').click();
+    await selectFilterOption(page, 'Liquid');
+    await closeOverlays(page);
+    await expect(page.locator('.mat-mdc-paginator-range-label')).not.toContainText('of 119');
+
+    await getColumnFilterTrigger(page, 'phase').click();
+    await page.getByRole('button', { name: 'Clear filter' }).click();
+
+    await expect(page.locator('.mat-mdc-paginator-range-label')).toContainText('of 119');
+  });
+
+  test('resets the paginator to the first page when a column filter is applied', async ({
+    page,
+  }) => {
+    await page.locator('.mat-mdc-paginator-navigation-next').click();
+    await expect(page.locator('.mat-mdc-paginator-range-label')).toContainText('26 – 50');
+
+    await getColumnFilterTrigger(page, 'phase').click();
+    await selectFilterOption(page, 'Solid');
+    await closeOverlays(page);
+
+    await expect(page.locator('.mat-mdc-paginator-range-label')).toContainText('1 – 25');
+  });
+
+  test('opens the column filter from the keyboard without sorting the column', async ({ page }) => {
+    const phaseHeader = page.locator('th.mat-column-phase');
+    await expect(phaseHeader).toHaveAttribute('aria-sort', 'none');
+
+    await getColumnFilterTrigger(page, 'phase').focus();
+    await page.keyboard.press('Enter');
+
+    await expect(page.locator('.column-filter-card')).toBeVisible();
+    await expect(phaseHeader).toHaveAttribute('aria-sort', 'none');
+
+    // Focus is captured by the overlay and handed back to the trigger once it closes.
+    await expect(page.locator('.column-filter-card')).toContainText('Phase');
+    await page.keyboard.press('Escape');
+    await expect(page.locator('.column-filter-card')).not.toBeAttached();
+    await expect(getColumnFilterTrigger(page, 'phase')).toBeFocused();
+  });
+
+  test('keeps the header sortable next to its filter trigger', async ({ page }) => {
+    const phaseHeader = page.locator('th.mat-column-phase');
+
+    await phaseHeader.locator('.mat-sort-header-container').click();
+
+    await expect(phaseHeader).toHaveAttribute('aria-sort', 'ascending');
+    await expect(getColumnFilterTrigger(page, 'phase')).toBeVisible();
+  });
+
+  test('exposes the column filter as a labelled modal dialog', async ({ page }) => {
+    const trigger = getColumnFilterTrigger(page, 'phase');
+    await expect(trigger).toHaveAttribute('aria-haspopup', 'dialog');
+    await expect(trigger).toHaveAttribute('aria-expanded', 'false');
+
+    await trigger.click();
+
+    const dialog = page.getByRole('dialog', { name: 'Filter Phase column' });
+    await expect(dialog).toBeVisible();
+    await expect(dialog).toHaveAttribute('aria-modal', 'true');
+    await expect(trigger).toHaveAttribute('aria-expanded', 'true');
+
+    // `aria-modal` marks everything outside the dialog inert for assistive tech, so the select
+    // options have to stay within the dialog subtree to remain reachable.
+    await page.locator('.column-filter-card mat-select').click();
+    await expect(dialog.getByRole('option')).toHaveText(['Gas', 'Liquid', 'Solid']);
   });
 });

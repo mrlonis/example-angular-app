@@ -11,6 +11,7 @@ export const NAME_COLUMN: ColumnDefinition = {
   name: 'name',
   displayName: 'Name',
   isSortable: true,
+  isFilterable: true,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
@@ -18,6 +19,7 @@ export const APPEARANCE_COLUMN: ColumnDefinition = {
   name: 'appearance',
   displayName: 'Appearance',
   isSortable: true,
+  isFilterable: false,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
@@ -25,6 +27,7 @@ export const ATOMIC_MASS_COLUMN: ColumnDefinition = {
   name: 'atomic_mass',
   displayName: 'Atomic Mass',
   isSortable: true,
+  isFilterable: false,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
@@ -32,6 +35,7 @@ export const BOIL_COLUMN: ColumnDefinition = {
   name: 'boil',
   displayName: 'Boiling Point',
   isSortable: true,
+  isFilterable: false,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
@@ -39,6 +43,7 @@ export const CATEGORY_COLUMN: ColumnDefinition = {
   name: 'category',
   displayName: 'Category',
   isSortable: true,
+  isFilterable: true,
   width: 200,
 };
 
@@ -46,6 +51,7 @@ export const DENSITY_COLUMN: ColumnDefinition = {
   name: 'density',
   displayName: 'Density',
   isSortable: true,
+  isFilterable: false,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
@@ -53,6 +59,7 @@ export const DISCOVERED_BY_COLUMN: ColumnDefinition = {
   name: 'discovered_by',
   displayName: 'Discovered By',
   isSortable: true,
+  isFilterable: false,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
@@ -60,6 +67,7 @@ export const MELT_COLUMN: ColumnDefinition = {
   name: 'melt',
   displayName: 'Melting Point',
   isSortable: true,
+  isFilterable: false,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
@@ -67,6 +75,7 @@ export const MOLAR_HEAT_COLUMN: ColumnDefinition = {
   name: 'molar_heat',
   displayName: 'Molar Heat',
   isSortable: true,
+  isFilterable: false,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
@@ -74,6 +83,7 @@ export const NAMED_BY_COLUMN: ColumnDefinition = {
   name: 'named_by',
   displayName: 'Named By',
   isSortable: true,
+  isFilterable: false,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
@@ -81,6 +91,7 @@ export const NUMBER_COLUMN: ColumnDefinition = {
   name: 'number',
   displayName: 'Number',
   isSortable: true,
+  isFilterable: false,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
@@ -88,6 +99,7 @@ export const PERIOD_COLUMN: ColumnDefinition = {
   name: 'period',
   displayName: 'Period',
   isSortable: true,
+  isFilterable: false,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
@@ -95,6 +107,7 @@ export const GROUP_COLUMN: ColumnDefinition = {
   name: 'group',
   displayName: 'Group',
   isSortable: true,
+  isFilterable: false,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
@@ -102,6 +115,7 @@ export const PHASE_COLUMN: ColumnDefinition = {
   name: 'phase',
   displayName: 'Phase',
   isSortable: true,
+  isFilterable: true,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
@@ -109,6 +123,7 @@ export const BOHR_MODEL_IMAGE_COLUMN: ColumnDefinition = {
   name: 'bohr_model_image',
   displayName: 'Bohr Model Image',
   isSortable: false,
+  isFilterable: false,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
@@ -116,6 +131,7 @@ export const BOHR_MODEL_3D_COLUMN: ColumnDefinition = {
   name: 'bohr_model_3d',
   displayName: 'Bohr Model 3D',
   isSortable: false,
+  isFilterable: false,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
@@ -123,6 +139,7 @@ export const SPECTRAL_IMG_COLUMN: ColumnDefinition = {
   name: 'spectral_img',
   displayName: 'Spectral Image',
   isSortable: false,
+  isFilterable: false,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
@@ -130,6 +147,7 @@ export const SUMMARY_COLUMN: ColumnDefinition = {
   name: 'summary',
   displayName: 'Summary',
   isSortable: true,
+  isFilterable: false,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
@@ -137,6 +155,7 @@ export const SYMBOL_COLUMN: ColumnDefinition = {
   name: 'symbol',
   displayName: 'Symbol',
   isSortable: true,
+  isFilterable: false,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
@@ -144,6 +163,7 @@ export const XPOS_COLUMN: ColumnDefinition = {
   name: 'xpos',
   displayName: 'X Position',
   isSortable: true,
+  isFilterable: false,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
@@ -151,6 +171,7 @@ export const YPOS_COLUMN: ColumnDefinition = {
   name: 'ypos',
   displayName: 'Y Position',
   isSortable: true,
+  isFilterable: false,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
@@ -158,6 +179,7 @@ export const WXPOS_COLUMN: ColumnDefinition = {
   name: 'wxpos',
   displayName: 'Wide X Position',
   isSortable: true,
+  isFilterable: false,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
@@ -165,6 +187,7 @@ export const WYPOS_COLUMN: ColumnDefinition = {
   name: 'wypos',
   displayName: 'Wide Y Position',
   isSortable: true,
+  isFilterable: false,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
@@ -172,6 +195,7 @@ export const SHELLS_COLUMN: ColumnDefinition = {
   name: 'shells',
   displayName: 'Shells',
   isSortable: true,
+  isFilterable: false,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
@@ -179,6 +203,7 @@ export const ELECTRON_CONFIGURATION_COLUMN: ColumnDefinition = {
   name: 'electron_configuration',
   displayName: 'Electron Configuration',
   isSortable: true,
+  isFilterable: false,
   width: 200,
 };
 
@@ -186,6 +211,7 @@ export const ELECTRON_CONFIGURATION_SEMANTIC_COLUMN: ColumnDefinition = {
   name: 'electron_configuration_semantic',
   displayName: 'Electron Configuration (Semantic)',
   isSortable: true,
+  isFilterable: false,
   width: 300,
 };
 
@@ -193,6 +219,7 @@ export const ELECTRON_AFFINITY_COLUMN: ColumnDefinition = {
   name: 'electron_affinity',
   displayName: 'Electron Affinity',
   isSortable: true,
+  isFilterable: false,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
@@ -200,6 +227,7 @@ export const ELECTRONEGATIVITY_PAULING_COLUMN: ColumnDefinition = {
   name: 'electronegativity_pauling',
   displayName: 'Electronegativity (Pauling)',
   isSortable: true,
+  isFilterable: false,
   width: 250,
 };
 
@@ -207,6 +235,7 @@ export const IONIZATION_ENERGIES_COLUMN: ColumnDefinition = {
   name: 'ionization_energies',
   displayName: 'Ionization Energies',
   isSortable: true,
+  isFilterable: false,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
@@ -214,6 +243,7 @@ export const IMAGE_COLUMN: ColumnDefinition = {
   name: 'image',
   displayName: 'Image',
   isSortable: false,
+  isFilterable: false,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
@@ -221,6 +251,7 @@ export const BLOCK_COLUMN: ColumnDefinition = {
   name: 'block',
   displayName: 'Block',
   isSortable: true,
+  isFilterable: true,
   width: DEFAULT_COLUMN_WIDTH,
 };
 
@@ -230,6 +261,7 @@ export const SOURCE_COLUMN: ColumnDefinition = {
   name: 'source',
   displayName: 'Source',
   isSortable: false,
+  isFilterable: false,
   width: 300,
 };
 

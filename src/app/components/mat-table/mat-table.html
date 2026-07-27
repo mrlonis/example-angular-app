@@ -1,4 +1,4 @@
-<app-filter (valueChange)="applyFilter($event)" />
+<app-filter (valueChange)="applyNameFilter($event)" />
 <div class="column-chooser-container">
   Edit Columns:
   <button
@@ -46,9 +46,19 @@
             mat-sort-header
             [appColumnResize]="column.name"
             [style.width.px]="column.width"
+            [class.filterable-header]="column.isFilterable"
             (widthChange)="setColumnWidth(column.name, $event)"
           >
             {{ column.displayName }}
+            @if (column.isFilterable) {
+              <app-column-filter
+                appHeaderCellAction
+                [column]="column"
+                [options]="columnFilterOptions(column.name)"
+                [selectedValues]="columnFilterValues(column.name)"
+                (selectedValuesChange)="setColumnFilter(column.name, $event)"
+              />
+            }
           </th>
         } @else {
           <th
@@ -56,9 +66,19 @@
             *matHeaderCellDef
             [appColumnResize]="column.name"
             [style.width.px]="column.width"
+            [class.filterable-header]="column.isFilterable"
             (widthChange)="setColumnWidth(column.name, $event)"
           >
             {{ column.displayName }}
+            @if (column.isFilterable) {
+              <app-column-filter
+                appHeaderCellAction
+                [column]="column"
+                [options]="columnFilterOptions(column.name)"
+                [selectedValues]="columnFilterValues(column.name)"
+                (selectedValuesChange)="setColumnFilter(column.name, $event)"
+              />
+            }
           </th>
         }
         @if (column.name === 'source' || column.name === 'bohr_model_3d') {

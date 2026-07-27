@@ -143,3 +143,17 @@ body {
   transform: none;
   opacity: 0.54;
 }
+
+// Filterable headers keep a filter trigger pinned to the trailing edge of the cell (see
+// HeaderCellAction). Cap the sort container so a long header label ellipsizes before it
+// reaches the trigger instead of running underneath it. MatSortHeader renders the container
+// inside its own view, so this override cannot live in an encapsulated component style.
+th.filterable-header .mat-sort-header-container {
+  max-width: calc(100% - 44px);
+}
+
+th.filterable-header .mat-sort-header-content {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
